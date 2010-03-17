@@ -1,0 +1,27 @@
+<idea-plugin version="2">
+  <name>CoffeeScript</name>
+  <description>syntax highlighting for coffeescript</description>
+  <version>1.0</version>
+  <vendor>yeungda</vendor>
+  <idea-version since-build="8000"/>
+
+  <application-components>
+    <!-- Add your application components here -->
+      <component>
+          <implementation-class>yeungda.coffeescript.Launcher</implementation-class>
+      </component>
+  </application-components>
+
+  <project-components>
+    <!-- Add your project components here -->
+  </project-components>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+      <lang.syntaxHighlighterFactory key="CoffeeScript" implementationClass="yeungda.coffeescript.lang.Language$HighlighterFactory" />
+  </extensions>
+</idea-plugin>
