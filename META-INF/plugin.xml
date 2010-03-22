@@ -23,5 +23,7 @@
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->
       <lang.syntaxHighlighterFactory key="CoffeeScript" implementationClass="yeungda.coffeescript.lang.Language$HighlighterFactory" />
+      <lang.parserDefinition language="CoffeeScript" implementationClass="yeungda.coffeescript.lang.ParserDefinition"/>
+
   </extensions>
 </idea-plugin>

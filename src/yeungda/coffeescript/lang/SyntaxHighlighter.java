@@ -1,25 +1,66 @@
 package yeungda.coffeescript.lang;
 
-import com.intellij.lexer.EmptyLexer;
-import com.intellij.lexer.FlexAdapter;
 import com.intellij.lexer.Lexer;
-import com.intellij.openapi.editor.colors.CodeInsightColors;
+import com.intellij.openapi.editor.HighlighterColors;
+import com.intellij.openapi.editor.SyntaxHighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SyntaxHighlighter extends SyntaxHighlighterBase {
+    private static final Map<IElementType, TextAttributesKey> TOKENS_TO_STYLES;
+
     @NotNull
     public Lexer getHighlightingLexer() {
-        return new EmptyLexer();
+        return new FlexLexerAdapter();
+    }
+
+    static final TextAttributesKey NUMBER = TextAttributesKey.createTextAttributesKey(
+            "COFFEESCRIPT.NUMBER",
+            SyntaxHighlighterColors.NUMBER.getDefaultAttributes()
+    );
+
+    private static final TextAttributesKey OPERATOR = TextAttributesKey.createTextAttributesKey(
+            "COFFEESCRIPT.OPERATOR",
+            SyntaxHighlighterColors.OPERATION_SIGN.getDefaultAttributes()
+    );
+
+    private static final TextAttributesKey ASSIGNMENT = TextAttributesKey.createTextAttributesKey(
+            "COFFEESCRIPT.ASSIGNMENT",
+            SyntaxHighlighterColors.OPERATION_SIGN.getDefaultAttributes()
+    );
+
+    private static final TextAttributesKey COMMENT = TextAttributesKey.createTextAttributesKey(
+            "COFFEESCRIPT.COMMENT",
+            SyntaxHighlighterColors.LINE_COMMENT.getDefaultAttributes()
+    );
+
+    private static final TextAttributesKey STRING = TextAttributesKey.createTextAttributesKey(
+            "COFFEESCRIPT.STRING",
+            SyntaxHighlighterColors.STRING.getDefaultAttributes()
+    );
+
+    static {
+        TOKENS_TO_STYLES = new HashMap<IElementType, TextAttributesKey>();
+        TOKENS_TO_STYLES.put(Tokens.NUMBER, NUMBER);
+        TOKENS_TO_STYLES.put(Tokens.OPERATOR, OPERATOR);
+        TOKENS_TO_STYLES.put(Tokens.COMMENT, COMMENT);
+        TOKENS_TO_STYLES.put(Tokens.ASSIGNMENT, ASSIGNMENT);
+        TOKENS_TO_STYLES.put(Tokens.STRING, STRING);
+        TOKENS_TO_STYLES.put(Tokens.IDENTIFIER, HighlighterColors.TEXT);
+        TOKENS_TO_STYLES.put(Tokens.WHITESPACE, HighlighterColors.TEXT);
     }
 
     @NotNull
     public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
-        return pack(TextAttributesKey.createTextAttributesKey(
-                "COFFEESCRIPT",
-                CodeInsightColors.INSTANCE_FIELD_ATTRIBUTES.getDefaultAttributes()
-        ));
+        if (!TOKENS_TO_STYLES.containsKey(tokenType)) {
+            throw new UnsupportedOperationException(tokenType.toString());
+        }
+        return pack(TOKENS_TO_STYLES.get(tokenType));
     }
+
 }

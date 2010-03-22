@@ -5,5 +5,5 @@ import com.intellij.openapi.util.IconLoader;
 import javax.swing.*;
 
 public interface Icons {
-    Icon ICON = IconLoader.getIcon("/yeungda/coffeescript/lang/icons/coffeescript.png");
+    Icon ICON = IconLoader.getIcon("/yeungda/coffeescript/icon/coffeescript.png");
 }

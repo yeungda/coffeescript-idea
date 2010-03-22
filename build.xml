@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="CoffeeScript" default="generate-lexer">
+  <property name="flex.base" value="/Users/dyeung/Projects/idea/tools/lexer/jflex-1.4"/>
+  <property name="idea.project.home" value="/Users/dyeung/Projects/idea"/>
+  <property name="out.dir" value="${basedir}/out"/>
+  <macrodef name="flex">
+    <attribute name="flexfile"/>
+    <attribute name="destdir"/>
+    <sequential>
+      <delete dir="${out.dir}"/>
+      <mkdir dir="${out.dir}"/>
+      <java classname="JFlex.Main"
+            fork="true"
+            failonerror="true">
+        <arg value="-charat"/>
+        <arg value="-skel"/>
+        <arg value="/Users/dyeung/Projects/idea/tools/lexer/idea-flex.skeleton"/>
+        <arg value="-d"/>
+        <arg value="${out.dir}"/>
+        <arg value="@{flexfile}"/>
+        <classpath>
+          <pathelement location="${flex.base}/lib/JFlex.jar"/>
+        </classpath>
+      </java>
+      <move todir="${basedir}/@{destdir}">
+        <fileset dir="${out.dir}">
+          <include name="*.java"/>
+        </fileset>
+      </move>
+      <delete dir="${out.dir}"/>
+    </sequential>
+  </macrodef>
+
+  <target name="generate-lexer">
+    <flex destdir="src/yeungda/coffeescript/lang"
+          flexfile="${basedir}/src/yeungda/coffeescript/lang/lexer.flex"/>
+  </target>
+
+</project>
