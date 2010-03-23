@@ -50,6 +50,16 @@ public class SyntaxHighlighter extends SyntaxHighlighterBase {
             SyntaxHighlighterColors.VALID_STRING_ESCAPE.getDefaultAttributes()
     );
 
+    private static final TextAttributesKey KEYWORD = TextAttributesKey.createTextAttributesKey(
+            "COFFEESCRIPT.KEYWORD",
+            SyntaxHighlighterColors.KEYWORD.getDefaultAttributes()
+    );
+
+    private static final TextAttributesKey RESERVED_WORD = TextAttributesKey.createTextAttributesKey(
+            "COFFEESCRIPT.BAD_KEYWORD",
+            HighlighterColors.BAD_CHARACTER.getDefaultAttributes()
+    );
+
     static {
         TOKENS_TO_STYLES = new HashMap<IElementType, TextAttributesKey>();
         TOKENS_TO_STYLES.put(Tokens.NUMBER, NUMBER);
@@ -62,6 +72,8 @@ public class SyntaxHighlighter extends SyntaxHighlighterBase {
         TOKENS_TO_STYLES.put(Tokens.BAD_CHARACTER, HighlighterColors.BAD_CHARACTER);
         TOKENS_TO_STYLES.put(Tokens.STRING_LITERAL, STRING_LITERAL);
         TOKENS_TO_STYLES.put(Tokens.LINE_TERMINATOR, HighlighterColors.TEXT);
+        TOKENS_TO_STYLES.put(Tokens.KEYWORD, KEYWORD);
+        TOKENS_TO_STYLES.put(Tokens.RESERVED_WORD, RESERVED_WORD);
     }
 
     @NotNull

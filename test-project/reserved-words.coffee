@@ -1,0 +1,16 @@
+case
+default
+do
+function
+var
+void
+with
+const
+let
+debugger
+enum
+export
+import
+native
+__extends
+__hasProp

@@ -43,6 +43,60 @@ REGEX_ESCAPE       = \\[^\$]
 %%
 
 <YYINITIAL> {
+    "if"        |
+    "else"      |
+    "true"      |
+    "false"     |
+    "new"       |
+    "return"    |
+    "try"       |
+    "catch"     |
+    "finally"   |
+    "throw"     |
+    "break"     |
+    "continue"  |
+    "for"       |
+    "in"        |
+    "while"     |
+    "delete"    |
+    "instanceof"|
+    "typeof"    |
+    "switch"    |
+    "super"     |
+    "extends"   |
+    "class"     |
+    "and"       |
+    "or"        |
+    "is"        |
+    "isnt"      |
+    "not"       |
+    "then"      |
+    "unless"    |
+    "yes"       |
+    "no"        |
+    "on"        |
+    "off"       |
+    "of"        |
+    "by"        |
+    "where"     |
+    "when"                      { return Tokens.KEYWORD; }
+
+    "case"      |
+    "default"   |
+    "do"        |
+    "function"  |
+    "var"       |
+    "void"      |
+    "with"      |
+    "const"     |
+    "let"       |
+    "debugger"  |
+    "enum"      |
+    "export"    |
+    "import"    |
+    "native"    |
+    "__extends" |
+    "__hasProp"                 { return Tokens.RESERVED_WORD; }
     {IDENTIFIER}                { return Tokens.IDENTIFIER; }
     {WS}                        { return Tokens.WHITESPACE; }
     {NUMBER}                    { return Tokens.NUMBER; }
