@@ -8,6 +8,7 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public class SyntaxHighlighter extends SyntaxHighlighterBase {
 
     @NotNull
     public Lexer getHighlightingLexer() {
-        return new FlexLexerAdapter();
+        return new FlexAdapterWithCommunicationSkills(new yeungda.coffeescript.lang.Lexer((Reader) null));
     }
 
     static final TextAttributesKey NUMBER = TextAttributesKey.createTextAttributesKey(
@@ -44,6 +45,11 @@ public class SyntaxHighlighter extends SyntaxHighlighterBase {
             SyntaxHighlighterColors.STRING.getDefaultAttributes()
     );
 
+    private static final TextAttributesKey STRING_LITERAL = TextAttributesKey.createTextAttributesKey(
+            "COFFEESCRIPT.STRING",
+            SyntaxHighlighterColors.VALID_STRING_ESCAPE.getDefaultAttributes()
+    );
+
     static {
         TOKENS_TO_STYLES = new HashMap<IElementType, TextAttributesKey>();
         TOKENS_TO_STYLES.put(Tokens.NUMBER, NUMBER);
@@ -53,6 +59,8 @@ public class SyntaxHighlighter extends SyntaxHighlighterBase {
         TOKENS_TO_STYLES.put(Tokens.STRING, STRING);
         TOKENS_TO_STYLES.put(Tokens.IDENTIFIER, HighlighterColors.TEXT);
         TOKENS_TO_STYLES.put(Tokens.WHITESPACE, HighlighterColors.TEXT);
+        TOKENS_TO_STYLES.put(Tokens.BAD_CHARACTER, HighlighterColors.BAD_CHARACTER);
+        TOKENS_TO_STYLES.put(Tokens.STRING_LITERAL, STRING_LITERAL);
     }
 
     @NotNull

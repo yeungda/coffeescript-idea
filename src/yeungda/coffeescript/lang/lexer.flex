@@ -29,6 +29,9 @@ MULTI_DENT    = ((\n([ \t]*))+)(\.)?
 LAST_DENT     = \n([ \t]*)
 ASSIGNMENT    = (:|=)
 
+CHARACTERS_IN_DOUBLE_QUOTES  = ([^\"\r\n\\]+)
+CHARACTERS_IN_SINGLE_QUOTES  = ([^\'\r\n\\]+)
+LINE_TERMINATOR = [\n\r]
 
 REGEX_START        = \/[^\/ ]
 REGEX_INTERPOLATION= ([^\\]\$[a-zA-Z_@]|[^\\]\$\{.*[^\\]\})
@@ -45,20 +48,27 @@ REGEX_ESCAPE       = \\[^\$]
     {NUMBER}                    { return Tokens.NUMBER; }
     {OPERATOR}                  { return Tokens.OPERATOR; }
     {COMMENT}                   { return Tokens.COMMENT; }
-    \"                          { yybegin(DOUBLE_QUOTE_STRING); }
-    \'                          { yybegin(SINGLE_QUOTE_STRING); }
+    \"                          { yybegin(DOUBLE_QUOTE_STRING); return Tokens.STRING; }
+    \'                          { yybegin(SINGLE_QUOTE_STRING); return Tokens.STRING; }
 }
 
 <DOUBLE_QUOTE_STRING> {
     \"                             { yybegin(YYINITIAL); return Tokens.STRING; }
-    "\\\""                         { }
-    .                              { }
+    "\\\""                         { return Tokens.STRING_LITERAL; }
+    {CHARACTERS_IN_DOUBLE_QUOTES}  { return Tokens.STRING; }
 }
 
 <SINGLE_QUOTE_STRING> {
     \'                             { yybegin(YYINITIAL); return Tokens.STRING; }
-    "\\'"                          { }
-    .                              { }
+    "\\'"                          { return Tokens.STRING_LITERAL; }
+    {CHARACTERS_IN_SINGLE_QUOTES}  { return Tokens.STRING; }
+}
+
+<DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING> {
+    "\\\\"                         { return Tokens.STRING_LITERAL; }
+    "\n"                          { System.out.println("end of the line!"); yybegin(YYINITIAL); return Tokens.BAD_CHARACTER; }
+    "\r"                          { yybegin(YYINITIAL); return Tokens.BAD_CHARACTER; }
+    \\.                            { return Tokens.BAD_CHARACTER; }
 }
 
 .                                  { yybegin(YYINITIAL);   return Tokens.BAD_CHARACTER; }
