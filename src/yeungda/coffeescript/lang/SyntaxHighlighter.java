@@ -8,7 +8,6 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,12 +74,13 @@ public class SyntaxHighlighter extends SyntaxHighlighterBase {
         TOKENS_TO_STYLES.put(Tokens.LINE_TERMINATOR, HighlighterColors.TEXT);
         TOKENS_TO_STYLES.put(Tokens.KEYWORD, KEYWORD);
         TOKENS_TO_STYLES.put(Tokens.RESERVED_WORD, RESERVED_WORD);
-        TOKENS_TO_STYLES.put(Tokens.BRACES, SyntaxHighlighterColors.BRACES);
-        TOKENS_TO_STYLES.put(Tokens.BRACKETS, SyntaxHighlighterColors.BRACKETS);
+        TOKENS_TO_STYLES.put(Tokens.BRACE, SyntaxHighlighterColors.BRACES);
+        TOKENS_TO_STYLES.put(Tokens.BRACKET, SyntaxHighlighterColors.BRACKETS);
         TOKENS_TO_STYLES.put(Tokens.COMMA, SyntaxHighlighterColors.COMMA);
         TOKENS_TO_STYLES.put(Tokens.SEMI_COLON, SyntaxHighlighterColors.JAVA_SEMICOLON);
         TOKENS_TO_STYLES.put(Tokens.DOT, SyntaxHighlighterColors.DOT);
         TOKENS_TO_STYLES.put(Tokens.PARENTHESIS, SyntaxHighlighterColors.PARENTHS);
+        TOKENS_TO_STYLES.put(Tokens.ACCESSOR, SyntaxHighlighterColors.KEYWORD);
     }
 
     @NotNull

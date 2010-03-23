@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager" verified="true">
     <list default="true" readonly="true" id="38457297-fe24-49d1-9f47-bddb30343484" name="Default" comment="" />
-    <ignored path="test-project.iws" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path="test-project.iws" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +72,7 @@
       <file leaf-file-name="all.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/all.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="4" selection-start="1534" selection-end="1534" vertical-scroll-proportion="0.93830335">
+            <state line="17" column="18" selection-start="628" selection-end="628" vertical-scroll-proportion="0.5244216">
               <folding />
             </state>
           </provider>
@@ -93,8 +93,8 @@
         <option value="$PROJECT_DIR$/numbers.coffee" />
         <option value="$PROJECT_DIR$/comment.coffee" />
         <option value="$PROJECT_DIR$/strings.coffee" />
-        <option value="$PROJECT_DIR$/all.coffee" />
         <option value="$PROJECT_DIR$/separators.coffee" />
+        <option value="$PROJECT_DIR$/all.coffee" />
       </list>
     </option>
   </component>
@@ -133,6 +133,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Favorites" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -155,7 +156,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -363,14 +363,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/separators.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="1" selection-start="9" selection-end="9" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="4" column="1" selection-start="9" selection-end="9" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/all.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="4" selection-start="1534" selection-end="1534" vertical-scroll-proportion="0.93830335">
+        <state line="17" column="18" selection-start="628" selection-end="628" vertical-scroll-proportion="0.5244216">
           <folding />
         </state>
       </provider>

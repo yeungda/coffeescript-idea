@@ -100,12 +100,13 @@ REGEX_ESCAPE       = \\[^\$]
     "("                         |
     ")"                         { return Tokens.PARENTHESIS; }
     "{"                         |
-    "}"                         { return Tokens.BRACES; }
+    "}"                         { return Tokens.BRACE; }
     "["                         |
-    "]"                         { return Tokens.BRACKETS; }
+    "]"                         { return Tokens.BRACKET; }
     ";"                         { return Tokens.SEMI_COLON; }
     ","                         { return Tokens.COMMA; }
     "."                         { return Tokens.DOT; }
+    "@"                         { return Tokens.ACCESSOR; }
     {IDENTIFIER}                { return Tokens.IDENTIFIER; }
     {WS}                        { return Tokens.WHITESPACE; }
     {NUMBER}                    { return Tokens.NUMBER; }
@@ -128,6 +129,7 @@ REGEX_ESCAPE       = \\[^\$]
 }
 
 <DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING> {
+    "\\n"                          |
     "\\\\"                         { return Tokens.STRING_LITERAL; }
     "\n"                           |
     "\r"                           { return Tokens.LINE_TERMINATOR; }

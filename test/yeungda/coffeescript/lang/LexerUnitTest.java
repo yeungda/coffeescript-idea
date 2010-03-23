@@ -17,12 +17,12 @@ import static yeungda.coffeescript.lang.Tokens.*;
 public class LexerUnitTest {
 
     @Test
-    public void shouldLexBadCharacters() {
+    public void badCharacters() {
         assertThat(lexing("~"), tokenisesTo(BAD_CHARACTER));
     }
 
     @Test
-    public void shouldLexNumbers() {
+    public void numbers() {
         assertThat(lexing("1"), tokenisesTo(NUMBER));
         assertThat(lexing("0x1234ff"), tokenisesTo(NUMBER));
         assertThat(lexing("1.2e+1"), tokenisesTo(NUMBER));
@@ -31,7 +31,7 @@ public class LexerUnitTest {
     }
 
     @Test
-    public void shouldLexOperators() {
+    public void operators() {
         assertThat(lexing("+"), tokenisesTo(OPERATOR));
         assertThat(lexing("*"), tokenisesTo(OPERATOR));
         assertThat(lexing("&"), tokenisesTo(OPERATOR));
@@ -48,7 +48,7 @@ public class LexerUnitTest {
     }
 
     @Test
-    public void shouldLexString() {
+    public void strings() {
         assertThat(lexing("\"x\""), tokenisesTo(STRING, STRING, STRING));
         assertThat(lexing("'x'"), tokenisesTo(STRING, STRING, STRING));
         assertThat(lexing("\"\\\""), tokenisesTo(STRING, STRING_LITERAL));
@@ -56,27 +56,29 @@ public class LexerUnitTest {
         assertThat(lexing("\""), tokenisesTo(STRING));
         assertThat(lexing("\"\\\\"), tokenisesTo(STRING, STRING_LITERAL));
         assertThat(lexing("\"\\x"), tokenisesTo(STRING, BAD_CHARACTER));
-        assertThat(lexing("\"\n"), tokenisesTo(STRING, LINE_TERMINATOR));
+        assertThat(lexing("\"\\n"), tokenisesTo(STRING, STRING_LITERAL));
         assertThat(lexing("'\\\\"), tokenisesTo(STRING, STRING_LITERAL));
         assertThat(lexing("'\\x"), tokenisesTo(STRING, BAD_CHARACTER));
+        assertThat(lexing("'\\n"), tokenisesTo(STRING, STRING_LITERAL));
+        assertThat(lexing("\"\n"), tokenisesTo(STRING, LINE_TERMINATOR));
         assertThat(lexing("'\n"), tokenisesTo(STRING, LINE_TERMINATOR));
     }
 
     @Test
-    public void shouldLexMultiLineStrings() {
+    public void multiLineStrings() {
         assertThat(lexing("'\nx"), tokenisesTo(STRING, Tokens.LINE_TERMINATOR, STRING));
         assertThat(lexing("'\rx"), tokenisesTo(STRING, LINE_TERMINATOR, STRING));
     }
 
     @Test
-    public void shouldLexIdentifier() {
+    public void identifiers() {
         assertThat(lexing("word"), tokenisesTo(IDENTIFIER));
         assertThat(lexing("$word"), tokenisesTo(IDENTIFIER));
         assertThat(lexing("$aA0_$"), tokenisesTo(IDENTIFIER));
     }
 
     @Test
-    public void shouldLexKeywords() {
+    public void keywords() {
         // javascript keywords
         assertThat(lexing("if"), tokenisesTo(Tokens.KEYWORD));
         assertThat(lexing("else"), tokenisesTo(Tokens.KEYWORD));
@@ -120,7 +122,7 @@ public class LexerUnitTest {
     }
 
     @Test
-    public void shouldLexReservedWords() {
+    public void reservedWords() {
         assertThat(lexing("case"), tokenisesTo(Tokens.RESERVED_WORD));
         assertThat(lexing("default"), tokenisesTo(Tokens.RESERVED_WORD));
         assertThat(lexing("do"), tokenisesTo(Tokens.RESERVED_WORD));
@@ -140,29 +142,34 @@ public class LexerUnitTest {
     }
 
     @Test
-    public void shouldLexSeparators() {
-            assertThat(lexing("("), tokenisesTo(Tokens.PARENTHESIS));
-            assertThat(lexing(")"), tokenisesTo(Tokens.PARENTHESIS));
-            assertThat(lexing("{"), tokenisesTo(Tokens.BRACES));
-            assertThat(lexing("}"), tokenisesTo(Tokens.BRACES));
-            assertThat(lexing("["), tokenisesTo(Tokens.BRACKETS));
-            assertThat(lexing("]"), tokenisesTo(Tokens.BRACKETS));
-            assertThat(lexing(";"), tokenisesTo(Tokens.SEMI_COLON));
-            assertThat(lexing(","), tokenisesTo(Tokens.COMMA));
-            assertThat(lexing("."), tokenisesTo(Tokens.DOT));
+    public void separators() {
+        assertThat(lexing("("), tokenisesTo(Tokens.PARENTHESIS));
+        assertThat(lexing(")"), tokenisesTo(Tokens.PARENTHESIS));
+        assertThat(lexing("{"), tokenisesTo(Tokens.BRACE));
+        assertThat(lexing("}"), tokenisesTo(Tokens.BRACE));
+        assertThat(lexing("["), tokenisesTo(Tokens.BRACKET));
+        assertThat(lexing("]"), tokenisesTo(Tokens.BRACKET));
+        assertThat(lexing(";"), tokenisesTo(Tokens.SEMI_COLON));
+        assertThat(lexing(","), tokenisesTo(Tokens.COMMA));
+        assertThat(lexing("."), tokenisesTo(Tokens.DOT));
     }
-
-    private Matcher<Collection> tokenisesTo(IElementType... identifier) {
-        return equalTo((Collection) Arrays.asList(identifier));
-    }
-
 
     @Test
-    public void shouldLexComment() {
+    public void accessors() {
+        assertThat(lexing("@"), tokenisesTo(Tokens.ACCESSOR));
+    }
+
+    @Test
+    public void comment() {
         assertThat(lexing("#"), tokenisesTo(COMMENT));
         assertThat(lexing("# "), tokenisesTo(COMMENT));
         assertThat(lexing(" #"), tokenisesTo(COMMENT));
         assertThat(lexing("#x"), tokenisesTo(COMMENT));
+    }
+
+
+    private Matcher<Collection> tokenisesTo(IElementType... identifier) {
+        return equalTo((Collection) Arrays.asList(identifier));
     }
 
     private Collection<IElementType> lexing(final CharSequence charSequence) {
