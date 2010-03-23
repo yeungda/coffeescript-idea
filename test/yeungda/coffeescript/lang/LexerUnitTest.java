@@ -12,7 +12,6 @@ import java.util.Collection;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
-import static org.junit.matchers.JUnitMatchers.hasItem;
 import static yeungda.coffeescript.lang.Tokens.*;
 
 public class LexerUnitTest {
@@ -57,13 +56,16 @@ public class LexerUnitTest {
         assertThat(lexing("\""), tokenisesTo(STRING));
         assertThat(lexing("\"\\\\"), tokenisesTo(STRING, STRING_LITERAL));
         assertThat(lexing("\"\\x"), tokenisesTo(STRING, BAD_CHARACTER));
-        assertThat(lexing("\"\n"), tokenisesTo(STRING, BAD_CHARACTER));
+        assertThat(lexing("\"\n"), tokenisesTo(STRING, LINE_TERMINATOR));
         assertThat(lexing("'\\\\"), tokenisesTo(STRING, STRING_LITERAL));
         assertThat(lexing("'\\x"), tokenisesTo(STRING, BAD_CHARACTER));
-        assertThat(lexing("'\n"), tokenisesTo(STRING, BAD_CHARACTER));
-        assertThat(lexing("'\nx"), tokenisesTo(STRING, BAD_CHARACTER, IDENTIFIER));
-        assertThat(lexing("'\rx"), tokenisesTo(STRING, BAD_CHARACTER, IDENTIFIER));
-        assertThat(lexing("'\nx"), tokenisesTo(STRING, BAD_CHARACTER, IDENTIFIER));
+        assertThat(lexing("'\n"), tokenisesTo(STRING, LINE_TERMINATOR));
+    }
+
+    @Test
+    public void shouldLexMultiLineStrings() {
+        assertThat(lexing("'\nx"), tokenisesTo(STRING, Tokens.LINE_TERMINATOR, STRING));
+        assertThat(lexing("'\rx"), tokenisesTo(STRING, LINE_TERMINATOR, STRING));
     }
 
     @Test

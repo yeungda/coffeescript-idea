@@ -13,4 +13,5 @@ public class Tokens {
     public static final IElementType STRING = new CoffeeScriptElementType("STRING");
     public static final IElementType BAD_CHARACTER = TokenType.BAD_CHARACTER;
     public static final IElementType STRING_LITERAL = new CoffeeScriptElementType("STRING_LITERAL");
+    public static final IElementType LINE_TERMINATOR = new CoffeeScriptElementType("LINE_TERMINATOR");
 }

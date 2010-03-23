@@ -61,6 +61,7 @@ public class SyntaxHighlighter extends SyntaxHighlighterBase {
         TOKENS_TO_STYLES.put(Tokens.WHITESPACE, HighlighterColors.TEXT);
         TOKENS_TO_STYLES.put(Tokens.BAD_CHARACTER, HighlighterColors.BAD_CHARACTER);
         TOKENS_TO_STYLES.put(Tokens.STRING_LITERAL, STRING_LITERAL);
+        TOKENS_TO_STYLES.put(Tokens.LINE_TERMINATOR, HighlighterColors.TEXT);
     }
 
     @NotNull

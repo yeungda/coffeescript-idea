@@ -66,8 +66,8 @@ REGEX_ESCAPE       = \\[^\$]
 
 <DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING> {
     "\\\\"                         { return Tokens.STRING_LITERAL; }
-    "\n"                          { System.out.println("end of the line!"); yybegin(YYINITIAL); return Tokens.BAD_CHARACTER; }
-    "\r"                          { yybegin(YYINITIAL); return Tokens.BAD_CHARACTER; }
+    "\n"                           |
+    "\r"                           { return Tokens.LINE_TERMINATOR; }
     \\.                            { return Tokens.BAD_CHARACTER; }
 }
 
