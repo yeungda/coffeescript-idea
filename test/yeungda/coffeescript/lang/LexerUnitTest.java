@@ -82,8 +82,6 @@ public class LexerUnitTest {
         // javascript keywords
         assertThat(lexing("if"), tokenisesTo(Tokens.KEYWORD));
         assertThat(lexing("else"), tokenisesTo(Tokens.KEYWORD));
-        assertThat(lexing("true"), tokenisesTo(Tokens.KEYWORD));
-        assertThat(lexing("false"), tokenisesTo(Tokens.KEYWORD));
         assertThat(lexing("new"), tokenisesTo(Tokens.KEYWORD));
         assertThat(lexing("return"), tokenisesTo(Tokens.KEYWORD));
         assertThat(lexing("try"), tokenisesTo(Tokens.KEYWORD));
@@ -111,10 +109,6 @@ public class LexerUnitTest {
         // coffee keywords
         assertThat(lexing("then"), tokenisesTo(Tokens.KEYWORD));
         assertThat(lexing("unless"), tokenisesTo(Tokens.KEYWORD));
-        assertThat(lexing("yes"), tokenisesTo(Tokens.KEYWORD));
-        assertThat(lexing("no"), tokenisesTo(Tokens.KEYWORD));
-        assertThat(lexing("on"), tokenisesTo(Tokens.KEYWORD));
-        assertThat(lexing("off"), tokenisesTo(Tokens.KEYWORD));
         assertThat(lexing("of"), tokenisesTo(Tokens.KEYWORD));
         assertThat(lexing("by"), tokenisesTo(Tokens.KEYWORD));
         assertThat(lexing("where"), tokenisesTo(Tokens.KEYWORD));
@@ -154,6 +148,16 @@ public class LexerUnitTest {
         assertThat(lexing("."), tokenisesTo(Tokens.DOT));
     }
 
+    @Test
+    public void booleans() {
+        assertThat(lexing("yes"), tokenisesTo(Tokens.BOOLEAN));
+        assertThat(lexing("no"), tokenisesTo(Tokens.BOOLEAN));
+        assertThat(lexing("on"), tokenisesTo(Tokens.BOOLEAN));
+        assertThat(lexing("off"), tokenisesTo(Tokens.BOOLEAN));
+        assertThat(lexing("true"), tokenisesTo(Tokens.BOOLEAN));
+        assertThat(lexing("false"), tokenisesTo(Tokens.BOOLEAN));
+    }
+    
     @Test
     public void accessors() {
         assertThat(lexing("@"), tokenisesTo(Tokens.ACCESSOR));

@@ -23,4 +23,5 @@ public class Tokens {
     public static final IElementType COMMA = new CoffeeScriptElementType("COLON");
     public static final IElementType DOT = new CoffeeScriptElementType("DOT");
     public static final IElementType ACCESSOR = new CoffeeScriptElementType("ACCESSOR");
+    public static final IElementType BOOLEAN = new CoffeeScriptElementType("BOOLEAN");
 }

@@ -81,6 +81,7 @@ public class SyntaxHighlighter extends SyntaxHighlighterBase {
         TOKENS_TO_STYLES.put(Tokens.DOT, SyntaxHighlighterColors.DOT);
         TOKENS_TO_STYLES.put(Tokens.PARENTHESIS, SyntaxHighlighterColors.PARENTHS);
         TOKENS_TO_STYLES.put(Tokens.ACCESSOR, SyntaxHighlighterColors.KEYWORD);
+        TOKENS_TO_STYLES.put(Tokens.BOOLEAN, SyntaxHighlighterColors.NUMBER);
     }
 
     @NotNull

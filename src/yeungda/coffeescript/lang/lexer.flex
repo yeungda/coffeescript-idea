@@ -45,8 +45,6 @@ REGEX_ESCAPE       = \\[^\$]
 <YYINITIAL> {
     "if"        |
     "else"      |
-    "true"      |
-    "false"     |
     "new"       |
     "return"    |
     "try"       |
@@ -72,14 +70,17 @@ REGEX_ESCAPE       = \\[^\$]
     "not"       |
     "then"      |
     "unless"    |
-    "yes"       |
-    "no"        |
-    "on"        |
-    "off"       |
     "of"        |
     "by"        |
     "where"     |
     "when"                      { return Tokens.KEYWORD; }
+
+    "true"      |
+    "false"     |
+    "yes"       |
+    "no"        |
+    "on"        |
+    "off"                      { return Tokens.BOOLEAN; }
 
     "case"      |
     "default"   |

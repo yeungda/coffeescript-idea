@@ -1,7 +1,5 @@
 if
 else
-true
-false
 new
 return
 try
@@ -19,3 +17,15 @@ typeof
 switch
 super
 extends
+class
+and
+or
+is
+isnt
+not
+then
+unless
+of
+by
+where
+when
