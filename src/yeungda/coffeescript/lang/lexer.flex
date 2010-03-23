@@ -97,6 +97,15 @@ REGEX_ESCAPE       = \\[^\$]
     "native"    |
     "__extends" |
     "__hasProp"                 { return Tokens.RESERVED_WORD; }
+    "("                         |
+    ")"                         { return Tokens.PARENTHESIS; }
+    "{"                         |
+    "}"                         { return Tokens.BRACES; }
+    "["                         |
+    "]"                         { return Tokens.BRACKETS; }
+    ";"                         { return Tokens.SEMI_COLON; }
+    ","                         { return Tokens.COMMA; }
+    "."                         { return Tokens.DOT; }
     {IDENTIFIER}                { return Tokens.IDENTIFIER; }
     {WS}                        { return Tokens.WHITESPACE; }
     {NUMBER}                    { return Tokens.NUMBER; }

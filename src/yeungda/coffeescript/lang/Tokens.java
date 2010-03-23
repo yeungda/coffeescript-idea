@@ -16,4 +16,10 @@ public class Tokens {
     public static final IElementType LINE_TERMINATOR = new CoffeeScriptElementType("LINE_TERMINATOR");
     public static final IElementType KEYWORD = new CoffeeScriptElementType("KEYWORD");
     public static final IElementType RESERVED_WORD = TokenType.BAD_CHARACTER;
+    public static final IElementType PARENTHESIS = new CoffeeScriptElementType("PARENTHESIS");
+    public static final IElementType BRACES = new CoffeeScriptElementType("BRACES");
+    public static final IElementType BRACKETS = new CoffeeScriptElementType("BRACKETS");
+    public static final IElementType SEMI_COLON = new CoffeeScriptElementType("SEMI_COLON");
+    public static final IElementType COMMA = new CoffeeScriptElementType("COLON");
+    public static final IElementType DOT = new CoffeeScriptElementType("DOT");
 }

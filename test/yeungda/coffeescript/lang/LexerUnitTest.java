@@ -139,6 +139,19 @@ public class LexerUnitTest {
         assertThat(lexing("__hasProp"), tokenisesTo(Tokens.RESERVED_WORD));
     }
 
+    @Test
+    public void shouldLexSeparators() {
+            assertThat(lexing("("), tokenisesTo(Tokens.PARENTHESIS));
+            assertThat(lexing(")"), tokenisesTo(Tokens.PARENTHESIS));
+            assertThat(lexing("{"), tokenisesTo(Tokens.BRACES));
+            assertThat(lexing("}"), tokenisesTo(Tokens.BRACES));
+            assertThat(lexing("["), tokenisesTo(Tokens.BRACKETS));
+            assertThat(lexing("]"), tokenisesTo(Tokens.BRACKETS));
+            assertThat(lexing(";"), tokenisesTo(Tokens.SEMI_COLON));
+            assertThat(lexing(","), tokenisesTo(Tokens.COMMA));
+            assertThat(lexing("."), tokenisesTo(Tokens.DOT));
+    }
+
     private Matcher<Collection> tokenisesTo(IElementType... identifier) {
         return equalTo((Collection) Arrays.asList(identifier));
     }
