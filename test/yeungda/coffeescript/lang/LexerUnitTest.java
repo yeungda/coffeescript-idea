@@ -16,9 +16,12 @@ import static yeungda.coffeescript.lang.LexerUnitTest.AnyString.NOUN;
 import static yeungda.coffeescript.lang.LexerUnitTest.AnyString.VERB;
 import static yeungda.coffeescript.lang.Tokens.*;
 
-//TODO: regexes
+//TODO: square bracket corrections
+//TODO: splats
+//TODO: bind function operator
+//TODO: javascript
+//TODO: half assignment
 //TODO: @ accessor highlighting
-
 //TODO: extra string literals
 //TODO: variable highlighting
 //TODO: string interpolation?
