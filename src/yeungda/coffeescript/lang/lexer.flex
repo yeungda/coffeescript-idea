@@ -81,6 +81,7 @@ REGULAR_EXPRESSION_LITERAL = \\[^\$]
     "=="                        |
     "<="                        |
     ">="                        |
+    "..."                       |
     "?"                         { yybegin(NOUN); return Tokens.OPERATOR; }
     ")"                         { return Tokens.PARENTHESIS; }
     "="                         |
@@ -90,7 +91,6 @@ REGULAR_EXPRESSION_LITERAL = \\[^\$]
     "then"                      |
     "in"                        |
     "unless"                    { yybegin(NOUN); return Tokens.KEYWORD; }
-    "]"                         { yybegin(VERB); return Tokens.BRACKET; }
 }
 <YYINITIAL, NOUN, VERB> {
     "@"                         { yybegin(NOUN); return Tokens.ACCESSOR; }
@@ -107,6 +107,7 @@ REGULAR_EXPRESSION_LITERAL = \\[^\$]
     {LINE_TERMINATOR}           { yybegin(YYINITIAL); return Tokens.LINE_TERMINATOR; }
     {COMMENT}                   { return Tokens.COMMENT; }
     "->"                        { yybegin(NOUN); return Tokens.FUNCTION; }
+    "]"                         { yybegin(VERB); return Tokens.BRACKET; }
 }
 
 <YYINITIAL, NOUN> {
@@ -141,8 +142,6 @@ REGULAR_EXPRESSION_LITERAL = \\[^\$]
     {NUMBER}                    { yybegin(VERB); return Tokens.NUMBER; }
     "{"                         { yybegin(NOUN); return Tokens.BRACE; }
     "}"                         { yybegin(VERB); return Tokens.BRACE; }
-
-
 }
 
 <NOUN> {

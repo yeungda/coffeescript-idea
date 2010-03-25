@@ -20,6 +20,7 @@ import static yeungda.coffeescript.lang.Tokens.*;
 //TODO: splats
 //TODO: bind function operator
 //TODO: javascript
+
 //TODO: half assignment
 //TODO: @ accessor highlighting
 //TODO: extra string literals
@@ -131,6 +132,16 @@ public class LexerUnitTest {
         assertThat(lexing(NOUN + VERB + lastLineElement), tokenisedTo(AnyToken.NOUN, AnyToken.VERB, token));
     }
 
+    static void assertNounalPreverb(String nounalPreverb, IElementType token) {
+        assertPreverb(nounalPreverb, token);
+        assertInitialNoun(nounalPreverb, token);
+    }
+
+    static void assertPreverb(String preverb, IElementType token) {
+        assertThat(lexing(NOUN + preverb), tokenisedTo(AnyToken.NOUN, token));
+        assertThat(lexing(NOUN + preverb + VERB), tokenisedTo(AnyToken.NOUN, token, AnyToken.VERB));
+    }
+
     public static class VerbsUnitTest {
 
         @Test
@@ -152,6 +163,7 @@ public class LexerUnitTest {
             assertVerb("<=", OPERATOR);
             assertVerb("!=", OPERATOR);
             assertVerb("++", OPERATOR);
+            assertVerb("...", OPERATOR);
         }
 
         @Test
@@ -160,16 +172,6 @@ public class LexerUnitTest {
             assertThat(lexing("foo-="), tokenisedTo(IDENTIFIER, OPERATOR, ASSIGNMENT));
             assertThat(lexing("foo="), tokenisedTo(IDENTIFIER, ASSIGNMENT));
             assertThat(lexing("foo:"), tokenisedTo(IDENTIFIER, ASSIGNMENT));
-        }
-
-        @Test
-        public void brackets() {
-            assertPreverb("]", BRACKET);
-        }
-
-        private void assertPreverb(String preverb, IElementType token) {
-            assertThat(lexing(NOUN + preverb), tokenisedTo(AnyToken.NOUN, token));
-            assertThat(lexing(NOUN + preverb + VERB), tokenisedTo(AnyToken.NOUN, token, AnyToken.VERB));
         }
 
         @Test
@@ -308,6 +310,7 @@ public class LexerUnitTest {
 
         @Test
         public void brackets() {
+            assertNounalPreverb("]", BRACKET);
             assertVerbalPreposition("[", BRACKET);
         }
 

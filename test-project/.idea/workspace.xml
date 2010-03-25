@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager" verified="true">
     <list default="true" readonly="true" id="38457297-fe24-49d1-9f47-bddb30343484" name="Default" comment="" />
-    <ignored path=".idea/workspace.xml" />
     <ignored path="test-project.iws" />
+    <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +63,7 @@
       <file leaf-file-name="all.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/all.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="111" column="11" selection-start="4432" selection-end="4432" vertical-scroll-proportion="-11.647815">
+            <state line="483" column="14" selection-start="18217" selection-end="18217" vertical-scroll-proportion="-0.46272492">
               <folding />
             </state>
           </provider>
@@ -93,10 +93,10 @@
         <option value="$PROJECT_DIR$/numbers.coffee" />
         <option value="$PROJECT_DIR$/comment.coffee" />
         <option value="$PROJECT_DIR$/strings.coffee" />
-        <option value="$PROJECT_DIR$/all.coffee" />
         <option value="$PROJECT_DIR$/operators.coffee" />
         <option value="$PROJECT_DIR$/divide.coffee" />
         <option value="$PROJECT_DIR$/separators.coffee" />
+        <option value="$PROJECT_DIR$/all.coffee" />
       </list>
     </option>
   </component>
@@ -136,7 +136,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -158,6 +157,7 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -380,7 +380,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/all.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="11" selection-start="4432" selection-end="4432" vertical-scroll-proportion="-11.647815">
+        <state line="483" column="14" selection-start="18217" selection-end="18217" vertical-scroll-proportion="-0.46272492">
           <folding />
         </state>
       </provider>
