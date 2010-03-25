@@ -1,15 +1,13 @@
 package yeungda.coffeescript.lang;
 
 import com.intellij.extapi.psi.PsiFileBase;
-import com.intellij.lang.*;
-import com.intellij.lang.Language;
-import com.intellij.lexer.*;
-import com.intellij.openapi.fileTypes.*;
+import com.intellij.lang.ASTNode;
+import com.intellij.lang.PsiBuilder;
+import com.intellij.lang.PsiParser;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiPlainTextFile;
 import com.intellij.psi.impl.source.tree.PlainTextFileElement;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
@@ -39,17 +37,17 @@ public class ParserDefinition implements com.intellij.lang.ParserDefinition {
 
     @NotNull
     public TokenSet getWhitespaceTokens() {
-        return TokenSet.EMPTY;
+        return TokenSet.create(Tokens.WHITESPACE);
     }
 
     @NotNull
     public TokenSet getCommentTokens() {
-        return TokenSet.EMPTY;
+        return TokenSet.create(Tokens.COMMENT);
     }
 
     @NotNull
     public TokenSet getStringLiteralElements() {
-        return TokenSet.EMPTY;
+        return TokenSet.create(Tokens.STRING_LITERAL);
     }
 
     @NotNull

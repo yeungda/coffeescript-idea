@@ -14,14 +14,12 @@ import com.intellij.psi.tree.IElementType;
 %eof{  return;
 %eof}
 
-WHITE_SPACE_CHAR=[\ \n\r\t]
-
-WS={WHITE_SPACE_CHAR}+
+WS=[\ \t]+
 
 IDENTIFIER    = [a-zA-Z\$_]([a-zA-Z_0-9$])*
 NUMBER        = (0(x|X)[0-9a-fA-F]+)|([0-9]+(\.[0-9]+)?(e[+\-]?[0-9]+)?)
 INTERPOLATION = \$([a-zA-Z_@]\w*(\.\w+)*)
-OPERATOR      = ([+\*&|\/\-%=<>:!?]+)
+OPERATOR      = ([+\*&|\/\-%=<>:!?][=+])
 WHITESPACE    = ([ \t]+)
 COMMENT       = (((\n?[ \t]*)?#[^\n]*)+)
 CODE          = ((-|=)>)
@@ -36,9 +34,9 @@ LINE_TERMINATOR = [\n\r]
 REGEX_START        = \/[^\/ ]
 REGEX_INTERPOLATION= ([^\\]\$[a-zA-Z_@]|[^\\]\$\{.*[^\\]\})
 REGEX_FLAGS        = [imgy]{0,4}
-REGEX_ESCAPE       = \\[^\$]
-
-%state DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING
+REGULAR_EXPRESSION = [^/\\\r\n]+
+REGULAR_EXPRESSION_LITERAL = \\[^\$]
+%state NOUN, DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING, REGULAR_EXPRESSION, VERB
 
 %%
 
@@ -98,8 +96,6 @@ REGEX_ESCAPE       = \\[^\$]
     "native"    |
     "__extends" |
     "__hasProp"                 { return Tokens.RESERVED_WORD; }
-    "("                         |
-    ")"                         { return Tokens.PARENTHESIS; }
     "{"                         |
     "}"                         { return Tokens.BRACE; }
     "["                         |
@@ -108,23 +104,67 @@ REGEX_ESCAPE       = \\[^\$]
     ","                         { return Tokens.COMMA; }
     "."                         { return Tokens.DOT; }
     "@"                         { return Tokens.ACCESSOR; }
-    {IDENTIFIER}                { return Tokens.IDENTIFIER; }
-    {WS}                        { return Tokens.WHITESPACE; }
-    {NUMBER}                    { return Tokens.NUMBER; }
-    {OPERATOR}                  { return Tokens.OPERATOR; }
     {COMMENT}                   { return Tokens.COMMENT; }
     \"                          { yybegin(DOUBLE_QUOTE_STRING); return Tokens.STRING; }
     \'                          { yybegin(SINGLE_QUOTE_STRING); return Tokens.STRING; }
+    {LINE_TERMINATOR}           { return Tokens.LINE_TERMINATOR; }
+}
+
+<VERB> {
+    "+"                        |
+    "++"                       |
+    "*"                        |
+    "&"                        |
+    "|"                        |
+    "/"                        |
+    "-"                        |
+    "--"                       |
+    "%"                        |
+    "<"                        |
+    ">"                        |
+    "::"                       |
+    "!"                        |
+    "!="                       |
+    "=="                       |
+    "<="                       |
+    ">="                       |
+    "?"                        { yybegin(NOUN); return Tokens.OPERATOR; }
+    ")"                        { return Tokens.PARENTHESIS; }
+    "="                        |
+    ":"                        { yybegin(NOUN); return Tokens.ASSIGNMENT; }
+}
+<YYINITIAL, NOUN, VERB> {
+    "("                        { yybegin(NOUN); return Tokens.PARENTHESIS; }
+    {WS}                       { return Tokens.WHITESPACE; }
+    {LINE_TERMINATOR}          { yybegin(YYINITIAL); return Tokens.LINE_TERMINATOR; }
+}
+
+<NOUN> {
+   <YYINITIAL> {IDENTIFIER}    { yybegin(VERB); return Tokens.IDENTIFIER; }
+   <YYINITIAL> {NUMBER}        { yybegin(VERB); return Tokens.NUMBER; }
+   ")"                         { yybegin(VERB); return Tokens.PARENTHESIS; }
+   "="                         { return Tokens.ASSIGNMENT; }
+   "/"                         { yybegin(REGULAR_EXPRESSION); return Tokens.REGULAR_EXPRESSION; }
+   \"                          { yybegin(DOUBLE_QUOTE_STRING); return Tokens.STRING; }
+   \'                          { yybegin(SINGLE_QUOTE_STRING); return Tokens.STRING; }
+}
+
+<REGULAR_EXPRESSION> {
+    {REGULAR_EXPRESSION}       { return Tokens.REGULAR_EXPRESSION; }
+    "\\/"                      { return Tokens.REGULAR_EXPRESSION_LITERAL; }
+    {REGULAR_EXPRESSION_LITERAL} { return Tokens.REGULAR_EXPRESSION_LITERAL; }
+    "/"                        { yybegin(VERB); return Tokens.REGULAR_EXPRESSION; }
+    {LINE_TERMINATOR}          { yybegin(YYINITIAL); return Tokens.BAD_CHARACTER; }
 }
 
 <DOUBLE_QUOTE_STRING> {
-    \"                             { yybegin(YYINITIAL); return Tokens.STRING; }
+    \"                             { yybegin(VERB); return Tokens.STRING; }
     "\\\""                         { return Tokens.STRING_LITERAL; }
     {CHARACTERS_IN_DOUBLE_QUOTES}  { return Tokens.STRING; }
 }
 
 <SINGLE_QUOTE_STRING> {
-    \'                             { yybegin(YYINITIAL); return Tokens.STRING; }
+    \'                             { yybegin(VERB); return Tokens.STRING; }
     "\\'"                          { return Tokens.STRING_LITERAL; }
     {CHARACTERS_IN_SINGLE_QUOTES}  { return Tokens.STRING; }
 }

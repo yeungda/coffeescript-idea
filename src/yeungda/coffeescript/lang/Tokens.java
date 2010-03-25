@@ -24,4 +24,7 @@ public class Tokens {
     public static final IElementType DOT = new CoffeeScriptElementType("DOT");
     public static final IElementType ACCESSOR = new CoffeeScriptElementType("ACCESSOR");
     public static final IElementType BOOLEAN = new CoffeeScriptElementType("BOOLEAN");
+    public static final IElementType REGULAR_EXPRESSION = new CoffeeScriptElementType("REGULAR_EXPRESSION");
+    public static final IElementType REGULAR_EXPRESSION_LITERAL = new CoffeeScriptElementType("REGULAR_EXPRESSION_LITERAL");
+    public static final IElementType JAVASCRIPT = new CoffeeScriptElementType("JAVASCRIPT");
 }

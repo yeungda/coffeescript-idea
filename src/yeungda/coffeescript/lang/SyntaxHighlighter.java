@@ -82,6 +82,9 @@ public class SyntaxHighlighter extends SyntaxHighlighterBase {
         TOKENS_TO_STYLES.put(Tokens.PARENTHESIS, SyntaxHighlighterColors.PARENTHS);
         TOKENS_TO_STYLES.put(Tokens.ACCESSOR, SyntaxHighlighterColors.KEYWORD);
         TOKENS_TO_STYLES.put(Tokens.BOOLEAN, SyntaxHighlighterColors.NUMBER);
+        TOKENS_TO_STYLES.put(Tokens.REGULAR_EXPRESSION, SyntaxHighlighterColors.STRING);
+        TOKENS_TO_STYLES.put(Tokens.REGULAR_EXPRESSION_LITERAL, SyntaxHighlighterColors.STRING);
+        TOKENS_TO_STYLES.put(Tokens.JAVASCRIPT, SyntaxHighlighterColors.STRING);
     }
 
     @NotNull

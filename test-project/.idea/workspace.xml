@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager" verified="true">
     <list default="true" readonly="true" id="38457297-fe24-49d1-9f47-bddb30343484" name="Default" comment="" />
-    <ignored path=".idea/workspace.xml" />
     <ignored path="test-project.iws" />
+    <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,35 +59,7 @@
   </component>
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="keywords.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/keywords.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="8" selection-start="77" selection-end="77" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="boolean.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/boolean.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="all.coffee" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/all.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="97" column="22" selection-start="3826" selection-end="3826" vertical-scroll-proportion="-12.604114">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -104,6 +76,8 @@
         <option value="$PROJECT_DIR$/strings.coffee" />
         <option value="$PROJECT_DIR$/separators.coffee" />
         <option value="$PROJECT_DIR$/all.coffee" />
+        <option value="$PROJECT_DIR$/operators.coffee" />
+        <option value="$PROJECT_DIR$/divide.coffee" />
       </list>
     </option>
   </component>
@@ -142,8 +116,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Favorites" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -164,6 +136,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Favorites" />
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -330,34 +304,19 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/comment.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/identifier.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/numbers.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/strings.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="1" selection-start="136" selection-end="136" vertical-scroll-proportion="0.47727272" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/operators.coffee">
+    <entry file="file://$PROJECT_DIR$/variable_assignment.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/variable_assignment.coffee">
+    <entry file="file://$PROJECT_DIR$/operators.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="11" column="17" selection-start="59" selection-end="59" vertical-scroll-proportion="0.34285715" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/reserved-words.coffee">
@@ -370,23 +329,41 @@
         <state line="4" column="1" selection-start="9" selection-end="9" vertical-scroll-proportion="0.11881188" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/keywords.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="8" selection-start="77" selection-end="77" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/boolean.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/keywords.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="8" selection-start="77" selection-end="77" vertical-scroll-proportion="0.38613862" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/numbers.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/comment.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/identifier.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/all.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="97" column="22" selection-start="3826" selection-end="3826" vertical-scroll-proportion="-12.604114">
+        <state line="11" column="32" selection-start="491" selection-end="491" vertical-scroll-proportion="-5.336761">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/divide.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="6" selection-start="50" selection-end="50" vertical-scroll-proportion="0.11881188">
           <folding />
         </state>
       </provider>

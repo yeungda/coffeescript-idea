@@ -32,7 +32,7 @@ class FlexAdapterWithCommunicationSkills extends FlexAdapter {
         } catch (Error error) {
             throw new Error("Failed for input: " + toString(), error);
         }
-        System.out.println("ADVANCE -> state was [" + getState() + "] and tokenText was [" + getTokenText() + "]");
+        System.out.print("{[" + getState() + "][" + getTokenText() + "]},");
     }
 
     @Override

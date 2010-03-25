@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <script src="jquery-1.3.2.min.js" type="text/javascript"></script>
+    <script src="coffee-script.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            $('#coffee').keyup(function() {
+        try {
+                $('#javascript').val(CoffeeScript.compile($(this).val()));
+                $('#error').text('');
+        }
+        catch(error) {
+            $('#error').text(error.toString());
+            $('#javascript').val('');
+
+        }
+            });
+        $('#run').click(function (){
+            eval($('#javascript').val());
+        });
+        });
+
+    </script>
+</head>
+<body style="font-size: 60pt;">
+<p>
+<textarea id="coffee" name="coffee" style="height: 250px; font-size: 18pt;" tabindex="1">hello
+</textarea>
+
+<textarea id="javascript" name="javascript" style="height: 250px; font-size: 18pt;" tabindex="99">
+    world
+</textarea>
+
+<input type="button" id="run" value="run" tabindex="2"/>
+</p>
+<p id="error">
+
+</p>
+</body>
+</html>
