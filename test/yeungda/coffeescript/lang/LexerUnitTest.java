@@ -12,6 +12,8 @@ import java.util.Collection;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static yeungda.coffeescript.lang.LexerUnitTest.AnyString.NOUN;
+import static yeungda.coffeescript.lang.LexerUnitTest.AnyString.VERB;
 import static yeungda.coffeescript.lang.Tokens.*;
 
 //TODO: regexes
@@ -58,44 +60,6 @@ public class LexerUnitTest {
     }
 
     @Test
-    public void keywords() {
-        // javascript keywords
-        assertThat(lexing("if"), tokenisedTo(KEYWORD));
-        assertThat(lexing("else"), tokenisedTo(KEYWORD));
-        assertThat(lexing("new"), tokenisedTo(KEYWORD));
-        assertThat(lexing("return"), tokenisedTo(KEYWORD));
-        assertThat(lexing("try"), tokenisedTo(KEYWORD));
-        assertThat(lexing("catch"), tokenisedTo(KEYWORD));
-        assertThat(lexing("finally"), tokenisedTo(KEYWORD));
-        assertThat(lexing("throw"), tokenisedTo(KEYWORD));
-        assertThat(lexing("break"), tokenisedTo(KEYWORD));
-        assertThat(lexing("continue"), tokenisedTo(KEYWORD));
-        assertThat(lexing("for"), tokenisedTo(KEYWORD));
-        assertThat(lexing("in"), tokenisedTo(KEYWORD));
-        assertThat(lexing("while"), tokenisedTo(KEYWORD));
-        assertThat(lexing("delete"), tokenisedTo(KEYWORD));
-        assertThat(lexing("instanceof"), tokenisedTo(KEYWORD));
-        assertThat(lexing("typeof"), tokenisedTo(KEYWORD));
-        assertThat(lexing("switch"), tokenisedTo(KEYWORD));
-        assertThat(lexing("super"), tokenisedTo(KEYWORD));
-        assertThat(lexing("extends"), tokenisedTo(KEYWORD));
-        assertThat(lexing("class"), tokenisedTo(KEYWORD));
-        // coffee aliases
-        assertThat(lexing("and"), tokenisedTo(KEYWORD));
-        assertThat(lexing("or"), tokenisedTo(KEYWORD));
-        assertThat(lexing("is"), tokenisedTo(KEYWORD));
-        assertThat(lexing("isnt"), tokenisedTo(KEYWORD));
-        assertThat(lexing("not"), tokenisedTo(KEYWORD));
-        // coffee keywords
-        assertThat(lexing("then"), tokenisedTo(KEYWORD));
-        assertThat(lexing("unless"), tokenisedTo(KEYWORD));
-        assertThat(lexing("of"), tokenisedTo(KEYWORD));
-        assertThat(lexing("by"), tokenisedTo(KEYWORD));
-        assertThat(lexing("where"), tokenisedTo(KEYWORD));
-        assertThat(lexing("when"), tokenisedTo(KEYWORD));
-    }
-
-    @Test
     public void reservedWords() {
         assertThat(lexing("case"), tokenisedTo(RESERVED_WORD));
         assertThat(lexing("default"), tokenisedTo(RESERVED_WORD));
@@ -117,16 +81,7 @@ public class LexerUnitTest {
 
     @Test
     public void separators() {
-        assertThat(lexing("("), tokenisedTo(PARENTHESIS));
-        assertThat(lexing("()"), tokenisedTo(PARENTHESIS, PARENTHESIS));
-        assertThat(lexing("(x)"), tokenisedTo(PARENTHESIS, IDENTIFIER, PARENTHESIS));
-        assertThat(lexing("{"), tokenisedTo(BRACE));
-        assertThat(lexing("}"), tokenisedTo(BRACE));
-        assertThat(lexing("["), tokenisedTo(BRACKET));
-        assertThat(lexing("]"), tokenisedTo(BRACKET));
         assertThat(lexing(";"), tokenisedTo(SEMI_COLON));
-        assertThat(lexing(","), tokenisedTo(COMMA));
-        assertThat(lexing("."), tokenisedTo(DOT));
     }
 
     @Test
@@ -135,51 +90,65 @@ public class LexerUnitTest {
         assertThat(lexing("\t"), tokenisedTo(WHITESPACE));
     }
 
-    @Test
-    public void booleans() {
-        assertThat(lexing("yes"), tokenisedTo(BOOLEAN));
-        assertThat(lexing("no"), tokenisedTo(BOOLEAN));
-        assertThat(lexing("on"), tokenisedTo(BOOLEAN));
-        assertThat(lexing("off"), tokenisedTo(BOOLEAN));
-        assertThat(lexing("true"), tokenisedTo(BOOLEAN));
-        assertThat(lexing("false"), tokenisedTo(BOOLEAN));
+    static void assertVerb(String verb, IElementType token) {
+        assertThat(lexing(NOUN + verb), tokenisedTo(AnyToken.NOUN, token));
+        assertThat(lexing(NOUN + verb + NOUN), tokenisedTo(AnyToken.NOUN, token, AnyToken.NOUN));
     }
 
-    @Test
-    public void accessors() {
-        assertThat(lexing("@"), tokenisedTo(ACCESSOR));
+    static void assertInitialNoun(String noun, IElementType token) {
+        assertThat(lexing(noun), tokenisedTo(token));
+        assertThat(lexing("(" + noun), tokenisedTo(PARENTHESIS, token));
+        assertThat(lexing(noun + VERB), tokenisedTo(token, AnyToken.VERB));
     }
 
-    @Test
-    public void comment() {
-        assertThat(lexing("#"), tokenisedTo(COMMENT));
-        assertThat(lexing("# "), tokenisedTo(COMMENT));
-        assertThat(lexing(" #"), tokenisedTo(COMMENT));
-        assertThat(lexing("#x"), tokenisedTo(COMMENT));
+    static void assertPreposition(String preposition, IElementType prepositionToken) {
+        assertThat("preposition [" + preposition + "]", lexing(preposition), tokenisedTo(prepositionToken));
+        assertThat("preposition [" + preposition + "]", lexing("(" + preposition), tokenisedTo(PARENTHESIS, prepositionToken));
+        assertThat("preposition [" + preposition + "]", lexing(preposition + " " + NOUN), tokenisedTo(prepositionToken, WHITESPACE, AnyToken.NOUN));
+    }
+
+    static void assertVerbalPreposition(String verbalPreposition, IElementType token) {
+        assertVerb(verbalPreposition, token);
+        assertPreposition(verbalPreposition, token);
+    }
+
+    static void assertTextualVerbalPreposition(String textualVerbalPreposition, IElementType token) {
+        assertTextualVerb(textualVerbalPreposition, token);
+        assertPreposition(textualVerbalPreposition, token);
+    }
+
+    private static void assertTextualVerb(String textualVerbalPreposition, IElementType token) {
+        assertThat(lexing(NOUN + " " + textualVerbalPreposition), tokenisedTo(AnyToken.NOUN, WHITESPACE, token));
+        assertThat(lexing(NOUN + " " + textualVerbalPreposition + NOUN), tokenisedTo(AnyToken.NOUN, WHITESPACE, token, AnyToken.NOUN));
+    }
+
+    static void assertLastLineElement(String lastLineElement, IElementType token) {
+        assertThat(lexing(lastLineElement), tokenisedTo(token));
+        assertThat(lexing(NOUN + lastLineElement), tokenisedTo(AnyToken.NOUN, token));
+        assertThat(lexing(NOUN + VERB + lastLineElement), tokenisedTo(AnyToken.NOUN, AnyToken.VERB, token));
     }
 
     public static class VerbsUnitTest {
 
         @Test
         public void operators() {
-            assertThat(lexing("foo+"), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing("foo*"), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing("foo&"), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing("foo|"), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing("foo/"), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing("foo-"), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing("foo%"), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing("foo<"), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing("foo>"), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing("foo::"), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing("foo!"), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing("foo?"), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing("foo=="), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing("foo>="), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing("foo<="), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing("foo!="), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing("foo++"), tokenisedTo(IDENTIFIER, OPERATOR));
-            assertThat(lexing(AnyString.NOUN + AnyString.OPERATOR + AnyString.NOUN), tokenisedTo(AnyToken.NOUN, OPERATOR, AnyToken.NOUN));
+            assertVerb("+", OPERATOR);
+            assertVerb("*", OPERATOR);
+            assertVerb("&", OPERATOR);
+            assertVerb("|", OPERATOR);
+            assertVerb("/", OPERATOR);
+            assertVerb("-", OPERATOR);
+            assertVerb("%", OPERATOR);
+            assertVerb("<", OPERATOR);
+            assertVerb(">", OPERATOR);
+            assertVerb("::", OPERATOR);
+            assertVerb("!", OPERATOR);
+            assertVerb("?", OPERATOR);
+            assertVerb("==", OPERATOR);
+            assertVerb(">=", OPERATOR);
+            assertVerb("<=", OPERATOR);
+            assertVerb("!=", OPERATOR);
+            assertVerb("++", OPERATOR);
         }
 
         @Test
@@ -191,14 +160,27 @@ public class LexerUnitTest {
         }
 
         @Test
+        public void brackets() {
+            assertPreverb("]", BRACKET);
+        }
+
+        private void assertPreverb(String preverb, IElementType token) {
+            assertThat(lexing(NOUN + preverb), tokenisedTo(AnyToken.NOUN, token));
+            assertThat(lexing(NOUN + preverb + VERB), tokenisedTo(AnyToken.NOUN, token, AnyToken.VERB));
+        }
+
+        @Test
         public void identifiers() {
             assertThat(lexing("x+"), tokenisedTo(IDENTIFIER, OPERATOR));
             assertThat(lexing("(x+"), tokenisedTo(PARENTHESIS, IDENTIFIER, OPERATOR));
         }
 
         @Test
-        public void should() {
-            assertThat(lexing("foo: 1 / 1\nfoo: foo / 1"), tokenisedTo(IDENTIFIER));
+        public void separators() {
+            assertThat(lexing(NOUN + "."), tokenisedTo(AnyToken.NOUN, DOT));
+            assertThat(lexing(NOUN + ","), tokenisedTo(AnyToken.NOUN, COMMA));
+            assertThat(lexing(NOUN + "." + NOUN), tokenisedTo(AnyToken.NOUN, DOT, AnyToken.NOUN));
+            assertThat(lexing(NOUN + "," + NOUN), tokenisedTo(AnyToken.NOUN, COMMA, AnyToken.NOUN));
         }
 
     }
@@ -234,7 +216,7 @@ public class LexerUnitTest {
 
         @Test
         public void identifiers() {
-            assertThat(lexing("x" + AnyString.VERB), tokenisedTo(IDENTIFIER, AnyToken.VERB));
+            assertThat(lexing("x" + VERB), tokenisedTo(IDENTIFIER, AnyToken.VERB));
             assertThat(lexing("\nx"), tokenisedTo(LINE_TERMINATOR, IDENTIFIER));
             assertThat(lexing("x:y"), tokenisedTo(IDENTIFIER, ASSIGNMENT, IDENTIFIER));
         }
@@ -244,14 +226,59 @@ public class LexerUnitTest {
     public static class InitialNounUnitTest {
 
         @Test
+        public void objectLiteral() {
+            assertPreposition("{", BRACE);
+            assertInitialNoun("}", BRACE);
+        }
+
+        @Test
         public void numbers() {
-            assertThat(lexing("1"), tokenisedTo(NUMBER));
-            assertThat(lexing("0x1234ff"), tokenisedTo(NUMBER));
-            assertThat(lexing("1.2e+1"), tokenisedTo(NUMBER));
-            assertThat(lexing("1.1e-1"), tokenisedTo(NUMBER));
-            assertThat(lexing("1.1e1"), tokenisedTo(NUMBER));
-            assertThat(lexing("(1"), tokenisedTo(PARENTHESIS, NUMBER));
-            assertThat(lexing("1" + AnyString.VERB), tokenisedTo(NUMBER, AnyToken.VERB));
+            assertInitialNoun("1", NUMBER);
+            assertInitialNoun("0x1234ff", NUMBER);
+            assertInitialNoun("1.2e+1", NUMBER);
+            assertInitialNoun("1.1e-1", NUMBER);
+            assertInitialNoun("1.1e1", NUMBER);
+        }
+
+        @Test
+        public void booleans() {
+            assertInitialNoun("yes", BOOLEAN);
+            assertInitialNoun("no", BOOLEAN);
+            assertInitialNoun("on", BOOLEAN);
+            assertInitialNoun("off", BOOLEAN);
+            assertInitialNoun("true", BOOLEAN);
+            assertInitialNoun("false", BOOLEAN);
+        }
+
+        @Test
+        public void keywords() {
+            // javascript keywords
+            assertPreposition("else", KEYWORD);
+            assertPreposition("new", KEYWORD);
+            assertPreposition("return", KEYWORD);
+            assertPreposition("try", KEYWORD);
+            assertPreposition("catch", KEYWORD);
+            assertPreposition("finally", KEYWORD);
+            assertPreposition("throw", KEYWORD);
+            assertPreposition("break", KEYWORD);
+            assertPreposition("continue", KEYWORD);
+            assertTextualVerbalPreposition("for", KEYWORD);
+            assertTextualVerb("in", KEYWORD);
+            assertPreposition("while", KEYWORD);
+            assertPreposition("delete", KEYWORD);
+            assertPreposition("instanceof", KEYWORD);
+            assertPreposition("typeof", KEYWORD);
+            assertPreposition("switch", KEYWORD);
+            assertPreposition("super", KEYWORD);
+            assertPreposition("extends", KEYWORD);
+            assertPreposition("class", KEYWORD);
+            // coffee keywords
+            assertTextualVerb("then", KEYWORD);
+            assertTextualVerb("unless", KEYWORD);
+            assertPreposition("of", KEYWORD);
+            assertPreposition("by", KEYWORD);
+            assertPreposition("where", KEYWORD);
+            assertPreposition("when", KEYWORD);
         }
 
     }
@@ -261,30 +288,59 @@ public class LexerUnitTest {
         @Test
         public void parenthesis() {
             assertThat(lexing("("), tokenisedTo(PARENTHESIS));
-            assertThat(lexing(AnyString.NOUN + "("), tokenisedTo(AnyToken.NOUN, PARENTHESIS));
-            assertThat(lexing(AnyString.NOUN + AnyString.VERB + "("), tokenisedTo(AnyToken.NOUN, AnyToken.VERB, PARENTHESIS));
-            assertThat(lexing("(" + AnyString.NOUN), tokenisedTo(PARENTHESIS, AnyToken.NOUN));
+            assertThat(lexing(NOUN + "("), tokenisedTo(AnyToken.NOUN, PARENTHESIS));
+            assertThat(lexing(NOUN + VERB + "("), tokenisedTo(AnyToken.NOUN, AnyToken.VERB, PARENTHESIS));
+            assertThat(lexing("(" + NOUN), tokenisedTo(PARENTHESIS, AnyToken.NOUN));
             assertThat(lexing("()"), tokenisedTo(PARENTHESIS, PARENTHESIS));
             assertThat(lexing("(\"\")"), tokenisedTo(PARENTHESIS, STRING, STRING, PARENTHESIS));
             assertThat(lexing("('')"), tokenisedTo(PARENTHESIS, STRING, STRING, PARENTHESIS));
             assertThat(lexing(")"), tokenisedTo(BAD_CHARACTER));
-            assertThat(lexing("()" + AnyString.VERB), tokenisedTo(PARENTHESIS, PARENTHESIS, AnyToken.VERB));
+            assertThat(lexing("()" + VERB), tokenisedTo(PARENTHESIS, PARENTHESIS, AnyToken.VERB));
+        }
+
+        @Test
+        public void accessors() {
+            assertVerbalPreposition("@", ACCESSOR);
+        }
+
+        @Test
+        public void brackets() {
+            assertVerbalPreposition("[", BRACKET);
+        }
+
+        @Test
+        public void keywords() {
+            assertTextualVerbalPreposition("if", KEYWORD);
+            assertTextualVerbalPreposition("and", KEYWORD);
+            assertTextualVerbalPreposition("or", KEYWORD);
+            assertTextualVerbalPreposition("is", KEYWORD);
+            assertTextualVerbalPreposition("isnt", KEYWORD);
+            assertTextualVerbalPreposition("not", KEYWORD);
+        }
+
+        @Test
+        public void functions() {
+            assertVerbalPreposition("->", FUNCTION);
         }
 
         @Test
         public void whitespace() {
-            assertThat(lexing(AnyString.NOUN + " "), tokenisedTo(AnyToken.NOUN, WHITESPACE));
+            assertThat(lexing(NOUN + " "), tokenisedTo(AnyToken.NOUN, WHITESPACE));
+        }
+
+        @Test
+        public void comment() {
+            assertLastLineElement("#", COMMENT);
+            assertLastLineElement("# ", COMMENT);
+            assertLastLineElement("#x", COMMENT);
         }
 
         @Test
         public void lineTerminators() {
-            assertThat(lexing("\r"), tokenisedTo(LINE_TERMINATOR));
-            assertThat(lexing("\n"), tokenisedTo(LINE_TERMINATOR));
-            assertThat(lexing(AnyString.NOUN + "\r"), tokenisedTo(AnyToken.NOUN, LINE_TERMINATOR));
-            assertThat(lexing(AnyString.NOUN + "\n"), tokenisedTo(AnyToken.NOUN, LINE_TERMINATOR));
-            assertThat(lexing(AnyString.NOUN + AnyString.VERB + "\r"), tokenisedTo(AnyToken.NOUN, AnyToken.VERB, LINE_TERMINATOR));
-            assertThat(lexing(AnyString.NOUN + AnyString.VERB + "\n"), tokenisedTo(AnyToken.NOUN, AnyToken.VERB, LINE_TERMINATOR));
+            assertLastLineElement("\r", LINE_TERMINATOR);
+            assertLastLineElement("\n", LINE_TERMINATOR);
         }
+
     }
 //
 //    @Test

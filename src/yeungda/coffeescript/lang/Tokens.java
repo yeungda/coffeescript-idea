@@ -17,14 +17,15 @@ public class Tokens {
     public static final IElementType KEYWORD = new CoffeeScriptElementType("KEYWORD");
     public static final IElementType RESERVED_WORD = TokenType.BAD_CHARACTER;
     public static final IElementType PARENTHESIS = new CoffeeScriptElementType("PARENTHESIS");
-    public static final IElementType BRACE = new CoffeeScriptElementType("BRACES");
-    public static final IElementType BRACKET = new CoffeeScriptElementType("BRACKETS");
+    public static final IElementType BRACE = new CoffeeScriptElementType("BRACE");
+    public static final IElementType BRACKET = new CoffeeScriptElementType("BRACKET");
     public static final IElementType SEMI_COLON = new CoffeeScriptElementType("SEMI_COLON");
-    public static final IElementType COMMA = new CoffeeScriptElementType("COLON");
+    public static final IElementType COMMA = new CoffeeScriptElementType("COMMA");
     public static final IElementType DOT = new CoffeeScriptElementType("DOT");
     public static final IElementType ACCESSOR = new CoffeeScriptElementType("ACCESSOR");
     public static final IElementType BOOLEAN = new CoffeeScriptElementType("BOOLEAN");
     public static final IElementType REGULAR_EXPRESSION = new CoffeeScriptElementType("REGULAR_EXPRESSION");
     public static final IElementType REGULAR_EXPRESSION_LITERAL = new CoffeeScriptElementType("REGULAR_EXPRESSION_LITERAL");
     public static final IElementType JAVASCRIPT = new CoffeeScriptElementType("JAVASCRIPT");
+    public static final IElementType FUNCTION = new CoffeeScriptElementType("FUNCTION");
 }

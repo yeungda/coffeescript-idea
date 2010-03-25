@@ -41,45 +41,6 @@ REGULAR_EXPRESSION_LITERAL = \\[^\$]
 %%
 
 <YYINITIAL> {
-    "if"        |
-    "else"      |
-    "new"       |
-    "return"    |
-    "try"       |
-    "catch"     |
-    "finally"   |
-    "throw"     |
-    "break"     |
-    "continue"  |
-    "for"       |
-    "in"        |
-    "while"     |
-    "delete"    |
-    "instanceof"|
-    "typeof"    |
-    "switch"    |
-    "super"     |
-    "extends"   |
-    "class"     |
-    "and"       |
-    "or"        |
-    "is"        |
-    "isnt"      |
-    "not"       |
-    "then"      |
-    "unless"    |
-    "of"        |
-    "by"        |
-    "where"     |
-    "when"                      { return Tokens.KEYWORD; }
-
-    "true"      |
-    "false"     |
-    "yes"       |
-    "no"        |
-    "on"        |
-    "off"                      { return Tokens.BOOLEAN; }
-
     "case"      |
     "default"   |
     "do"        |
@@ -96,57 +57,100 @@ REGULAR_EXPRESSION_LITERAL = \\[^\$]
     "native"    |
     "__extends" |
     "__hasProp"                 { return Tokens.RESERVED_WORD; }
-    "{"                         |
-    "}"                         { return Tokens.BRACE; }
-    "["                         |
-    "]"                         { return Tokens.BRACKET; }
     ";"                         { return Tokens.SEMI_COLON; }
-    ","                         { return Tokens.COMMA; }
-    "."                         { return Tokens.DOT; }
-    "@"                         { return Tokens.ACCESSOR; }
-    {COMMENT}                   { return Tokens.COMMENT; }
     \"                          { yybegin(DOUBLE_QUOTE_STRING); return Tokens.STRING; }
     \'                          { yybegin(SINGLE_QUOTE_STRING); return Tokens.STRING; }
     {LINE_TERMINATOR}           { return Tokens.LINE_TERMINATOR; }
 }
 
 <VERB> {
-    "+"                        |
-    "++"                       |
-    "*"                        |
-    "&"                        |
-    "|"                        |
-    "/"                        |
-    "-"                        |
-    "--"                       |
-    "%"                        |
-    "<"                        |
-    ">"                        |
-    "::"                       |
-    "!"                        |
-    "!="                       |
-    "=="                       |
-    "<="                       |
-    ">="                       |
-    "?"                        { yybegin(NOUN); return Tokens.OPERATOR; }
-    ")"                        { return Tokens.PARENTHESIS; }
-    "="                        |
-    ":"                        { yybegin(NOUN); return Tokens.ASSIGNMENT; }
+    "+"                         |
+    "++"                        |
+    "*"                         |
+    "&"                         |
+    "|"                         |
+    "/"                         |
+    "-"                         |
+    "--"                        |
+    "%"                         |
+    "<"                         |
+    ">"                         |
+    "::"                        |
+    "!"                         |
+    "!="                        |
+    "=="                        |
+    "<="                        |
+    ">="                        |
+    "?"                         { yybegin(NOUN); return Tokens.OPERATOR; }
+    ")"                         { return Tokens.PARENTHESIS; }
+    "="                         |
+    ":"                         { yybegin(NOUN); return Tokens.ASSIGNMENT; }
+    "."                         { yybegin(NOUN); return Tokens.DOT; }
+    ","                         { yybegin(NOUN); return Tokens.COMMA; }
+    "then"                      |
+    "in"                        |
+    "unless"                    { yybegin(NOUN); return Tokens.KEYWORD; }
+    "]"                         { yybegin(VERB); return Tokens.BRACKET; }
 }
 <YYINITIAL, NOUN, VERB> {
-    "("                        { yybegin(NOUN); return Tokens.PARENTHESIS; }
-    {WS}                       { return Tokens.WHITESPACE; }
-    {LINE_TERMINATOR}          { yybegin(YYINITIAL); return Tokens.LINE_TERMINATOR; }
+    "@"                         { yybegin(NOUN); return Tokens.ACCESSOR; }
+    "if"                        |
+    "and"                       |
+    "or"                        |
+    "is"                        |
+    "isnt"                      |
+    "not"                       { yybegin(NOUN); return Tokens.KEYWORD; }
+    "for"                       { yybegin(NOUN); return Tokens.KEYWORD; }
+    "("                         { yybegin(NOUN); return Tokens.PARENTHESIS; }
+    "["                         { yybegin(NOUN); return Tokens.BRACKET; }
+    {WS}                        { return Tokens.WHITESPACE; }
+    {LINE_TERMINATOR}           { yybegin(YYINITIAL); return Tokens.LINE_TERMINATOR; }
+    {COMMENT}                   { return Tokens.COMMENT; }
+    "->"                        { yybegin(NOUN); return Tokens.FUNCTION; }
+}
+
+<YYINITIAL, NOUN> {
+    "else"                      |
+    "new"                       |
+    "return"                    |
+    "try"                       |
+    "catch"                     |
+    "finally"                   |
+    "throw"                     |
+    "break"                     |
+    "continue"                  |
+    "while"                     |
+    "delete"                    |
+    "instanceof"                |
+    "typeof"                    |
+    "switch"                    |
+    "super"                     |
+    "extends"                   |
+    "class"                     |
+    "of"                        |
+    "by"                        |
+    "where"                     |
+    "when"                      { yybegin(NOUN); return Tokens.KEYWORD; }
+    "true"                      |
+    "false"                     |
+    "yes"                       |
+    "no"                        |
+    "on"                        |
+    "off"                       { yybegin(VERB); return Tokens.BOOLEAN; }
+    {IDENTIFIER}                { yybegin(VERB); return Tokens.IDENTIFIER; }
+    {NUMBER}                    { yybegin(VERB); return Tokens.NUMBER; }
+    "{"                         { yybegin(NOUN); return Tokens.BRACE; }
+    "}"                         { yybegin(VERB); return Tokens.BRACE; }
+
+
 }
 
 <NOUN> {
-   <YYINITIAL> {IDENTIFIER}    { yybegin(VERB); return Tokens.IDENTIFIER; }
-   <YYINITIAL> {NUMBER}        { yybegin(VERB); return Tokens.NUMBER; }
-   ")"                         { yybegin(VERB); return Tokens.PARENTHESIS; }
-   "="                         { return Tokens.ASSIGNMENT; }
-   "/"                         { yybegin(REGULAR_EXPRESSION); return Tokens.REGULAR_EXPRESSION; }
-   \"                          { yybegin(DOUBLE_QUOTE_STRING); return Tokens.STRING; }
-   \'                          { yybegin(SINGLE_QUOTE_STRING); return Tokens.STRING; }
+    ")"                         { yybegin(VERB); return Tokens.PARENTHESIS; }
+    "="                         { return Tokens.ASSIGNMENT; }
+    "/"                         { yybegin(REGULAR_EXPRESSION); return Tokens.REGULAR_EXPRESSION; }
+    \"                          { yybegin(DOUBLE_QUOTE_STRING); return Tokens.STRING; }
+    \'                          { yybegin(SINGLE_QUOTE_STRING); return Tokens.STRING; }
 }
 
 <REGULAR_EXPRESSION> {
