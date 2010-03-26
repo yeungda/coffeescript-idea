@@ -48,6 +48,15 @@ public class LexerUnitTest {
         assertThat(lexing("'\\n"), tokenisedTo(STRING, STRING_LITERAL));
         assertThat(lexing("\"\n"), tokenisedTo(STRING, LINE_TERMINATOR));
         assertThat(lexing("'\n"), tokenisedTo(STRING, LINE_TERMINATOR));
+        assertInitialNounOfTwoTokens("\"\"", STRING, STRING);
+        assertInitialNounOfTwoTokens("''", STRING, STRING);
+    }
+
+    static void assertInitialNounOfTwoTokens(String initialNoun, IElementType startToken, IElementType endToken) {
+        assertThat(lexing(initialNoun), tokenisedTo(startToken, endToken));
+        assertThat(lexing("(" + initialNoun), tokenisedTo(PARENTHESIS, startToken, endToken));
+        assertThat(lexing(initialNoun + VERB), tokenisedTo(startToken, endToken, AnyToken.VERB));
+        assertThat(lexing(IDENTIFIER + " " + initialNoun), tokenisedTo(IDENTIFIER, WHITESPACE, startToken, endToken));
     }
 
     @Test
@@ -103,6 +112,7 @@ public class LexerUnitTest {
         assertThat(lexing(noun), tokenisedTo(token));
         assertThat(lexing("(" + noun), tokenisedTo(PARENTHESIS, token));
         assertThat(lexing(noun + VERB), tokenisedTo(token, AnyToken.VERB));
+        assertThat(lexing(IDENTIFIER + " " + noun), tokenisedTo(IDENTIFIER, WHITESPACE, token));
     }
 
     static void assertPreposition(String preposition, IElementType prepositionToken) {
@@ -123,7 +133,12 @@ public class LexerUnitTest {
 
     private static void assertTextualVerb(String textualVerbalPreposition, IElementType token) {
         assertThat(lexing(NOUN + " " + textualVerbalPreposition), tokenisedTo(AnyToken.NOUN, WHITESPACE, token));
-        assertThat(lexing(NOUN + " " + textualVerbalPreposition + NOUN), tokenisedTo(AnyToken.NOUN, WHITESPACE, token, AnyToken.NOUN));
+        assertThat(lexing(NOUN + " " + textualVerbalPreposition + " " + NOUN), tokenisedTo(AnyToken.NOUN, WHITESPACE, token, WHITESPACE, AnyToken.NOUN));
+    }
+
+
+    @Test
+    public void should() {
     }
 
     static void assertLastLineElement(String lastLineElement, IElementType token) {
@@ -193,20 +208,6 @@ public class LexerUnitTest {
     public static class NounsUnitTest {
 
         @Test
-        public void regexes() {
-            assertThat(lexing("foo:/"), tokenisedTo(IDENTIFIER, ASSIGNMENT, REGULAR_EXPRESSION));
-            assertThat(lexing("foo=/"), tokenisedTo(IDENTIFIER, ASSIGNMENT, REGULAR_EXPRESSION));
-            assertThat(lexing("foo(/"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION));
-            assertThat(lexing("foo(/x"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION));
-            assertThat(lexing("foo(//"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION));
-            assertThat(lexing("foo(/\\//"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION_LITERAL, REGULAR_EXPRESSION));
-            assertThat(lexing("foo(/\\x/"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION_LITERAL, REGULAR_EXPRESSION));
-            assertThat(lexing("foo(/\\\\/"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION_LITERAL, REGULAR_EXPRESSION));
-            assertThat(lexing("foo(/\n"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, BAD_CHARACTER));
-            assertThat(lexing("foo(/\r"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, BAD_CHARACTER));
-        }
-
-        @Test
         public void strings() {
             assertThat(lexing("(\""), tokenisedTo(PARENTHESIS, STRING));
             assertThat(lexing("(\"\"+"), tokenisedTo(PARENTHESIS, STRING, STRING, OPERATOR));
@@ -256,9 +257,30 @@ public class LexerUnitTest {
         }
 
         @Test
+        public void regexes() {
+            assertThat(lexing("foo:/"), tokenisedTo(IDENTIFIER, ASSIGNMENT, REGULAR_EXPRESSION));
+            assertThat(lexing("foo=/"), tokenisedTo(IDENTIFIER, ASSIGNMENT, REGULAR_EXPRESSION));
+            assertThat(lexing("foo(/"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION));
+            assertThat(lexing("foo(/x"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION));
+            assertThat(lexing("foo(//"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION));
+            assertThat(lexing("foo(/\\//"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION_LITERAL, REGULAR_EXPRESSION));
+            assertThat(lexing("foo(/\\x/"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION_LITERAL, REGULAR_EXPRESSION));
+            assertThat(lexing("foo(/\\\\/"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION_LITERAL, REGULAR_EXPRESSION));
+            assertThat(lexing("foo(/\n"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, BAD_CHARACTER));
+            assertThat(lexing("foo(/\r"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, BAD_CHARACTER));
+            assertThat(lexing("foo(/\\$"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION_LITERAL));
+            assertThat(lexing("foo(//g"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION, REGULAR_EXPRESSION_FLAG));
+            assertThat(lexing("foo(//i"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION, REGULAR_EXPRESSION_FLAG));
+            assertThat(lexing("foo(//m"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION, REGULAR_EXPRESSION_FLAG));
+            assertThat(lexing("foo(//y"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION, REGULAR_EXPRESSION_FLAG));
+            assertThat(lexing("foo(//gimy+"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION, REGULAR_EXPRESSION_FLAG, OPERATOR));
+            assertThat(lexing("foo(//."), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION, DOT));
+        }
+
+        @Test
         public void keywords() {
             // javascript keywords
-            assertPreposition("else", KEYWORD);
+            assertTextualVerbalPreposition("else", KEYWORD);
             assertPreposition("new", KEYWORD);
             assertPreposition("return", KEYWORD);
             assertPreposition("try", KEYWORD);
@@ -267,7 +289,6 @@ public class LexerUnitTest {
             assertPreposition("throw", KEYWORD);
             assertPreposition("break", KEYWORD);
             assertPreposition("continue", KEYWORD);
-            assertTextualVerbalPreposition("for", KEYWORD);
             assertTextualVerb("in", KEYWORD);
             assertPreposition("while", KEYWORD);
             assertPreposition("delete", KEYWORD);
@@ -279,7 +300,6 @@ public class LexerUnitTest {
             assertPreposition("class", KEYWORD);
             // coffee keywords
             assertTextualVerb("then", KEYWORD);
-            assertTextualVerb("unless", KEYWORD);
             assertPreposition("of", KEYWORD);
             assertPreposition("by", KEYWORD);
             assertPreposition("where", KEYWORD);
@@ -299,8 +319,7 @@ public class LexerUnitTest {
             assertThat(lexing("()"), tokenisedTo(PARENTHESIS, PARENTHESIS));
             assertThat(lexing("(\"\")"), tokenisedTo(PARENTHESIS, STRING, STRING, PARENTHESIS));
             assertThat(lexing("('')"), tokenisedTo(PARENTHESIS, STRING, STRING, PARENTHESIS));
-            assertThat(lexing(")"), tokenisedTo(BAD_CHARACTER));
-            assertThat(lexing("()" + VERB), tokenisedTo(PARENTHESIS, PARENTHESIS, AnyToken.VERB));
+            assertNounalPreverb(")", PARENTHESIS);
         }
 
         @Test
@@ -322,6 +341,8 @@ public class LexerUnitTest {
             assertTextualVerbalPreposition("is", KEYWORD);
             assertTextualVerbalPreposition("isnt", KEYWORD);
             assertTextualVerbalPreposition("not", KEYWORD);
+            assertTextualVerbalPreposition("unless", KEYWORD);
+            assertTextualVerbalPreposition("for", KEYWORD);
         }
 
         @Test

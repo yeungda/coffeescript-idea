@@ -385,7 +385,7 @@ exports.Lexer: class Lexer
           @token tag, "\"$escaped\""
         else
           @token tag, value
-        @token '+', '+' if i < tokens.length - 1
+        @token , '+' if i < tokens.length - 1
       tokens
 
   # Helpers

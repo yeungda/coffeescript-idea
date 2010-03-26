@@ -35,8 +35,10 @@ REGEX_START        = \/[^\/ ]
 REGEX_INTERPOLATION= ([^\\]\$[a-zA-Z_@]|[^\\]\$\{.*[^\\]\})
 REGEX_FLAGS        = [imgy]{0,4}
 REGULAR_EXPRESSION = [^/\\\r\n]+
-REGULAR_EXPRESSION_LITERAL = \\[^\$]
-%state NOUN, DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING, REGULAR_EXPRESSION, VERB
+REGULAR_EXPRESSION_LITERAL = \\.
+REGULAR_EXPRESSION_FLAGS = [imgy]{0,4}
+REGULAR_EXPRESSION_TERMINATOR = \/{REGULAR_EXPRESSION_FLAGS}
+%state NOUN, DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING, REGULAR_EXPRESSION, VERB, REGULAR_EXPRESSION_FLAG, NOUN_OR_VERB
 
 %%
 
@@ -58,12 +60,10 @@ REGULAR_EXPRESSION_LITERAL = \\[^\$]
     "__extends" |
     "__hasProp"                 { return Tokens.RESERVED_WORD; }
     ";"                         { return Tokens.SEMI_COLON; }
-    \"                          { yybegin(DOUBLE_QUOTE_STRING); return Tokens.STRING; }
-    \'                          { yybegin(SINGLE_QUOTE_STRING); return Tokens.STRING; }
     {LINE_TERMINATOR}           { return Tokens.LINE_TERMINATOR; }
 }
 
-<VERB> {
+<VERB, NOUN_OR_VERB> {
     "+"                         |
     "++"                        |
     "*"                         |
@@ -89,12 +89,14 @@ REGULAR_EXPRESSION_LITERAL = \\[^\$]
     "."                         { yybegin(NOUN); return Tokens.DOT; }
     ","                         { yybegin(NOUN); return Tokens.COMMA; }
     "then"                      |
-    "in"                        |
-    "unless"                    { yybegin(NOUN); return Tokens.KEYWORD; }
+    "in"                        { yybegin(NOUN); return Tokens.KEYWORD; }
 }
-<YYINITIAL, NOUN, VERB> {
+
+<YYINITIAL, NOUN, VERB, NOUN_OR_VERB> {
     "@"                         { yybegin(NOUN); return Tokens.ACCESSOR; }
     "if"                        |
+    "else"                      |
+    "unless"                    |
     "and"                       |
     "or"                        |
     "is"                        |
@@ -110,8 +112,7 @@ REGULAR_EXPRESSION_LITERAL = \\[^\$]
     "]"                         { yybegin(VERB); return Tokens.BRACKET; }
 }
 
-<YYINITIAL, NOUN> {
-    "else"                      |
+<YYINITIAL, NOUN, NOUN_OR_VERB> {
     "new"                       |
     "return"                    |
     "try"                       |
@@ -138,28 +139,40 @@ REGULAR_EXPRESSION_LITERAL = \\[^\$]
     "no"                        |
     "on"                        |
     "off"                       { yybegin(VERB); return Tokens.BOOLEAN; }
-    {IDENTIFIER}                { yybegin(VERB); return Tokens.IDENTIFIER; }
+    {IDENTIFIER}                { yybegin(NOUN_OR_VERB); return Tokens.IDENTIFIER; }
     {NUMBER}                    { yybegin(VERB); return Tokens.NUMBER; }
     "{"                         { yybegin(NOUN); return Tokens.BRACE; }
     "}"                         { yybegin(VERB); return Tokens.BRACE; }
+    ")"                         { yybegin(VERB); return Tokens.PARENTHESIS; }
+    \"                          { yybegin(DOUBLE_QUOTE_STRING); return Tokens.STRING; }
+    \'                          { yybegin(SINGLE_QUOTE_STRING); return Tokens.STRING; }
 }
 
 <NOUN> {
-    ")"                         { yybegin(VERB); return Tokens.PARENTHESIS; }
     "="                         { return Tokens.ASSIGNMENT; }
     "/"                         { yybegin(REGULAR_EXPRESSION); return Tokens.REGULAR_EXPRESSION; }
-    \"                          { yybegin(DOUBLE_QUOTE_STRING); return Tokens.STRING; }
-    \'                          { yybegin(SINGLE_QUOTE_STRING); return Tokens.STRING; }
 }
 
 <REGULAR_EXPRESSION> {
     {REGULAR_EXPRESSION}       { return Tokens.REGULAR_EXPRESSION; }
     "\\/"                      { return Tokens.REGULAR_EXPRESSION_LITERAL; }
     {REGULAR_EXPRESSION_LITERAL} { return Tokens.REGULAR_EXPRESSION_LITERAL; }
-    "/"                        { yybegin(VERB); return Tokens.REGULAR_EXPRESSION; }
+    {REGULAR_EXPRESSION_TERMINATOR} {
+        final int length = yytext().length();
+        if (length > 1) {
+            yypushback(length -1);
+            yybegin(REGULAR_EXPRESSION_FLAG);
+        } else {
+            yybegin(VERB);
+        }
+        return Tokens.REGULAR_EXPRESSION;
+    }
     {LINE_TERMINATOR}          { yybegin(YYINITIAL); return Tokens.BAD_CHARACTER; }
 }
 
+<REGULAR_EXPRESSION_FLAG> {
+    {REGULAR_EXPRESSION_FLAGS}       { yybegin(VERB); return Tokens.REGULAR_EXPRESSION_FLAG; }
+}
 <DOUBLE_QUOTE_STRING> {
     \"                             { yybegin(VERB); return Tokens.STRING; }
     "\\\""                         { return Tokens.STRING_LITERAL; }
