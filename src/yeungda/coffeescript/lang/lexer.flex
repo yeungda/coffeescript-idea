@@ -91,6 +91,7 @@ JAVASCRIPT = [^`]+
     ">="                        |
     ".."                        |
     "..."                       |
+    "<-"                        |
     "?"                         { yybegin(NOUN); return Tokens.OPERATOR; }
     ")"                         { return Tokens.PARENTHESIS; }
     "="                         |

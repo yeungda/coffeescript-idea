@@ -191,6 +191,7 @@ public class LexerUnitTest {
             assertVerb("++", OPERATOR);
             assertVerb("...", OPERATOR);
             assertVerb("..", OPERATOR);
+            assertVerb("<-", OPERATOR);
         }
 
         @Test
