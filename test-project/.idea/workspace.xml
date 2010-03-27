@@ -72,7 +72,7 @@
       <file leaf-file-name="heredocs.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/heredocs.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="1" column="14" selection-start="24" selection-end="24" vertical-scroll-proportion="0.016528925">
               <folding />
             </state>
           </provider>
@@ -106,6 +106,7 @@
         <option value="$PROJECT_DIR$/divide.coffee" />
         <option value="$PROJECT_DIR$/separators.coffee" />
         <option value="$PROJECT_DIR$/all.coffee" />
+        <option value="$PROJECT_DIR$/heredocs.coffee" />
       </list>
     </option>
   </component>
@@ -146,6 +147,7 @@
     <panes>
       <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -166,7 +168,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -387,21 +388,19 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/all.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="500" column="29" selection-start="18807" selection-end="18807" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/separators.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="0" selection-start="8" selection-end="8" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/all.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="500" column="29" selection-start="18807" selection-end="18807" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/heredocs.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="1" column="14" selection-start="24" selection-end="24" vertical-scroll-proportion="0.016528925">
           <folding />
         </state>
       </provider>
