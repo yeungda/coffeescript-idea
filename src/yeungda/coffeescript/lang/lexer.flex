@@ -38,7 +38,9 @@ REGULAR_EXPRESSION = [^/\\\r\n]+
 REGULAR_EXPRESSION_LITERAL = \\.
 REGULAR_EXPRESSION_FLAGS = [imgy]{0,4}
 REGULAR_EXPRESSION_TERMINATOR = \/{REGULAR_EXPRESSION_FLAGS}
-%state NOUN, DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING, REGULAR_EXPRESSION, VERB, REGULAR_EXPRESSION_FLAG, NOUN_OR_VERB
+
+JAVASCRIPT = [^`]+
+%state NOUN, DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING, REGULAR_EXPRESSION, VERB, REGULAR_EXPRESSION_FLAG, NOUN_OR_VERB, JAVASCRIPT
 
 %%
 
@@ -61,6 +63,12 @@ REGULAR_EXPRESSION_TERMINATOR = \/{REGULAR_EXPRESSION_FLAGS}
     "__hasProp"                 { return Tokens.RESERVED_WORD; }
     ";"                         { return Tokens.SEMI_COLON; }
     {LINE_TERMINATOR}           { return Tokens.LINE_TERMINATOR; }
+    "`"                         { yybegin(JAVASCRIPT); return Tokens.JAVASCRIPT; }
+}
+
+<JAVASCRIPT> {
+    "`"                         { yybegin(YYINITIAL); return Tokens.JAVASCRIPT; }
+    {JAVASCRIPT}                { return Tokens.JAVASCRIPT; }
 }
 
 <VERB, NOUN_OR_VERB> {
@@ -81,6 +89,7 @@ REGULAR_EXPRESSION_TERMINATOR = \/{REGULAR_EXPRESSION_FLAGS}
     "=="                        |
     "<="                        |
     ">="                        |
+    ".."                        |
     "..."                       |
     "?"                         { yybegin(NOUN); return Tokens.OPERATOR; }
     ")"                         { return Tokens.PARENTHESIS; }
@@ -108,7 +117,8 @@ REGULAR_EXPRESSION_TERMINATOR = \/{REGULAR_EXPRESSION_FLAGS}
     {WS}                        { return Tokens.WHITESPACE; }
     {LINE_TERMINATOR}           { yybegin(YYINITIAL); return Tokens.LINE_TERMINATOR; }
     {COMMENT}                   { return Tokens.COMMENT; }
-    "->"                        { yybegin(NOUN); return Tokens.FUNCTION; }
+    "->"                        |
+    "=>"                        { yybegin(NOUN); return Tokens.FUNCTION; }
     "]"                         { yybegin(VERB); return Tokens.BRACKET; }
 }
 

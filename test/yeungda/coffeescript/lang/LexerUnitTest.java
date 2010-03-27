@@ -16,11 +16,10 @@ import static yeungda.coffeescript.lang.LexerUnitTest.AnyString.NOUN;
 import static yeungda.coffeescript.lang.LexerUnitTest.AnyString.VERB;
 import static yeungda.coffeescript.lang.Tokens.*;
 
-//TODO: square bracket corrections
-//TODO: splats
-//TODO: bind function operator
 //TODO: javascript
-
+//TODO: negative numbers
+//TODO: curry operator
+//TODO: test NOUNORVERB state
 //TODO: half assignment
 //TODO: @ accessor highlighting
 //TODO: extra string literals
@@ -179,6 +178,7 @@ public class LexerUnitTest {
             assertVerb("!=", OPERATOR);
             assertVerb("++", OPERATOR);
             assertVerb("...", OPERATOR);
+            assertVerb("..", OPERATOR);
         }
 
         @Test
@@ -348,6 +348,7 @@ public class LexerUnitTest {
         @Test
         public void functions() {
             assertVerbalPreposition("->", FUNCTION);
+            assertVerbalPreposition("=>", FUNCTION);
         }
 
         @Test
@@ -369,12 +370,14 @@ public class LexerUnitTest {
         }
 
     }
-//
-//    @Test
-//    @Ignore
-//    public void javascript() {
-//        assertThat(lexing("`"), tokenisedTo(Tokens.JAVASCRIPT));
-//    }
+
+    @Test
+    public void javascript() {
+        assertThat(lexing("` "), tokenisedTo(JAVASCRIPT, JAVASCRIPT));
+        assertThat(lexing("`\n"), tokenisedTo(JAVASCRIPT, JAVASCRIPT));
+        assertThat(lexing("`\n`"), tokenisedTo(JAVASCRIPT, JAVASCRIPT, JAVASCRIPT));
+        assertThat(lexing("`\n`" + NOUN), tokenisedTo(JAVASCRIPT, JAVASCRIPT, JAVASCRIPT, AnyToken.NOUN));
+    }
 
     public static Matcher<Collection> tokenisedTo(IElementType... identifier) {
         return equalTo((Collection) Arrays.asList(identifier));
