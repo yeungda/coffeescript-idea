@@ -38,9 +38,9 @@ REGULAR_EXPRESSION = [^/\\\r\n]+
 REGULAR_EXPRESSION_LITERAL = \\.
 REGULAR_EXPRESSION_FLAGS = [imgy]{0,4}
 REGULAR_EXPRESSION_TERMINATOR = \/{REGULAR_EXPRESSION_FLAGS}
-
+HEREDOCS   = .
 JAVASCRIPT = [^`]+
-%state NOUN, DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING, REGULAR_EXPRESSION, VERB, REGULAR_EXPRESSION_FLAG, NOUN_OR_VERB, JAVASCRIPT
+%state NOUN, DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING, REGULAR_EXPRESSION, VERB, REGULAR_EXPRESSION_FLAG, NOUN_OR_VERB, JAVASCRIPT, HEREDOCS
 
 %%
 
@@ -155,6 +155,7 @@ JAVASCRIPT = [^`]+
     "}"                         { yybegin(VERB); return Tokens.BRACE; }
     ")"                         { yybegin(VERB); return Tokens.PARENTHESIS; }
     \"                          { yybegin(DOUBLE_QUOTE_STRING); return Tokens.STRING; }
+    \'\'\'                      { yybegin(HEREDOCS); return Tokens.HEREDOCS; }
     \'                          { yybegin(SINGLE_QUOTE_STRING); return Tokens.STRING; }
 }
 
@@ -203,4 +204,9 @@ JAVASCRIPT = [^`]+
     \\.                            { return Tokens.BAD_CHARACTER; }
 }
 
+<HEREDOCS> {
+    "'''"                           { yybegin(VERB); return Tokens.HEREDOCS; }
+    {HEREDOCS}                      { return Tokens.HEREDOCS; }
+    {LINE_TERMINATOR}               { return Tokens.HEREDOCS; }
+}
 .                                  { yybegin(YYINITIAL);   return Tokens.BAD_CHARACTER; }

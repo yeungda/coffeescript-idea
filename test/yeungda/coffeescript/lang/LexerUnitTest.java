@@ -2,6 +2,7 @@ package yeungda.coffeescript.lang;
 
 import com.intellij.lexer.FlexAdapter;
 import com.intellij.psi.tree.IElementType;
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matcher;
 import org.junit.Test;
 
@@ -10,7 +11,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static yeungda.coffeescript.lang.LexerUnitTest.AnyString.NOUN;
 import static yeungda.coffeescript.lang.LexerUnitTest.AnyString.VERB;
@@ -49,6 +52,13 @@ public class LexerUnitTest {
         assertThat(lexing("'\n"), tokenisedTo(STRING, LINE_TERMINATOR));
         assertInitialNounOfTwoTokens("\"\"", STRING, STRING);
         assertInitialNounOfTwoTokens("''", STRING, STRING);
+    }
+
+    @Test
+    public void heredocs() {
+        assertInitialNounOfTwoTokens("''''''", HEREDOCS, HEREDOCS);
+        assertThat(lexing("'''a"), tokenisedTo(HEREDOCS, HEREDOCS));
+        assertThat(lexing("'''\n"), tokenisedTo(HEREDOCS, HEREDOCS));
     }
 
     static void assertInitialNounOfTwoTokens(String initialNoun, IElementType startToken, IElementType endToken) {

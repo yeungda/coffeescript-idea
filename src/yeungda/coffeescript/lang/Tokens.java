@@ -29,4 +29,5 @@ public class Tokens {
     public static final IElementType JAVASCRIPT = new CoffeeScriptElementType("JAVASCRIPT");
     public static final IElementType FUNCTION = new CoffeeScriptElementType("FUNCTION");
     public static final IElementType REGULAR_EXPRESSION_FLAG = new CoffeeScriptElementType("REGULAR_EXPRESSION_FLAG");
+    public static final IElementType HEREDOCS = new CoffeeScriptElementType("HEREDOCS");
 }

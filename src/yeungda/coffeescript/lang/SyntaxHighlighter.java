@@ -87,6 +87,7 @@ public class SyntaxHighlighter extends SyntaxHighlighterBase {
         TOKENS_TO_STYLES.put(Tokens.JAVASCRIPT, SyntaxHighlighterColors.STRING);
         TOKENS_TO_STYLES.put(Tokens.FUNCTION, KEYWORD);
         TOKENS_TO_STYLES.put(Tokens.REGULAR_EXPRESSION_FLAG, SyntaxHighlighterColors.STRING);
+        TOKENS_TO_STYLES.put(Tokens.HEREDOCS, SyntaxHighlighterColors.STRING);
     }
 
     @NotNull
