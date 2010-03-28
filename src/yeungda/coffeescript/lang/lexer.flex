@@ -74,13 +74,16 @@ JAVASCRIPT = [^`]+
 <VERB, NOUN_OR_VERB> {
     <YYINITIAL,NOUN> "+"        |
     <YYINITIAL,NOUN> "-"        |
+    <YYINITIAL,NOUN> "*"        |
+    <YYINITIAL,NOUN> "%"        |
+    <YYINITIAL,NOUN> "&&"       |
+    <YYINITIAL,NOUN> "||"       |
+    <YYINITIAL,NOUN> "?"        |
+    "/"        |
     "++"                        |
-    "*"                         |
     "&"                         |
     "|"                         |
-    "/"                         |
     "--"                        |
-    "%"                         |
     "<"                         |
     ">"                         |
     "::"                        |
@@ -91,8 +94,7 @@ JAVASCRIPT = [^`]+
     ">="                        |
     ".."                        |
     "..."                       |
-    "<-"                        |
-    "?"                         { yybegin(NOUN); return Tokens.OPERATOR; }
+    "<-"                        { yybegin(NOUN); return Tokens.OPERATOR; }
     ")"                         { return Tokens.PARENTHESIS; }
     "="                         |
     ":"                         { yybegin(NOUN); return Tokens.ASSIGNMENT; }

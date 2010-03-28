@@ -32,7 +32,7 @@ class FlexAdapterWithCommunicationSkills extends FlexAdapter {
         } catch (Error error) {
             throw new Error("Failed for input: " + toString(), error);
         }
-        System.out.printf("[%2d][%2d],%n", getState(), getTokenEnd());
+//        System.out.printf("[%2d][%2d],%n", getState(), getTokenEnd());
     }
 
     @Override

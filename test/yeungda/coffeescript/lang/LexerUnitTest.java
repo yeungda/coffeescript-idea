@@ -167,16 +167,18 @@ public class LexerUnitTest {
         public void operators() {
             assertVerbalPreposition("+", OPERATOR);
             assertVerbalPreposition("-", OPERATOR);
-            assertVerb("*", OPERATOR);
+            assertVerbalPreposition("*", OPERATOR);
             assertVerb("&", OPERATOR);
+            assertVerbalPreposition("&&", OPERATOR);
             assertVerb("|", OPERATOR);
+            assertVerbalPreposition("||", OPERATOR);
             assertVerb("/", OPERATOR);
-            assertVerb("%", OPERATOR);
+            assertVerbalPreposition("%", OPERATOR);
             assertVerb("<", OPERATOR);
             assertVerb(">", OPERATOR);
             assertVerb("::", OPERATOR);
             assertVerb("!", OPERATOR);
-            assertVerb("?", OPERATOR);
+            assertVerbalPreposition("?", OPERATOR);
             assertVerb("==", OPERATOR);
             assertVerb(">=", OPERATOR);
             assertVerb("<=", OPERATOR);
