@@ -16,13 +16,11 @@ import static yeungda.coffeescript.lang.LexerUnitTest.AnyString.NOUN;
 import static yeungda.coffeescript.lang.LexerUnitTest.AnyString.VERB;
 import static yeungda.coffeescript.lang.Tokens.*;
 
-//TODO: negative numbers
-//TODO: curry operator
-//TODO: test NOUNORVERB state
-
 //TODO: half assignment
+
 //TODO: @ accessor highlighting
 //TODO: extra string literals
+//TODO: test NOUNORVERB state
 //TODO: variable highlighting
 //TODO: backticks in javascript
 //TODO: nested ''' in heredocs?
@@ -147,11 +145,6 @@ public class LexerUnitTest {
         assertThat(lexing(NOUN + " " + textualVerbalPreposition + " " + NOUN), tokenisedTo(AnyToken.NOUN, WHITESPACE, token, WHITESPACE, AnyToken.NOUN));
     }
 
-
-    @Test
-    public void should() {
-    }
-
     static void assertLastLineElement(String lastLineElement, IElementType token) {
         assertThat(lexing(lastLineElement), tokenisedTo(token));
         assertThat(lexing(NOUN + lastLineElement), tokenisedTo(AnyToken.NOUN, token));
@@ -172,12 +165,12 @@ public class LexerUnitTest {
 
         @Test
         public void operators() {
-            assertVerb("+", OPERATOR);
+            assertVerbalPreposition("+", OPERATOR);
+            assertVerbalPreposition("-", OPERATOR);
             assertVerb("*", OPERATOR);
             assertVerb("&", OPERATOR);
             assertVerb("|", OPERATOR);
             assertVerb("/", OPERATOR);
-            assertVerb("-", OPERATOR);
             assertVerb("%", OPERATOR);
             assertVerb("<", OPERATOR);
             assertVerb(">", OPERATOR);
@@ -189,6 +182,7 @@ public class LexerUnitTest {
             assertVerb("<=", OPERATOR);
             assertVerb("!=", OPERATOR);
             assertVerb("++", OPERATOR);
+            assertVerb("--", OPERATOR);
             assertVerb("...", OPERATOR);
             assertVerb("..", OPERATOR);
             assertVerb("<-", OPERATOR);

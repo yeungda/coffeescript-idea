@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager" verified="true">
     <list default="true" readonly="true" id="38457297-fe24-49d1-9f47-bddb30343484" name="Default" comment="" />
-    <ignored path="test-project.iws" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path="test-project.iws" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,35 +59,7 @@
   </component>
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="all.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/all.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="500" column="29" selection-start="18807" selection-end="18807" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="heredocs.coffee" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/heredocs.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="14" selection-start="24" selection-end="24" vertical-scroll-proportion="0.016528925">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="separators.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/separators.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="0" selection-start="8" selection-end="8" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -363,11 +335,6 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/operators.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="17" selection-start="59" selection-end="59" vertical-scroll-proportion="0.32673267" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/reserved-words.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
@@ -388,19 +355,26 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/all.coffee">
+    <entry file="file://$PROJECT_DIR$/heredocs.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="500" column="29" selection-start="18807" selection-end="18807" vertical-scroll-proportion="0.0" />
+        <state line="4" column="9" selection-start="78" selection-end="78" vertical-scroll-proportion="0.0661157" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/separators.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="8" selection-end="8" vertical-scroll-proportion="0.0" />
+        <state line="4" column="0" selection-start="8" selection-end="8" vertical-scroll-proportion="0.0661157" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/heredocs.coffee">
+    <entry file="file://$PROJECT_DIR$/operators.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="14" selection-start="24" selection-end="24" vertical-scroll-proportion="0.016528925">
+        <state line="14" column="7" selection-start="82" selection-end="82" vertical-scroll-proportion="0.23140496">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/all.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="42" selection-start="1823" selection-end="1823" vertical-scroll-proportion="0.016528925">
           <folding />
         </state>
       </provider>

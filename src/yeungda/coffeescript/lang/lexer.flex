@@ -72,13 +72,13 @@ JAVASCRIPT = [^`]+
 }
 
 <VERB, NOUN_OR_VERB> {
-    "+"                         |
+    <YYINITIAL,NOUN> "+"        |
+    <YYINITIAL,NOUN> "-"        |
     "++"                        |
     "*"                         |
     "&"                         |
     "|"                         |
     "/"                         |
-    "-"                         |
     "--"                        |
     "%"                         |
     "<"                         |
