@@ -146,6 +146,8 @@ JAVASCRIPT = [^`]+
     "by"                        |
     "where"                     |
     "when"                      { yybegin(NOUN); return Tokens.KEYWORD; }
+    "this"                      |
+    "null"                      { yybegin(VERB); return Tokens.KEYWORD; }
     "true"                      |
     "false"                     |
     "yes"                       |

@@ -313,6 +313,9 @@ public class LexerUnitTest {
             assertPreposition("by", KEYWORD);
             assertPreposition("where", KEYWORD);
             assertPreposition("when", KEYWORD);
+            assertInitialNoun("this", KEYWORD);
+            assertInitialNoun("null", KEYWORD);
+            
         }
 
     }
