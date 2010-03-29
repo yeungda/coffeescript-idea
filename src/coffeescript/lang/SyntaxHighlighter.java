@@ -1,4 +1,4 @@
-package yeungda.coffeescript.lang;
+package coffeescript.lang;
 
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.HighlighterColors;
@@ -17,7 +17,7 @@ public class SyntaxHighlighter extends SyntaxHighlighterBase {
 
     @NotNull
     public Lexer getHighlightingLexer() {
-        return new FlexAdapterWithCommunicationSkills(new yeungda.coffeescript.lang.Lexer((Reader) null));
+        return new FlexAdapterWithCommunicationSkills(new coffeescript.lang.Lexer((Reader) null));
     }
 
     static final TextAttributesKey NUMBER = TextAttributesKey.createTextAttributesKey(

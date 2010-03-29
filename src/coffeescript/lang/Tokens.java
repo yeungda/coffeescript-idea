@@ -1,4 +1,4 @@
-package yeungda.coffeescript.lang;
+package coffeescript.lang;
 
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;

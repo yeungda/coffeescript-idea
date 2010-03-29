@@ -1,9 +1,9 @@
-package yeungda.coffeescript.lang;
+package coffeescript.lang;
 
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
-import yeungda.coffeescript.icon.Icons;
+import coffeescript.icon.Icons;
 
 import javax.swing.*;
 

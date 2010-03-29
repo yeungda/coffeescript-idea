@@ -1,4 +1,4 @@
-package yeungda.coffeescript.lang;
+package coffeescript.lang;
 
 import com.intellij.extapi.psi.PsiFileBase;
 import com.intellij.lang.ASTNode;

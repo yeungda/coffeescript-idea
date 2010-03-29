@@ -8,7 +8,7 @@
   <application-components>
     <!-- Add your application components here -->
       <component>
-          <implementation-class>yeungda.coffeescript.Launcher</implementation-class>
+          <implementation-class>coffeescript.Launcher</implementation-class>
       </component>
   </application-components>
 
@@ -22,8 +22,8 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->
-      <lang.syntaxHighlighterFactory key="CoffeeScript" implementationClass="yeungda.coffeescript.lang.Language$HighlighterFactory" />
-      <lang.parserDefinition language="CoffeeScript" implementationClass="yeungda.coffeescript.lang.ParserDefinition"/>
+      <lang.syntaxHighlighterFactory key="CoffeeScript" implementationClass="coffeescript.lang.Language$HighlighterFactory" />
+      <lang.parserDefinition language="CoffeeScript" implementationClass="coffeescript.lang.ParserDefinition"/>
 
   </extensions>
 </idea-plugin>

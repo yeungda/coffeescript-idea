@@ -1,4 +1,4 @@
-package yeungda.coffeescript.lang;
+package coffeescript.lang;
 
 class CoffeeScriptElementType extends com.intellij.psi.tree.IElementType {
     public CoffeeScriptElementType(String debugName) {

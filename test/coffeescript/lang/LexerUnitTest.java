@@ -1,4 +1,4 @@
-package yeungda.coffeescript.lang;
+package coffeescript.lang;
 
 import com.intellij.lexer.FlexAdapter;
 import com.intellij.psi.tree.IElementType;
@@ -12,19 +12,17 @@ import java.util.Collection;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
-import static yeungda.coffeescript.lang.LexerUnitTest.AnyString.NOUN;
-import static yeungda.coffeescript.lang.LexerUnitTest.AnyString.VERB;
-import static yeungda.coffeescript.lang.Tokens.*;
-
-//TODO: half assignment
+import static coffeescript.lang.LexerUnitTest.AnyString.NOUN;
+import static coffeescript.lang.LexerUnitTest.AnyString.VERB;
+import static coffeescript.lang.Tokens.*;
 
 //TODO: @ accessor highlighting
 //TODO: extra string literals
-//TODO: test NOUNORVERB state
 //TODO: variable highlighting
+//TODO: string interpolation?
+//TODO: test NOUNORVERB state
 //TODO: backticks in javascript
 //TODO: nested ''' in heredocs?
-//TODO: string interpolation?
 public class LexerUnitTest {
 
     @Test
@@ -124,20 +122,20 @@ public class LexerUnitTest {
         assertThat(lexing(IDENTIFIER + " " + noun), tokenisedTo(IDENTIFIER, WHITESPACE, token));
     }
 
-    static void assertPreposition(String preposition, IElementType prepositionToken) {
-        assertThat("preposition [" + preposition + "]", lexing(preposition), tokenisedTo(prepositionToken));
-        assertThat("preposition [" + preposition + "]", lexing("(" + preposition), tokenisedTo(PARENTHESIS, prepositionToken));
-        assertThat("preposition [" + preposition + "]", lexing(preposition + " " + NOUN), tokenisedTo(prepositionToken, WHITESPACE, AnyToken.NOUN));
+    static void assertPreNoun(String preNoun, IElementType preNounToken) {
+        assertThat("preNoun [" + preNoun + "]", lexing(preNoun), tokenisedTo(preNounToken));
+        assertThat("preNoun [" + preNoun + "]", lexing("(" + preNoun), tokenisedTo(PARENTHESIS, preNounToken));
+        assertThat("preNoun [" + preNoun + "]", lexing(preNoun + " " + NOUN), tokenisedTo(preNounToken, WHITESPACE, AnyToken.NOUN));
     }
 
     static void assertVerbalPreposition(String verbalPreposition, IElementType token) {
         assertVerb(verbalPreposition, token);
-        assertPreposition(verbalPreposition, token);
+        assertPreNoun(verbalPreposition, token);
     }
 
-    static void assertTextualVerbalPreposition(String textualVerbalPreposition, IElementType token) {
-        assertTextualVerb(textualVerbalPreposition, token);
-        assertPreposition(textualVerbalPreposition, token);
+    static void assertTextualVerbalPreNoun(String textualVerbalPreNoun, IElementType token) {
+        assertTextualVerb(textualVerbalPreNoun, token);
+        assertPreNoun(textualVerbalPreNoun, token);
     }
 
     private static void assertTextualVerb(String textualVerbalPreposition, IElementType token) {
@@ -242,7 +240,7 @@ public class LexerUnitTest {
 
         @Test
         public void objectLiteral() {
-            assertPreposition("{", BRACE);
+            assertPreNoun("{", BRACE);
             assertInitialNoun("}", BRACE);
         }
 
@@ -267,7 +265,7 @@ public class LexerUnitTest {
 
         @Test
         public void halfAssignments() {
-            assertThat(lexing("foo:/ bar"), tokenisedTo(IDENTIFIER, ASSIGNMENT, OPERATOR, WHITESPACE, IDENTIFIER));            
+            assertThat(lexing("foo:/ bar"), tokenisedTo(IDENTIFIER, ASSIGNMENT, OPERATOR, WHITESPACE, IDENTIFIER));
         }
 
         @Test
@@ -294,33 +292,33 @@ public class LexerUnitTest {
         @Test
         public void keywords() {
             // javascript keywords
-            assertTextualVerbalPreposition("else", KEYWORD);
-            assertPreposition("new", KEYWORD);
-            assertPreposition("return", KEYWORD);
-            assertPreposition("try", KEYWORD);
-            assertPreposition("catch", KEYWORD);
-            assertPreposition("finally", KEYWORD);
-            assertPreposition("throw", KEYWORD);
-            assertPreposition("break", KEYWORD);
-            assertPreposition("continue", KEYWORD);
+            assertTextualVerbalPreNoun("else", KEYWORD);
+            assertPreNoun("new", KEYWORD);
+            assertPreNoun("return", KEYWORD);
+            assertPreNoun("try", KEYWORD);
+            assertPreNoun("catch", KEYWORD);
+            assertPreNoun("finally", KEYWORD);
+            assertPreNoun("throw", KEYWORD);
+            assertPreNoun("break", KEYWORD);
+            assertPreNoun("continue", KEYWORD);
             assertTextualVerb("in", KEYWORD);
-            assertPreposition("while", KEYWORD);
-            assertPreposition("delete", KEYWORD);
-            assertPreposition("instanceof", KEYWORD);
-            assertPreposition("typeof", KEYWORD);
-            assertPreposition("switch", KEYWORD);
-            assertPreposition("super", KEYWORD);
-            assertPreposition("extends", KEYWORD);
-            assertPreposition("class", KEYWORD);
+            assertPreNoun("while", KEYWORD);
+            assertPreNoun("delete", KEYWORD);
+            assertPreNoun("instanceof", KEYWORD);
+            assertPreNoun("typeof", KEYWORD);
+            assertPreNoun("switch", KEYWORD);
+            assertPreNoun("super", KEYWORD);
+            assertPreNoun("extends", KEYWORD);
+            assertPreNoun("class", KEYWORD);
             // coffee keywords
             assertTextualVerb("then", KEYWORD);
-            assertPreposition("of", KEYWORD);
-            assertPreposition("by", KEYWORD);
-            assertPreposition("where", KEYWORD);
-            assertPreposition("when", KEYWORD);
+            assertPreNoun("of", KEYWORD);
+            assertPreNoun("by", KEYWORD);
+            assertPreNoun("where", KEYWORD);
+            assertPreNoun("when", KEYWORD);
             assertInitialNoun("this", KEYWORD);
             assertInitialNoun("null", KEYWORD);
-            
+
         }
 
     }
@@ -352,14 +350,14 @@ public class LexerUnitTest {
 
         @Test
         public void keywords() {
-            assertTextualVerbalPreposition("if", KEYWORD);
-            assertTextualVerbalPreposition("and", KEYWORD);
-            assertTextualVerbalPreposition("or", KEYWORD);
-            assertTextualVerbalPreposition("is", KEYWORD);
-            assertTextualVerbalPreposition("isnt", KEYWORD);
-            assertTextualVerbalPreposition("not", KEYWORD);
-            assertTextualVerbalPreposition("unless", KEYWORD);
-            assertTextualVerbalPreposition("for", KEYWORD);
+            assertTextualVerbalPreNoun("if", KEYWORD);
+            assertTextualVerbalPreNoun("and", KEYWORD);
+            assertTextualVerbalPreNoun("or", KEYWORD);
+            assertTextualVerbalPreNoun("is", KEYWORD);
+            assertTextualVerbalPreNoun("isnt", KEYWORD);
+            assertTextualVerbalPreNoun("not", KEYWORD);
+            assertTextualVerbalPreNoun("unless", KEYWORD);
+            assertTextualVerbalPreNoun("for", KEYWORD);
         }
 
         @Test

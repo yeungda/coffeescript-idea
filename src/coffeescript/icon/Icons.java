@@ -1,4 +1,4 @@
-package yeungda.coffeescript.icon;
+package coffeescript.icon;
 
 import com.intellij.openapi.util.IconLoader;
 

@@ -1,10 +1,10 @@
-package yeungda.coffeescript;
+package coffeescript;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.fileTypes.FileTypeManager;
 import org.jetbrains.annotations.NotNull;
-import yeungda.coffeescript.lang.FileType;
+import coffeescript.lang.FileType;
 
 public class Launcher implements ApplicationComponent {
     public Launcher() {
