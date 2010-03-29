@@ -1,4 +1,4 @@
-package yeungda.coffeescript.lang;
+package coffeescript.lang;
 
 
 import com.intellij.lexer.FlexLexer;
@@ -62,7 +62,6 @@ JAVASCRIPT = [^`]+
     "native"    |
     "__extends" |
     "__hasProp"                 { return Tokens.RESERVED_WORD; }
-    ";"                         { return Tokens.SEMI_COLON; }
     {LINE_TERMINATOR}           { return Tokens.LINE_TERMINATOR; }
     "`"                         { yybegin(JAVASCRIPT); return Tokens.JAVASCRIPT; }
 }
@@ -103,6 +102,7 @@ JAVASCRIPT = [^`]+
     ","                         { yybegin(NOUN); return Tokens.COMMA; }
     "then"                      |
     "in"                        { yybegin(NOUN); return Tokens.KEYWORD; }
+    <YYINITIAL> ";"             { return Tokens.SEMI_COLON; }
 }
 
 <YYINITIAL, NOUN, VERB, NOUN_OR_VERB> {
@@ -124,6 +124,7 @@ JAVASCRIPT = [^`]+
     "->"                        |
     "=>"                        { yybegin(NOUN); return Tokens.FUNCTION; }
     "]"                         { yybegin(VERB); return Tokens.BRACKET; }
+    "}"                         { yybegin(VERB); return Tokens.BRACE; }
 }
 
 <YYINITIAL, NOUN, NOUN_OR_VERB> {
@@ -158,7 +159,6 @@ JAVASCRIPT = [^`]+
     {IDENTIFIER}                { yybegin(NOUN_OR_VERB); return Tokens.IDENTIFIER; }
     {NUMBER}                    { yybegin(VERB); return Tokens.NUMBER; }
     "{"                         { yybegin(NOUN); return Tokens.BRACE; }
-    "}"                         { yybegin(VERB); return Tokens.BRACE; }
     ")"                         { yybegin(VERB); return Tokens.PARENTHESIS; }
     \"                          { yybegin(DOUBLE_QUOTE_STRING); return Tokens.STRING; }
     "'''"                       { yybegin(HEREDOCS); return Tokens.HEREDOCS; }

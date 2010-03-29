@@ -11,10 +11,12 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static coffeescript.lang.LexerUnitTest.AnyString.NOUN;
 import static coffeescript.lang.LexerUnitTest.AnyString.VERB;
 import static coffeescript.lang.Tokens.*;
+import static org.junit.matchers.JUnitMatchers.hasItem;
 
 //TODO: @ accessor highlighting
 //TODO: extra string literals
@@ -102,6 +104,7 @@ public class LexerUnitTest {
     @Test
     public void separators() {
         assertThat(lexing(";"), tokenisedTo(SEMI_COLON));
+        assertVerb(";", SEMI_COLON);
     }
 
     @Test
@@ -242,6 +245,9 @@ public class LexerUnitTest {
         public void objectLiteral() {
             assertPreNoun("{", BRACE);
             assertInitialNoun("}", BRACE);
+            assertNounalPreverb("}", BRACE);
+            assertThat(lexing("{x:1}"), tokenisedTo(BRACE, IDENTIFIER, ASSIGNMENT, NUMBER, BRACE));
+            assertThat(lexing("  window:  {width: 200, height: 200}"), not(hasItem(BAD_CHARACTER)));
         }
 
         @Test
@@ -270,9 +276,9 @@ public class LexerUnitTest {
 
         @Test
         public void regexes() {
-            assertThat(lexing("foo:/"), tokenisedTo(IDENTIFIER, ASSIGNMENT, REGULAR_EXPRESSION));
-            assertThat(lexing("foo=/"), tokenisedTo(IDENTIFIER, ASSIGNMENT, REGULAR_EXPRESSION));
-            assertThat(lexing("foo(/"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION));
+            assertThat(lexing("foo:/x"), tokenisedTo(IDENTIFIER, ASSIGNMENT, REGULAR_EXPRESSION, REGULAR_EXPRESSION));
+            assertThat(lexing("foo=/x"), tokenisedTo(IDENTIFIER, ASSIGNMENT, REGULAR_EXPRESSION, REGULAR_EXPRESSION));
+            assertThat(lexing("foo(/x"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION));
             assertThat(lexing("foo(/x"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION));
             assertThat(lexing("foo(//"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION));
             assertThat(lexing("foo(/\\//"), tokenisedTo(IDENTIFIER, PARENTHESIS, REGULAR_EXPRESSION, REGULAR_EXPRESSION_LITERAL, REGULAR_EXPRESSION));

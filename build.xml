@@ -32,8 +32,8 @@
   </macrodef>
 
   <target name="generate-lexer">
-    <flex destdir="src/yeungda/coffeescript/lang"
-          flexfile="${basedir}/src/yeungda/coffeescript/lang/lexer.flex"/>
+    <flex destdir="src/coffeescript/lang"
+          flexfile="${basedir}/src/coffeescript/lang/lexer.flex"/>
   </target>
 
 </project>
