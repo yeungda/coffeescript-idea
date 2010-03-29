@@ -18,8 +18,6 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.hasItem;
 
-//TODO: >>, <<
-//TODO: !, !!
 //TODO: @ accessor highlighting
 //TODO: extra string literals
 //TODO: variable highlighting
