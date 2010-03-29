@@ -1,39 +1,78 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="CoffeeScript" default="generate-lexer">
-  <property name="flex.base" value="/Users/dyeung/Projects/idea/tools/lexer/jflex-1.4"/>
-  <property name="idea.project.home" value="/Users/dyeung/Projects/idea"/>
-  <property name="out.dir" value="${basedir}/out"/>
-  <macrodef name="flex">
-    <attribute name="flexfile"/>
-    <attribute name="destdir"/>
-    <sequential>
-      <delete dir="${out.dir}"/>
-      <mkdir dir="${out.dir}"/>
-      <java classname="JFlex.Main"
-            fork="true"
-            failonerror="true">
-        <arg value="-charat"/>
-        <arg value="-skel"/>
-        <arg value="/Users/dyeung/Projects/idea/tools/lexer/idea-flex.skeleton"/>
-        <arg value="-d"/>
-        <arg value="${out.dir}"/>
-        <arg value="@{flexfile}"/>
-        <classpath>
-          <pathelement location="${flex.base}/lib/JFlex.jar"/>
-        </classpath>
-      </java>
-      <move todir="${basedir}/@{destdir}">
-        <fileset dir="${out.dir}">
-          <include name="*.java"/>
+    <property name="idea.home" value="${basedir}/../idea"/>
+
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2">
+        <classpath refid="idea.classpath"/>
+    </taskdef>
+
+    <taskdef name="jflex" classname="JFlex.anttask.JFlexTask">
+        <classpath location="${idea.home}/tools/lexer/jflex-1.4/lib/JFlex.jar"/>
+    </taskdef>
+
+    <path id="idea.classpath">
+        <fileset dir="${idea.home}">
+            <include name="lib/*.jar"/>
+            <include name="redist/*.jar"/>
         </fileset>
-      </move>
-      <delete dir="${out.dir}"/>
-    </sequential>
-  </macrodef>
+        <fileset dir="/Applications/IntelliJ IDEA 9.0.1 CE.app/lib/">
+            <include name="*.jar"/>
+        </fileset>
 
-  <target name="generate-lexer">
-    <flex destdir="src/coffeescript/lang"
-          flexfile="${basedir}/src/coffeescript/lang/lexer.flex"/>
-  </target>
+    </path>
 
+    <target name="generate-lexer">
+        <jflex skeleton="${idea.home}/tools/lexer/idea-flex.skeleton" nobak="true"
+               file="${basedir}/src/coffeescript/lang/lexer.flex"
+               destdir="${basedir}/src"
+               charat="true"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${basedir}/target"/>
+    </target>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${basedir}/target/classes"/>
+        <mkdir dir="${basedir}/target/test-classes"/>
+        <mkdir dir="${basedir}/target/junit"/>
+        <mkdir dir="${basedir}/target/test-reports"/>
+    </target>
+
+    <target name="resources" depends="init, generate-lexer">
+        <copy todir="${basedir}/target/classes">
+            <fileset dir="${basedir}/resources"/>
+        </copy>
+    </target>
+
+    <target name="compile" depends="resources">
+        <javac2 srcdir="${basedir}/src" destdir="${basedir}/target/classes" source="1.5" target="1.5">
+            <classpath refid="idea.classpath"/>
+        </javac2>
+        <javac2 srcdir="${basedir}/test" destdir="${basedir}/target/test-classes" source="1.5" target="1.5">
+            <classpath refid="idea.classpath"/>
+            <classpath location="${basedir}/target/classes"/>
+        </javac2>
+    </target>
+
+    <target name="unit-test" depends="compile">
+        <junit failureproperty="unit-test.fail" forkmode="once" fork="yes" includeantruntime="yes"
+               tempdir="${basedir}/target/junit" printsummary="yes" showoutput="yes">
+            <classpath location="${basedir}/target/classes"/>
+            <classpath location="${basedir}/target/test-classes"/>
+            <classpath refid="idea.classpath"/>
+            <formatter type="xml"/>
+            <batchtest todir="${basedir}/target/test-reports" fork="yes">
+                <fileset dir="${basedir}/target/test-classes" includes="**/*UnitTest.class"/>
+            </batchtest>
+        </junit>
+        <fail if="unit-test.fail" message="unit tests failed see ${basedir}/target/test-reports"/>
+    </target>
+
+    <target name="jar" depends="unit-test">
+        <jar file="${basedir}/target/coffeescript.jar" compress="true">
+            <zipfileset dir="${basedir}/target/classes">
+            </zipfileset>
+        </jar>
+    </target>
 </project>
