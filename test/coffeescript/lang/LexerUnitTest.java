@@ -107,6 +107,7 @@ public class LexerUnitTest {
     public void separators() {
         assertThat(lexing(";"), tokenisedTo(SEMI_COLON));
         assertVerb(";", SEMI_COLON);
+        assertThat(lexing("x:1;y"), tokenisedTo(IDENTIFIER, ASSIGNMENT, NUMBER, SEMI_COLON, IDENTIFIER));
     }
 
     @Test

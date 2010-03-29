@@ -102,7 +102,7 @@ JAVASCRIPT = [^`]+
     ","                         { yybegin(NOUN); return Tokens.COMMA; }
     "then"                      |
     "in"                        { yybegin(NOUN); return Tokens.KEYWORD; }
-    <YYINITIAL> ";"             { return Tokens.SEMI_COLON; }
+    <YYINITIAL> ";"             { yybegin(NOUN); return Tokens.SEMI_COLON; }
 }
 
 <YYINITIAL, NOUN, VERB, NOUN_OR_VERB> {
