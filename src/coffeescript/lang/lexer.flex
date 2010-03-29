@@ -63,7 +63,6 @@ JAVASCRIPT = [^`]+
     "__extends" |
     "__hasProp"                 { return Tokens.RESERVED_WORD; }
     {LINE_TERMINATOR}           { return Tokens.LINE_TERMINATOR; }
-    "`"                         { yybegin(JAVASCRIPT); return Tokens.JAVASCRIPT; }
 }
 
 <JAVASCRIPT> {
@@ -163,6 +162,8 @@ JAVASCRIPT = [^`]+
     \"                          { yybegin(DOUBLE_QUOTE_STRING); return Tokens.STRING; }
     "'''"                       { yybegin(HEREDOCS); return Tokens.HEREDOCS; }
     \'                          { yybegin(SINGLE_QUOTE_STRING); return Tokens.STRING; }
+    "`"                         { yybegin(JAVASCRIPT); return Tokens.JAVASCRIPT; }
+
 }
 
 <NOUN> {

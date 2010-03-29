@@ -10,17 +10,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertThat;
 import static coffeescript.lang.LexerUnitTest.AnyString.NOUN;
 import static coffeescript.lang.LexerUnitTest.AnyString.VERB;
 import static coffeescript.lang.Tokens.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.hasItem;
 
+//TODO: >>, <<
+//TODO: !, !!
 //TODO: @ accessor highlighting
 //TODO: extra string literals
 //TODO: variable highlighting
+
 //TODO: string interpolation?
 //TODO: test NOUNORVERB state
 //TODO: backticks in javascript
@@ -273,6 +276,15 @@ public class LexerUnitTest {
         }
 
         @Test
+        public void javascript() {
+            assertInitialNounOfTwoTokens("``", JAVASCRIPT, JAVASCRIPT);
+            assertThat(lexing("` "), tokenisedTo(JAVASCRIPT, JAVASCRIPT));
+            assertThat(lexing("`\n"), tokenisedTo(JAVASCRIPT, JAVASCRIPT));
+            assertThat(lexing("`\n`"), tokenisedTo(JAVASCRIPT, JAVASCRIPT, JAVASCRIPT));
+            assertThat(lexing("`\n`" + NOUN), tokenisedTo(JAVASCRIPT, JAVASCRIPT, JAVASCRIPT, AnyToken.NOUN));
+        }
+
+        @Test
         public void halfAssignments() {
             assertThat(lexing("foo:/ bar"), tokenisedTo(IDENTIFIER, ASSIGNMENT, OPERATOR, WHITESPACE, IDENTIFIER));
         }
@@ -393,14 +405,6 @@ public class LexerUnitTest {
             assertLastLineElement("\n", LINE_TERMINATOR);
         }
 
-    }
-
-    @Test
-    public void javascript() {
-        assertThat(lexing("` "), tokenisedTo(JAVASCRIPT, JAVASCRIPT));
-        assertThat(lexing("`\n"), tokenisedTo(JAVASCRIPT, JAVASCRIPT));
-        assertThat(lexing("`\n`"), tokenisedTo(JAVASCRIPT, JAVASCRIPT, JAVASCRIPT));
-        assertThat(lexing("`\n`" + NOUN), tokenisedTo(JAVASCRIPT, JAVASCRIPT, JAVASCRIPT, AnyToken.NOUN));
     }
 
     public static Matcher<Collection> tokenisedTo(IElementType... identifier) {
