@@ -38,6 +38,7 @@ REGULAR_EXPRESSION = [^/\\\r\n]+
 REGULAR_EXPRESSION_LITERAL = \\.
 REGULAR_EXPRESSION_FLAGS = [imgy]{0,4}
 REGULAR_EXPRESSION_TERMINATOR = \/{REGULAR_EXPRESSION_FLAGS}
+REGULAR_EXPRESSION_START = \/[^ ]
 HEREDOCS   = [^\r\n]
 JAVASCRIPT = [^`]+
 %state NOUN, DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING, REGULAR_EXPRESSION, VERB, REGULAR_EXPRESSION_FLAG, NOUN_OR_VERB, JAVASCRIPT, HEREDOCS
@@ -79,7 +80,7 @@ JAVASCRIPT = [^`]+
     <YYINITIAL,NOUN> "&&"       |
     <YYINITIAL,NOUN> "||"       |
     <YYINITIAL,NOUN> "?"        |
-    "/"        |
+    <YYINITIAL,NOUN> "/"        |
     "++"                        |
     "&"                         |
     "|"                         |
@@ -166,7 +167,7 @@ JAVASCRIPT = [^`]+
 
 <NOUN> {
     "="                         { return Tokens.ASSIGNMENT; }
-    "/"                         { yybegin(REGULAR_EXPRESSION); return Tokens.REGULAR_EXPRESSION; }
+    {REGULAR_EXPRESSION_START}  { yypushback(1); yybegin(REGULAR_EXPRESSION); return Tokens.REGULAR_EXPRESSION; }
 }
 
 <REGULAR_EXPRESSION> {

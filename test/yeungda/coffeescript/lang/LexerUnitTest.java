@@ -266,6 +266,11 @@ public class LexerUnitTest {
         }
 
         @Test
+        public void halfAssignments() {
+            assertThat(lexing("foo:/ bar"), tokenisedTo(IDENTIFIER, ASSIGNMENT, OPERATOR, WHITESPACE, IDENTIFIER));            
+        }
+
+        @Test
         public void regexes() {
             assertThat(lexing("foo:/"), tokenisedTo(IDENTIFIER, ASSIGNMENT, REGULAR_EXPRESSION));
             assertThat(lexing("foo=/"), tokenisedTo(IDENTIFIER, ASSIGNMENT, REGULAR_EXPRESSION));
