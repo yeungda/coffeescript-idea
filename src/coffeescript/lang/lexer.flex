@@ -192,18 +192,19 @@ JAVASCRIPT = [^`]+
 }
 <DOUBLE_QUOTE_STRING> {
     \"                             { yybegin(VERB); return Tokens.STRING; }
-    "\\\""                         { return Tokens.STRING_LITERAL; }
     {CHARACTERS_IN_DOUBLE_QUOTES}  { return Tokens.STRING; }
 }
 
 <SINGLE_QUOTE_STRING> {
     \'                             { yybegin(VERB); return Tokens.STRING; }
-    "\\'"                          { return Tokens.STRING_LITERAL; }
     {CHARACTERS_IN_SINGLE_QUOTES}  { return Tokens.STRING; }
 }
 
 <DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING> {
     "\\n"                          |
+    "\\t"                          |
+    "\\'"                          |
+    "\\\""                          |
     "\\\\"                         { return Tokens.STRING_LITERAL; }
     "\n"                           |
     "\r"                           { return Tokens.LINE_TERMINATOR; }

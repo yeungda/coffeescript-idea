@@ -34,21 +34,23 @@ public class LexerUnitTest {
 
     @Test
     public void strings() {
-        assertThat(lexing("\"x\""), tokenisedTo(STRING, STRING, STRING));
-        assertThat(lexing("'x'"), tokenisedTo(STRING, STRING, STRING));
-        assertThat(lexing("\"\\\""), tokenisedTo(STRING, STRING_LITERAL));
-        assertThat(lexing("'\\'"), tokenisedTo(STRING, STRING_LITERAL));
         assertThat(lexing("\""), tokenisedTo(STRING));
-        assertThat(lexing("\"\\\\"), tokenisedTo(STRING, STRING_LITERAL));
-        assertThat(lexing("\"\\x"), tokenisedTo(STRING, BAD_CHARACTER));
-        assertThat(lexing("\"\\n"), tokenisedTo(STRING, STRING_LITERAL));
-        assertThat(lexing("'\\\\"), tokenisedTo(STRING, STRING_LITERAL));
-        assertThat(lexing("'\\x"), tokenisedTo(STRING, BAD_CHARACTER));
-        assertThat(lexing("'\\n"), tokenisedTo(STRING, STRING_LITERAL));
-        assertThat(lexing("\"\n"), tokenisedTo(STRING, LINE_TERMINATOR));
-        assertThat(lexing("'\n"), tokenisedTo(STRING, LINE_TERMINATOR));
+        assertStringHas("x", STRING);
+        assertStringHas("\\\'", STRING_LITERAL);
+        assertStringHas("\\\"", STRING_LITERAL);
+        assertStringHas("\\t", STRING_LITERAL);
+        assertStringHas("\\\\", STRING_LITERAL);
+        assertStringHas("\\n", STRING_LITERAL);
+        assertStringHas("\\n", STRING_LITERAL);
+        assertStringHas("\\x", BAD_CHARACTER);
+        assertStringHas("\n", LINE_TERMINATOR);
         assertInitialNounOfTwoTokens("\"\"", STRING, STRING);
         assertInitialNounOfTwoTokens("''", STRING, STRING);
+    }
+
+    private void assertStringHas(String character, IElementType token) {
+        assertThat(lexing("\"" + character), tokenisedTo(STRING, token));
+        assertThat(lexing("'" + character), tokenisedTo(STRING, token));
     }
 
     @Test

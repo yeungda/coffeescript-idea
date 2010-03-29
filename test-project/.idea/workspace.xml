@@ -87,19 +87,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="potion.coffee" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="potion.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/examples/potion.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="145" column="35" selection-start="2395" selection-end="2395" vertical-scroll-proportion="0.0">
+            <state line="145" column="35" selection-start="2395" selection-end="2395" vertical-scroll-proportion="-0.10743801">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="underscore.coffee" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="underscore.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/underscore.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="242" column="61" selection-start="8449" selection-end="8449" vertical-scroll-proportion="-6.107438">
+            <state line="243" column="61" selection-start="8497" selection-end="8497" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -436,16 +436,16 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/potion.coffee">
+    <entry file="file://$PROJECT_DIR$/examples/underscore.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="35" selection-start="2395" selection-end="2395" vertical-scroll-proportion="0.0">
+        <state line="243" column="61" selection-start="8497" selection-end="8497" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/underscore.coffee">
+    <entry file="file://$PROJECT_DIR$/examples/potion.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="242" column="61" selection-start="8449" selection-end="8449" vertical-scroll-proportion="-6.107438">
+        <state line="145" column="35" selection-start="2395" selection-end="2395" vertical-scroll-proportion="-0.10743801">
           <folding />
         </state>
       </provider>
