@@ -137,9 +137,9 @@ public class LexerUnitTest {
         assertThat("preNoun [" + preNoun + "]", lexing(preNoun + " " + NOUN), tokenisedTo(preNounToken, WHITESPACE, AnyToken.NOUN));
     }
 
-    static void assertVerbalPreposition(String verbalPreposition, IElementType token) {
-        assertVerb(verbalPreposition, token);
-        assertPreNoun(verbalPreposition, token);
+    static void assertVerbalPreNoun(String verbalPreNoun, IElementType token) {
+        assertVerb(verbalPreNoun, token);
+        assertPreNoun(verbalPreNoun, token);
     }
 
     static void assertTextualVerbalPreNoun(String textualVerbalPreNoun, IElementType token) {
@@ -147,9 +147,9 @@ public class LexerUnitTest {
         assertPreNoun(textualVerbalPreNoun, token);
     }
 
-    private static void assertTextualVerb(String textualVerbalPreposition, IElementType token) {
-        assertThat(lexing(NOUN + " " + textualVerbalPreposition), tokenisedTo(AnyToken.NOUN, WHITESPACE, token));
-        assertThat(lexing(NOUN + " " + textualVerbalPreposition + " " + NOUN), tokenisedTo(AnyToken.NOUN, WHITESPACE, token, WHITESPACE, AnyToken.NOUN));
+    private static void assertTextualVerb(String textualVerbalVerb, IElementType token) {
+        assertThat(lexing(NOUN + " " + textualVerbalVerb), tokenisedTo(AnyToken.NOUN, WHITESPACE, token));
+        assertThat(lexing(NOUN + " " + textualVerbalVerb + " " + NOUN), tokenisedTo(AnyToken.NOUN, WHITESPACE, token, WHITESPACE, AnyToken.NOUN));
     }
 
     static void assertLastLineElement(String lastLineElement, IElementType token) {
@@ -158,7 +158,7 @@ public class LexerUnitTest {
         assertThat(lexing(NOUN + VERB + lastLineElement), tokenisedTo(AnyToken.NOUN, AnyToken.VERB, token));
     }
 
-    static void assertNounalPreverb(String nounalPreverb, IElementType token) {
+    static void assertNounalPreVerb(String nounalPreverb, IElementType token) {
         assertPreverb(nounalPreverb, token);
         assertInitialNoun(nounalPreverb, token);
     }
@@ -172,20 +172,26 @@ public class LexerUnitTest {
 
         @Test
         public void operators() {
-            assertVerbalPreposition("+", OPERATOR);
-            assertVerbalPreposition("-", OPERATOR);
-            assertVerbalPreposition("*", OPERATOR);
+            assertVerbalPreNoun("+", OPERATOR);
+            assertVerbalPreNoun("-", OPERATOR);
+            assertVerbalPreNoun("*", OPERATOR);
             assertVerb("&", OPERATOR);
-            assertVerbalPreposition("&&", OPERATOR);
+            assertVerbalPreNoun("&&", OPERATOR);
             assertVerb("|", OPERATOR);
-            assertVerbalPreposition("||", OPERATOR);
+            assertVerbalPreNoun("||", OPERATOR);
             assertVerb("/", OPERATOR);
-            assertVerbalPreposition("%", OPERATOR);
+            assertVerbalPreNoun("%", OPERATOR);
             assertVerb("<", OPERATOR);
             assertVerb(">", OPERATOR);
             assertVerb("::", OPERATOR);
-            assertVerb("!", OPERATOR);
-            assertVerbalPreposition("?", OPERATOR);
+            assertVerbalPreNoun("!", OPERATOR);
+            assertVerbalPreNoun("!!", OPERATOR);
+            assertVerb("^", OPERATOR);
+            assertVerb("~", OPERATOR);
+            assertVerb("<<", OPERATOR);
+            assertVerb(">>", OPERATOR);
+            assertVerb(">>>", OPERATOR);
+            assertVerbalPreNoun("?", OPERATOR);
             assertVerb("==", OPERATOR);
             assertVerb(">=", OPERATOR);
             assertVerb("<=", OPERATOR);
@@ -251,7 +257,7 @@ public class LexerUnitTest {
         public void objectLiteral() {
             assertPreNoun("{", BRACE);
             assertInitialNoun("}", BRACE);
-            assertNounalPreverb("}", BRACE);
+            assertNounalPreVerb("}", BRACE);
             assertThat(lexing("{x:1}"), tokenisedTo(BRACE, IDENTIFIER, ASSIGNMENT, NUMBER, BRACE));
             assertThat(lexing("  window:  {width: 200, height: 200}"), not(hasItem(BAD_CHARACTER)));
         }
@@ -355,18 +361,18 @@ public class LexerUnitTest {
             assertThat(lexing("()"), tokenisedTo(PARENTHESIS, PARENTHESIS));
             assertThat(lexing("(\"\")"), tokenisedTo(PARENTHESIS, STRING, STRING, PARENTHESIS));
             assertThat(lexing("('')"), tokenisedTo(PARENTHESIS, STRING, STRING, PARENTHESIS));
-            assertNounalPreverb(")", PARENTHESIS);
+            assertNounalPreVerb(")", PARENTHESIS);
         }
 
         @Test
         public void accessors() {
-            assertVerbalPreposition("@", ACCESSOR);
+            assertVerbalPreNoun("@", ACCESSOR);
         }
 
         @Test
         public void brackets() {
-            assertNounalPreverb("]", BRACKET);
-            assertVerbalPreposition("[", BRACKET);
+            assertNounalPreVerb("]", BRACKET);
+            assertVerbalPreNoun("[", BRACKET);
         }
 
         @Test
@@ -383,8 +389,8 @@ public class LexerUnitTest {
 
         @Test
         public void functions() {
-            assertVerbalPreposition("->", FUNCTION);
-            assertVerbalPreposition("=>", FUNCTION);
+            assertVerbalPreNoun("->", FUNCTION);
+            assertVerbalPreNoun("=>", FUNCTION);
         }
 
         @Test
@@ -397,12 +403,17 @@ public class LexerUnitTest {
             assertLastLineElement("#", COMMENT);
             assertLastLineElement("# ", COMMENT);
             assertLastLineElement("#x", COMMENT);
+            assertThat(lexing("#x\n x"), tokenisedTo(COMMENT, LINE_TERMINATOR, WHITESPACE, IDENTIFIER));
         }
 
         @Test
         public void lineTerminators() {
             assertLastLineElement("\r", LINE_TERMINATOR);
             assertLastLineElement("\n", LINE_TERMINATOR);
+            assertThat(lexing(NOUN + "\n" + NOUN), tokenisedTo(AnyToken.NOUN, LINE_TERMINATOR, AnyToken.NOUN));
+            assertThat(lexing(NOUN + "\r" + NOUN), tokenisedTo(AnyToken.NOUN, LINE_TERMINATOR, AnyToken.NOUN));
+            assertThat(lexing(NOUN + "\n."), tokenisedTo(AnyToken.NOUN, LINE_TERMINATOR, DOT));
+            assertThat(lexing(NOUN + "\r."), tokenisedTo(AnyToken.NOUN, LINE_TERMINATOR, DOT));
         }
 
     }
@@ -421,6 +432,10 @@ public class LexerUnitTest {
             lexer.advance();
         }
         return tokenTypes;
+    }
+
+    static Matcher<Iterable<IElementType>> tokenisedWithoutBadCharacters() {
+        return not(hasItem(BAD_CHARACTER));
     }
 
     public static class AnyToken {

@@ -59,53 +59,7 @@
   </component>
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="blocks.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/blocks.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="code.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/code.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="51" selection-start="243" selection-end="243" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="poignant.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/poignant.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="potion.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/potion.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="102" column="4" selection-start="1720" selection-end="1720" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="underscore.coffee" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/examples/underscore.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="450" column="4" selection-start="15002" selection-end="15002" vertical-scroll-proportion="0.59504133">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -127,6 +81,7 @@
         <option value="$PROJECT_DIR$/heredocs.coffee" />
         <option value="$PROJECT_DIR$/variable_assignment.coffee" />
         <option value="$PROJECT_DIR$/examples/potion.coffee" />
+        <option value="$PROJECT_DIR$/examples/underscore.coffee" />
       </list>
     </option>
   </component>
@@ -165,9 +120,9 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Favorites" />
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -197,6 +152,42 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="examples" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test-project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test-project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="examples" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="computer_science" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test-project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test-project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="examples" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="beautiful_code" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -367,86 +358,114 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/identifier.coffee">
+    <entry file="file://$PROJECT_DIR$/examples/underscore.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/keywords.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="8" selection-start="77" selection-end="77" vertical-scroll-proportion="0.31683168" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/numbers.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reserved-words.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/strings.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="1" selection-start="136" selection-end="136" vertical-scroll-proportion="0.20792079" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/heredocs.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="9" selection-start="78" selection-end="78" vertical-scroll-proportion="0.0661157" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/separators.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="8" selection-end="8" vertical-scroll-proportion="0.0661157" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/operators.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="7" selection-start="82" selection-end="82" vertical-scroll-proportion="0.23140496" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/all.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="42" selection-start="1823" selection-end="1823" vertical-scroll-proportion="-7.132231" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/variable_assignment.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="4" selection-start="86" selection-end="86" vertical-scroll-proportion="0.18181819" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/blocks.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/code.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="51" selection-start="243" selection-end="243" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/poignant.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/potion.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="4" selection-start="1720" selection-end="1720" vertical-scroll-proportion="0.0">
+        <state line="20" column="0" selection-start="646" selection-end="646" vertical-scroll-proportion="-9.776859">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/underscore.coffee">
+    <entry file="file://$PROJECT_DIR$/examples/web_server.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="450" column="4" selection-start="15002" selection-end="15002" vertical-scroll-proportion="0.59504133">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/potion.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="102" column="4" selection-start="1720" selection-end="1720" vertical-scroll-proportion="0.3553719">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/poignant.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-2.1570249">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/code.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="51" selection-start="243" selection-end="243" vertical-scroll-proportion="-1.7603306">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/blocks.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.041322313">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/computer_science/binary_search.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/computer_science/bubble_sort.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/computer_science/linked_list.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/computer_science/luhn_algorithm.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/computer_science/merge_sort.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/computer_science/selection_sort.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/beautiful_code/binary_search.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/beautiful_code/quicksort_runtime.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/beautiful_code/regular_expression_matcher.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="20" selection-start="151" selection-end="151" vertical-scroll-proportion="0.0661157">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/all.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-7.892562">
           <folding />
         </state>
       </provider>

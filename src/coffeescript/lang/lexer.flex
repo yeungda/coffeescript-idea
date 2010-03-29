@@ -85,8 +85,14 @@ JAVASCRIPT = [^`]+
     "--"                        |
     "<"                         |
     ">"                         |
+    "^"                         |
+    "~"                         |
+    "<<"                        |
+    ">>"                        |
+    ">>>"                       |
     "::"                        |
-    "!"                         |
+    <YYINITIAL,NOUN> "!"        |
+    <YYINITIAL,NOUN> "!!"       |
     "!="                        |
     "=="                        |
     "<="                        |
@@ -118,7 +124,7 @@ JAVASCRIPT = [^`]+
     "("                         { yybegin(NOUN); return Tokens.PARENTHESIS; }
     "["                         { yybegin(NOUN); return Tokens.BRACKET; }
     {WS}                        { return Tokens.WHITESPACE; }
-    {LINE_TERMINATOR}           { yybegin(YYINITIAL); return Tokens.LINE_TERMINATOR; }
+    {LINE_TERMINATOR}           { yybegin(NOUN_OR_VERB); return Tokens.LINE_TERMINATOR; }
     {COMMENT}                   { return Tokens.COMMENT; }
     "->"                        |
     "=>"                        { yybegin(NOUN); return Tokens.FUNCTION; }
