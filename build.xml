@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
    Copyright 2010 David Yeung
 
@@ -13,7 +14,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="CoffeeScript" default="generate-lexer">
     <property name="idea.home" value="${basedir}/../idea"/>
 
@@ -85,8 +85,8 @@
 
     <target name="jar" depends="unit-test">
         <jar file="${basedir}/target/coffeescript.jar" compress="true">
-            <zipfileset dir="${basedir}/target/classes">
-            </zipfileset>
+            <metainf file="LICENSE"/>
+            <zipfileset dir="${basedir}/target/classes"/>
         </jar>
     </target>
 </project>
