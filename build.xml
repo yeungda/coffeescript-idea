@@ -14,7 +14,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<project name="CoffeeScript" default="generate-lexer">
+<project name="coffeescript-idea" default="generate-lexer">
+    <property name="version" value="0.1"/>
     <property name="idea.home" value="${basedir}/../idea"/>
 
     <taskdef name="javac2" classname="com.intellij.ant.Javac2">
@@ -83,8 +84,8 @@
         <fail if="unit-test.fail" message="unit tests failed see ${basedir}/target/test-reports"/>
     </target>
 
-    <target name="jar" depends="unit-test">
-        <jar file="${basedir}/target/coffeescript.jar" compress="true">
+    <target name="jar" depends="unit-test" description="build jar">
+        <jar file="${basedir}/target/coffeescript-idea.${version}.jar" compress="true">
             <metainf dir="${basedir}" includes="LICENSE,NOTICE"/>
             <zipfileset dir="${basedir}/target/classes"/>
         </jar>

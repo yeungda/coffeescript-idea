@@ -14,9 +14,9 @@
    limitations under the License.
 -->
 <idea-plugin version="2">
-  <name>CoffeeScript Plugin</name>
+  <name>coffeescript-idea</name>
   <description>Syntax highlighting for CoffeeScript</description>
-  <version>1.0</version>
+  <version>0.1</version>
   <vendor>David Yeung</vendor>
   <idea-version since-build="8000"/>
 
