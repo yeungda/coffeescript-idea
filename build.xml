@@ -85,7 +85,7 @@
 
     <target name="jar" depends="unit-test">
         <jar file="${basedir}/target/coffeescript.jar" compress="true">
-            <metainf file="LICENSE"/>
+            <metainf dir="${basedir}" includes="LICENSE,NOTICE"/>
             <zipfileset dir="${basedir}/target/classes"/>
         </jar>
     </target>
