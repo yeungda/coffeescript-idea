@@ -232,10 +232,10 @@ public class LexerUnitTest {
 
         @Test
         public void separators() {
-            assertThat(lexing(NOUN + "."), tokenisedTo(AnyToken.NOUN, DOT));
-            assertThat(lexing(NOUN + ","), tokenisedTo(AnyToken.NOUN, COMMA));
-            assertThat(lexing(NOUN + "." + NOUN), tokenisedTo(AnyToken.NOUN, DOT, AnyToken.NOUN));
-            assertThat(lexing(NOUN + "," + NOUN), tokenisedTo(AnyToken.NOUN, COMMA, AnyToken.NOUN));
+            assertThat(lexing("x" + "."), tokenisedTo(IDENTIFIER, DOT));
+            assertThat(lexing("x" + ","), tokenisedTo(IDENTIFIER, COMMA));
+            assertThat(lexing("x" + "." + "x"), tokenisedTo(IDENTIFIER, DOT, IDENTIFIER));
+            assertThat(lexing("x" + "," + "x"), tokenisedTo(IDENTIFIER, COMMA, IDENTIFIER));
         }
 
     }
@@ -342,7 +342,6 @@ public class LexerUnitTest {
             assertPreNoun("break", KEYWORD);
             assertPreNoun("continue", KEYWORD);
             assertTextualVerb("in", KEYWORD);
-            assertPreNoun("while", KEYWORD);
             assertPreNoun("delete", KEYWORD);
             assertPreNoun("instanceof", KEYWORD);
             assertPreNoun("typeof", KEYWORD);
@@ -398,6 +397,7 @@ public class LexerUnitTest {
             assertTextualVerbalPreNoun("not", KEYWORD);
             assertTextualVerbalPreNoun("unless", KEYWORD);
             assertTextualVerbalPreNoun("for", KEYWORD);
+            assertTextualVerbalPreNoun("while", KEYWORD);
         }
 
         @Test
@@ -453,13 +453,13 @@ public class LexerUnitTest {
 
     public static class AnyToken {
         private static final IElementType VERB = OPERATOR;
-        private static final IElementType NOUN = Tokens.IDENTIFIER;
+        private static final IElementType NOUN = NUMBER;
     }
 
     public static class AnyString {
 
         public static final String VERB = "+";
-        public static final String NOUN = "x";
+        public static final String NOUN = "1";
         private static final String OPERATOR = "+";
     }
 }

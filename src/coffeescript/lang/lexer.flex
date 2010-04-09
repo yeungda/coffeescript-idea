@@ -134,6 +134,7 @@ JAVASCRIPT = [^`]+
     "or"                        |
     "is"                        |
     "isnt"                      |
+    "while"                     |
     "not"                       { yybegin(NOUN); return Tokens.KEYWORD; }
     "for"                       { yybegin(NOUN); return Tokens.KEYWORD; }
     "("                         { yybegin(NOUN); return Tokens.PARENTHESIS; }
@@ -156,7 +157,6 @@ JAVASCRIPT = [^`]+
     "throw"                     |
     "break"                     |
     "continue"                  |
-    "while"                     |
     "delete"                    |
     "instanceof"                |
     "typeof"                    |
