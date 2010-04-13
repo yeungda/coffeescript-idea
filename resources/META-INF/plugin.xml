@@ -13,13 +13,15 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<idea-plugin version="2">
+<idea-plugin version="2" url="http://yeungda.github.com/coffeescript-idea/">
   <name>coffeescript-idea</name>
   <description>Syntax highlighting for CoffeeScript</description>
-  <version>0.1</version>
+  <version>${version}</version>
   <vendor>David Yeung</vendor>
-  <idea-version since-build="8000"/>
 
+  <idea-version since-build="8000"/>
+  <!--magic incantation to enable plugin for non intellij ides like rubymine and webide-->
+  <depends>com.intellij.modules.xml</depends>
   <application-components>
     <!-- Add your application components here -->
       <component>

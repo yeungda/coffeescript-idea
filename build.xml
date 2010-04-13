@@ -15,8 +15,13 @@
   ~ limitations under the License.
   -->
 <project name="coffeescript-idea" default="generate-lexer">
-    <property name="version" value="0.1"/>
     <property name="idea.home" value="${basedir}/../idea"/>
+
+    <target name="bootstrap">
+        <exec executable="${basedir}/VERSION-GEN" dir="${basedir}" outputproperty="version"/>
+
+        <echo message="${version}"/>
+    </target>
 
     <taskdef name="javac2" classname="com.intellij.ant.Javac2">
         <classpath refid="idea.classpath"/>
@@ -47,7 +52,7 @@
         <delete dir="${basedir}/target"/>
     </target>
 
-    <target name="init" depends="clean">
+    <target name="init" depends="clean, bootstrap">
         <mkdir dir="${basedir}/target/classes"/>
         <mkdir dir="${basedir}/target/test-classes"/>
         <mkdir dir="${basedir}/target/junit"/>
@@ -57,6 +62,7 @@
     <target name="resources" depends="init, generate-lexer">
         <copy todir="${basedir}/target/classes">
             <fileset dir="${basedir}/resources"/>
+            <filterchain ><expandproperties/></filterchain>
         </copy>
     </target>
 
@@ -85,9 +91,15 @@
     </target>
 
     <target name="jar" depends="unit-test" description="build jar">
-        <jar file="${basedir}/target/coffeescript-idea.${version}.jar" compress="true">
+        <mkdir dir="${basedir}/target/jar"/>
+        <jar file="${basedir}/target/jar/coffeescript-idea.${version}.jar" compress="true">
             <metainf dir="${basedir}" includes="LICENSE,NOTICE"/>
             <zipfileset dir="${basedir}/target/classes"/>
         </jar>
+    </target>
+
+    <target  name="install-in-rubymine-on-mac" description="deploy built jar to existing rubymine 2.0 installation">
+        <delete dir="${user.home}/Library/Application Support/RubyMine20" includes="coffeescript-idea*.jar"/>
+        <copy todir="${user.home}/Library/Application Support/RubyMine20"><fileset dir="${basedir}/target/jar" includes="*.jar"/></copy>
     </target>
 </project>
