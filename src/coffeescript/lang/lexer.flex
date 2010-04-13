@@ -71,7 +71,6 @@ JAVASCRIPT = [^`]+
     "with"      |
     "const"     |
     "let"       |
-    "debugger"  |
     "enum"      |
     "export"    |
     "import"    |

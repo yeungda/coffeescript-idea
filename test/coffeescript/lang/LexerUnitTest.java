@@ -110,7 +110,6 @@ public class LexerUnitTest {
         assertThat(lexing("with"), tokenisedTo(RESERVED_WORD));
         assertThat(lexing("const"), tokenisedTo(RESERVED_WORD));
         assertThat(lexing("let"), tokenisedTo(RESERVED_WORD));
-        assertThat(lexing("debugger"), tokenisedTo(RESERVED_WORD));
         assertThat(lexing("enum"), tokenisedTo(RESERVED_WORD));
         assertThat(lexing("export"), tokenisedTo(RESERVED_WORD));
         assertThat(lexing("import"), tokenisedTo(RESERVED_WORD));
