@@ -91,7 +91,8 @@ JAVASCRIPT      = [^`]+
     "import"                    |
     "native"                    |
     "__extends"                 |
-    "__hasProp"                 { return CoffeeScriptTokenTypes.RESERVED_WORD; }
+    "__hasProp"                 |
+    "__slice"                   { return CoffeeScriptTokenTypes.RESERVED_WORD; }
     {LINE_TERMINATOR}           { return CoffeeScriptTokenTypes.LINE_TERMINATOR; }
 }
 
