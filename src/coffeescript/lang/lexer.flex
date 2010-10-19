@@ -198,7 +198,6 @@ JAVASCRIPT = [^`]+
     \"                          { yybegin(DOUBLE_QUOTE_STRING); return Tokens.STRING; }
     "\"\"\""                    |
     "'''"                       { yybegin(HEREDOCS); return Tokens.HEREDOCS; }
-    "###"                       { yybegin(BLOCK_COMMENT); return Tokens.BLOCK_COMMENT; }
     \'                          { yybegin(SINGLE_QUOTE_STRING); return Tokens.STRING; }
     "`"                         { yybegin(JAVASCRIPT); return Tokens.JAVASCRIPT; }
 
