@@ -40,37 +40,37 @@ public class SyntaxHighlighter extends SyntaxHighlighterBase {
             SyntaxHighlighterColors.NUMBER.getDefaultAttributes()
     );
 
-    private static final TextAttributesKey OPERATOR = TextAttributesKey.createTextAttributesKey(
+    static final TextAttributesKey OPERATOR = TextAttributesKey.createTextAttributesKey(
             "COFFEESCRIPT.OPERATOR",
             SyntaxHighlighterColors.OPERATION_SIGN.getDefaultAttributes()
     );
 
-    private static final TextAttributesKey ASSIGNMENT = TextAttributesKey.createTextAttributesKey(
+    static final TextAttributesKey ASSIGNMENT = TextAttributesKey.createTextAttributesKey(
             "COFFEESCRIPT.ASSIGNMENT",
             SyntaxHighlighterColors.OPERATION_SIGN.getDefaultAttributes()
     );
 
-    private static final TextAttributesKey COMMENT = TextAttributesKey.createTextAttributesKey(
+    static final TextAttributesKey COMMENT = TextAttributesKey.createTextAttributesKey(
             "COFFEESCRIPT.COMMENT",
             SyntaxHighlighterColors.LINE_COMMENT.getDefaultAttributes()
     );
 
-    private static final TextAttributesKey STRING = TextAttributesKey.createTextAttributesKey(
+    static final TextAttributesKey STRING = TextAttributesKey.createTextAttributesKey(
             "COFFEESCRIPT.STRING",
             SyntaxHighlighterColors.STRING.getDefaultAttributes()
     );
 
-    private static final TextAttributesKey STRING_LITERAL = TextAttributesKey.createTextAttributesKey(
+    static final TextAttributesKey STRING_LITERAL = TextAttributesKey.createTextAttributesKey(
             "COFFEESCRIPT.STRING",
             SyntaxHighlighterColors.VALID_STRING_ESCAPE.getDefaultAttributes()
     );
 
-    private static final TextAttributesKey KEYWORD = TextAttributesKey.createTextAttributesKey(
+    static final TextAttributesKey KEYWORD = TextAttributesKey.createTextAttributesKey(
             "COFFEESCRIPT.KEYWORD",
             SyntaxHighlighterColors.KEYWORD.getDefaultAttributes()
     );
 
-    private static final TextAttributesKey RESERVED_WORD = TextAttributesKey.createTextAttributesKey(
+    static final TextAttributesKey RESERVED_WORD = TextAttributesKey.createTextAttributesKey(
             "COFFEESCRIPT.BAD_KEYWORD",
             HighlighterColors.BAD_CHARACTER.getDefaultAttributes()
     );
