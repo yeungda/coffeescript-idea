@@ -79,6 +79,16 @@ public class LexerUnitTest {
         assertThat(lexing("'''\n\n'''"), tokenisedTo(HEREDOCS, LINE_TERMINATOR, LINE_TERMINATOR, HEREDOCS));
     }
 
+    @Test
+    public void doubleQuatedHeredocs() {
+        assertInitialNounOfTwoTokens("\"\"\"\"\"\"", HEREDOCS, HEREDOCS);
+        assertThat(lexing("\"\"\"a"), tokenisedTo(HEREDOCS, HEREDOCS));
+        assertThat(lexing("\"\"\"\""), tokenisedTo(HEREDOCS, HEREDOCS));
+        assertThat(lexing("\"\"\"\n"), tokenisedTo(HEREDOCS, LINE_TERMINATOR));
+        assertThat(lexing("\"\"\"\r"), tokenisedTo(HEREDOCS, LINE_TERMINATOR));
+        assertThat(lexing("\"\"\"\n\n\"\"\""), tokenisedTo(HEREDOCS, LINE_TERMINATOR, LINE_TERMINATOR, HEREDOCS));
+    }
+
     static void assertInitialNounOfTwoTokens(String initialNoun, IElementType startToken, IElementType endToken) {
         assertThat(lexing(initialNoun), tokenisedTo(startToken, endToken));
         assertThat(lexing("(" + initialNoun), tokenisedTo(PARENTHESIS, startToken, endToken));
@@ -122,7 +132,7 @@ public class LexerUnitTest {
     public void separators() {
         assertThat(lexing(";"), tokenisedTo(SEMI_COLON));
         assertVerb(";", SEMI_COLON);
-        assertThat(lexing("x:1;y"), tokenisedTo(IDENTIFIER, ASSIGNMENT, NUMBER, SEMI_COLON, IDENTIFIER));
+        assertThat(lexing("x=1;y"), tokenisedTo(IDENTIFIER, ASSIGNMENT, NUMBER, SEMI_COLON, IDENTIFIER));
     }
 
     @Test
@@ -220,7 +230,6 @@ public class LexerUnitTest {
             assertThat(lexing("foo+="), tokenisedTo(IDENTIFIER, OPERATOR, ASSIGNMENT));
             assertThat(lexing("foo-="), tokenisedTo(IDENTIFIER, OPERATOR, ASSIGNMENT));
             assertThat(lexing("foo="), tokenisedTo(IDENTIFIER, ASSIGNMENT));
-            assertThat(lexing("foo:"), tokenisedTo(IDENTIFIER, ASSIGNMENT));
         }
 
         @Test
@@ -251,14 +260,14 @@ public class LexerUnitTest {
 
         @Test
         public void whitespace() {
-            assertThat(lexing("foo: "), tokenisedTo(IDENTIFIER, ASSIGNMENT, WHITESPACE));
+            assertThat(lexing("foo= "), tokenisedTo(IDENTIFIER, ASSIGNMENT, WHITESPACE));
         }
 
         @Test
         public void identifiers() {
             assertThat(lexing("x" + VERB), tokenisedTo(IDENTIFIER, AnyToken.VERB));
             assertThat(lexing("\nx"), tokenisedTo(LINE_TERMINATOR, IDENTIFIER));
-            assertThat(lexing("x:y"), tokenisedTo(IDENTIFIER, ASSIGNMENT, IDENTIFIER));
+            assertThat(lexing("x=y"), tokenisedTo(IDENTIFIER, ASSIGNMENT, IDENTIFIER));
         }
 
     }

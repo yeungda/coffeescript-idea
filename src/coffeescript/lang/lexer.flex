@@ -181,6 +181,7 @@ JAVASCRIPT = [^`]+
     "{"                         { yybegin(NOUN); return Tokens.BRACE; }
     ")"                         { yybegin(VERB); return Tokens.PARENTHESIS; }
     \"                          { yybegin(DOUBLE_QUOTE_STRING); return Tokens.STRING; }
+    "\"\"\""                    |
     "'''"                       { yybegin(HEREDOCS); return Tokens.HEREDOCS; }
     \'                          { yybegin(SINGLE_QUOTE_STRING); return Tokens.STRING; }
     "`"                         { yybegin(JAVASCRIPT); return Tokens.JAVASCRIPT; }
@@ -237,7 +238,8 @@ JAVASCRIPT = [^`]+
 <HEREDOCS> {
     {HEREDOCS}                      { return Tokens.HEREDOCS; }
     {LINE_TERMINATOR}               { return Tokens.LINE_TERMINATOR; }
-    "'''"                           { yybegin(VERB);  return Tokens.HEREDOCS;}
+    "'''"                           |
+    "\"\"\""                        { yybegin(VERB);  return Tokens.HEREDOCS;}
 }
 
 .                                  { yybegin(YYINITIAL);   return Tokens.BAD_CHARACTER; }
