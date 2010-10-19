@@ -21,6 +21,7 @@ public class ColorsPage implements ColorSettingsPage {
       new AttributesDescriptor("Operator", coffeescript.lang.SyntaxHighlighter.OPERATOR),
       new AttributesDescriptor("Assignment", coffeescript.lang.SyntaxHighlighter.ASSIGNMENT),
       new AttributesDescriptor("Comment", coffeescript.lang.SyntaxHighlighter.COMMENT),
+      new AttributesDescriptor("Block comment", coffeescript.lang.SyntaxHighlighter.BLOCK_COMMENT),
       new AttributesDescriptor("String", coffeescript.lang.SyntaxHighlighter.STRING),
       new AttributesDescriptor("String literal", coffeescript.lang.SyntaxHighlighter.STRING_LITERAL),
       new AttributesDescriptor("Keyword", coffeescript.lang.SyntaxHighlighter.KEYWORD),
@@ -53,15 +54,18 @@ public class ColorsPage implements ColorSettingsPage {
 
   @NotNull
   public String getDemoText() {
-    return "class Animal" +
-           "  constructor: (@name) -> " +
-           "  move: (meters) -> alert @name + \" moved \" + meters + \"m.\"" +
-           "" +
-           "class Snake extends Animal" +
-           "  move: -> " +
-           "    alert \"Slithering...\"" +
-           "    super 5" +
-           ""  +
+    return "###\n" +
+           "Some examples\n" +
+           "###\n" +
+           "class Animal\n" +
+           "  constructor: (@name) -> \n" +
+           "  move: (meters) -> alert @name + \" moved \" + meters + \"m.\"\n" +
+           "\n" +
+           "class Snake extends Animal\n" +
+           "  move: -> \n" +
+           "    alert \"Slithering...\"\n" +
+           "    super 5\n" +
+           "\n"  +
            "# Assignment:\n" +
            "number   = 42\n" +
            "opposite = true\n" +

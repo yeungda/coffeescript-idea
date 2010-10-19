@@ -44,33 +44,38 @@ import com.intellij.psi.tree.IElementType;
   }
 %}
 
-WS=[\ \t]+
+WS = [\ \t]+
 
-IDENTIFIER    = [a-zA-Z\$_]([a-zA-Z_0-9$])*
-NUMBER        = (0(x|X)[0-9a-fA-F]+)|([0-9]+(\.[0-9]+)?(e[+\-]?[0-9]+)?)
-INTERPOLATION = \$([a-zA-Z_@]\w*(\.\w+)*)
-OPERATOR      = ([+\*&|\/\-%=<>:!?][=+])
-WHITESPACE    = ([ \t]+)
-COMMENT       = ((([ \t]*)?#[^\n]*)+)
-CODE          = ((-|=)>)
-MULTI_DENT    = ((\n([ \t]*))+)(\.)?
-LAST_DENT     = \n([ \t]*)
-ASSIGNMENT    = (:|=|or=)
-
-CHARACTERS_IN_DOUBLE_QUOTES  = ([^\"\r\n\\]+)
-CHARACTERS_IN_SINGLE_QUOTES  = ([^\'\r\n\\]+)
 LINE_TERMINATOR = [\n\r]
 
-REGEX_START        = \/[^\/ ]
-REGEX_INTERPOLATION= ([^\\]\$[a-zA-Z_@]|[^\\]\$\{.*[^\\]\})
-REGEX_FLAGS        = [imgy]{0,4}
-REGULAR_EXPRESSION = [^/\\\r\n]+
-REGULAR_EXPRESSION_LITERAL = \\.
-REGULAR_EXPRESSION_FLAGS = [imgy]{0,4}
+IDENTIFIER     = [a-zA-Z\$_]([a-zA-Z_0-9$])*
+NUMBER         = (0(x|X)[0-9a-fA-F]+)|([0-9]+(\.[0-9]+)?(e[+\-]?[0-9]+)?)
+INTERPOLATION  = \$([a-zA-Z_@]\w*(\.\w+)*)
+OPERATOR       = ([+\*&|\/\-%=<>:!?][=+])
+WHITESPACE     = ([ \t]+)
+COMMENT        = ((([ \t]*)?#[^\n]*)+)
+BLOCK_COMMENTS = (([ \t]*)?(###)+([^]*?)(###)+)
+CODE           = ((-|=)>)
+MULTI_DENT     = ((\n([ \t]*))+)(\.)?
+LAST_DENT      = \n([ \t]*)
+ASSIGNMENT     = (:|=|or=)
+
+CHARACTERS_IN_DOUBLE_QUOTES = ([^\"\r\n\\]+)
+CHARACTERS_IN_SINGLE_QUOTES = ([^\'\r\n\\]+)
+
+REGEX_START         = \/[^\/ ]
+REGEX_INTERPOLATION = ([^\\]\$[a-zA-Z_@]|[^\\]\$\{.*[^\\]\})
+REGEX_FLAGS         = [imgy]{0,4}
+
+REGULAR_EXPRESSION            = [^/\\\r\n]+
+REGULAR_EXPRESSION_LITERAL    = \\.
+REGULAR_EXPRESSION_FLAGS      = [imgy]{0,4}
 REGULAR_EXPRESSION_TERMINATOR = \/{REGULAR_EXPRESSION_FLAGS}
-REGULAR_EXPRESSION_START = \/[^ ]
-HEREDOCS   = [^\r\n]
-JAVASCRIPT = [^`]+
+REGULAR_EXPRESSION_START      = \/[^ ]
+
+HEREDOCS        = [^\r\n]
+JAVASCRIPT      = [^`]+
+
 %state NOUN, DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING, REGULAR_EXPRESSION, VERB, REGULAR_EXPRESSION_FLAG, NOUN_OR_VERB, JAVASCRIPT, HEREDOCS
 
 %%
@@ -156,6 +161,7 @@ JAVASCRIPT = [^`]+
     "["                         { yybegin(NOUN); return Tokens.BRACKET; }
     {WS}                        { return Tokens.WHITESPACE; }
     {LINE_TERMINATOR}           { yybegin(NOUN_OR_VERB); return Tokens.LINE_TERMINATOR; }
+    {BLOCK_COMMENTS}            { return Tokens.BLOCK_COMMENT; }
     {COMMENT}                   { return Tokens.COMMENT; }
     "->"                        |
     "=>"                        { yybegin(NOUN); return Tokens.FUNCTION; }
@@ -249,7 +255,6 @@ JAVASCRIPT = [^`]+
     "\r"                           { return Tokens.LINE_TERMINATOR; }
     \\.                            { return Tokens.BAD_CHARACTER; }
 }
-
 
 <HEREDOCS> {
     {HEREDOCS}                      { return Tokens.HEREDOCS; }

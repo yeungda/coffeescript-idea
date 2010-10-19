@@ -28,11 +28,11 @@ public class Commenter implements CodeDocumentationAwareCommenter {
   }
 
   public String getBlockCommentPrefix() {
-    return null;
+    return "###";
   }
 
   public String getBlockCommentSuffix() {
-    return null;
+    return "###";
   }
 
   public String getCommentedBlockCommentPrefix() {
@@ -50,7 +50,7 @@ public class Commenter implements CodeDocumentationAwareCommenter {
 
   @Nullable
   public IElementType getBlockCommentTokenType() {
-    return null;
+    return coffeescript.lang.Tokens.BLOCK_COMMENT;
   }
 
   @Nullable

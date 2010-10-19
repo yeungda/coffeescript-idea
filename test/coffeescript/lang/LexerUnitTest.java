@@ -430,6 +430,14 @@ public class LexerUnitTest {
         }
 
         @Test
+        public void blockcomment() {
+            assertLastLineElement("### A block comment ###", BLOCK_COMMENT);
+            assertLastLineElement("###\nA block comment\n###", BLOCK_COMMENT);
+            assertLastLineElement("###\nA\n# block\n# comment\n###", BLOCK_COMMENT);
+            assertThat(lexing("x ### A block comment ###"), tokenisedTo(IDENTIFIER, BLOCK_COMMENT));
+        }
+
+        @Test
         public void lineTerminators() {
             assertLastLineElement("\r", LINE_TERMINATOR);
             assertLastLineElement("\n", LINE_TERMINATOR);

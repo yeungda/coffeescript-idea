@@ -55,6 +55,11 @@ public class SyntaxHighlighter extends SyntaxHighlighterBase {
             SyntaxHighlighterColors.LINE_COMMENT.getDefaultAttributes()
     );
 
+    static final TextAttributesKey BLOCK_COMMENT = TextAttributesKey.createTextAttributesKey(
+            "COFFEESCRIPT.BLOCK_COMMENT",
+            SyntaxHighlighterColors.LINE_COMMENT.getDefaultAttributes()
+    );
+
     static final TextAttributesKey STRING = TextAttributesKey.createTextAttributesKey(
             "COFFEESCRIPT.STRING",
             SyntaxHighlighterColors.STRING.getDefaultAttributes()
@@ -80,6 +85,7 @@ public class SyntaxHighlighter extends SyntaxHighlighterBase {
         TOKENS_TO_STYLES.put(Tokens.NUMBER, NUMBER);
         TOKENS_TO_STYLES.put(Tokens.OPERATOR, OPERATOR);
         TOKENS_TO_STYLES.put(Tokens.COMMENT, COMMENT);
+        TOKENS_TO_STYLES.put(Tokens.BLOCK_COMMENT, BLOCK_COMMENT);
         TOKENS_TO_STYLES.put(Tokens.ASSIGNMENT, ASSIGNMENT);
         TOKENS_TO_STYLES.put(Tokens.STRING, STRING);
         TOKENS_TO_STYLES.put(Tokens.IDENTIFIER, HighlighterColors.TEXT);
