@@ -42,6 +42,6 @@
       <lang.syntaxHighlighterFactory key="CoffeeScript" implementationClass="coffeescript.lang.Language$HighlighterFactory" />
       <lang.parserDefinition language="CoffeeScript" implementationClass="coffeescript.lang.ParserDefinition"/>
       <colorSettingsPage implementation="coffeescript.lang.ColorsPage"/>
-      
+      <lang.commenter language="CoffeeScript" implementationClass="coffeescript.lang.Commenter"/> 
   </extensions>
 </idea-plugin>
