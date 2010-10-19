@@ -65,8 +65,23 @@ public class CoffeeScriptSyntaxHighlighter extends SyntaxHighlighterBase {
         SyntaxHighlighterColors.LINE_COMMENT.getDefaultAttributes()
     );
 
-    static final TextAttributesKey STRING = TextAttributesKey.createTextAttributesKey(
-        "COFFEESCRIPT.STRING",
+    static final TextAttributesKey DOUBLE_QUOTE_STRING = TextAttributesKey.createTextAttributesKey(
+        "COFFEESCRIPT.DOUBLE_QUOTE_STRING",
+        SyntaxHighlighterColors.STRING.getDefaultAttributes()
+    );
+
+    static final TextAttributesKey SINGLE_QUOTE_STRING = TextAttributesKey.createTextAttributesKey(
+        "COFFEESCRIPT.SINGLE_QUOTE_STRING",
+        SyntaxHighlighterColors.STRING.getDefaultAttributes()
+    );
+
+    static final TextAttributesKey DOUBLE_QUOTE_HEREDOC = TextAttributesKey.createTextAttributesKey(
+        "COFFEESCRIPT.DOUBLE_QUOTE_HEREDOC",
+        SyntaxHighlighterColors.STRING.getDefaultAttributes()
+    );
+
+    static final TextAttributesKey SINGLE_QUOTE_HEREDOC = TextAttributesKey.createTextAttributesKey(
+        "COFFEESCRIPT.SINGLE_QUOTE_HEREDOC",
         SyntaxHighlighterColors.STRING.getDefaultAttributes()
     );
 
@@ -85,6 +100,11 @@ public class CoffeeScriptSyntaxHighlighter extends SyntaxHighlighterBase {
         HighlighterColors.BAD_CHARACTER.getDefaultAttributes()
     );
 
+    static final TextAttributesKey INTERPOLATION = TextAttributesKey.createTextAttributesKey(
+        "COFFEESCRIPT.INTERPOLATION",
+        SyntaxHighlighterColors.OPERATION_SIGN.getDefaultAttributes()
+    );
+
     static {
         TOKENS_TO_STYLES = new HashMap<IElementType, TextAttributesKey>();
         TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.NUMBER, NUMBER);
@@ -92,7 +112,8 @@ public class CoffeeScriptSyntaxHighlighter extends SyntaxHighlighterBase {
         TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.COMMENT, COMMENT);
         TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.BLOCK_COMMENT, BLOCK_COMMENT);
         TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.ASSIGNMENT, ASSIGNMENT);
-        TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.STRING, STRING);
+        TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.DOUBLE_QUOTE_STRING, DOUBLE_QUOTE_STRING);
+        TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.SINGLE_QUOTE_STRING, SINGLE_QUOTE_STRING);
         TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.IDENTIFIER, HighlighterColors.TEXT);
         TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.WHITESPACE, HighlighterColors.TEXT);
         TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.BAD_CHARACTER, HighlighterColors.BAD_CHARACTER);
@@ -113,7 +134,9 @@ public class CoffeeScriptSyntaxHighlighter extends SyntaxHighlighterBase {
         TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.JAVASCRIPT, SyntaxHighlighterColors.STRING);
         TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.FUNCTION, KEYWORD);
         TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.REGULAR_EXPRESSION_FLAG, SyntaxHighlighterColors.STRING);
-        TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.HEREDOCS, SyntaxHighlighterColors.STRING);
+        TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.DOUBLE_QUOTE_HEREDOC, DOUBLE_QUOTE_HEREDOC);
+        TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.SINGLE_QUOTE_HEREDOC, SINGLE_QUOTE_HEREDOC);
+        TOKENS_TO_STYLES.put(CoffeeScriptTokenTypes.INTERPOLATION, INTERPOLATION);
     }
 
     @NotNull

@@ -50,8 +50,7 @@ public class CoffeeScriptLexerUnitTest {
 
     @Test
     public void strings() {
-        assertThat(lexing("\""), tokenisedTo(STRING));
-        assertStringHas("x", STRING);
+        assertThat(lexing("\""), tokenisedTo(DOUBLE_QUOTE_STRING));
         assertStringHas("\\\'", STRING_LITERAL);
         assertStringHas("\\\"", STRING_LITERAL);
         assertStringHas("\\t", STRING_LITERAL);
@@ -60,33 +59,41 @@ public class CoffeeScriptLexerUnitTest {
         assertStringHas("\\n", STRING_LITERAL);
         assertStringHas("\\x", BAD_CHARACTER);
         assertStringHas("\n", LINE_TERMINATOR);
-        assertInitialNounOfTwoTokens("\"\"", STRING, STRING);
-        assertInitialNounOfTwoTokens("''", STRING, STRING);
+        assertInitialNounOfTwoTokens("\"\"", DOUBLE_QUOTE_STRING, DOUBLE_QUOTE_STRING);
+        assertInitialNounOfTwoTokens("''", SINGLE_QUOTE_STRING, SINGLE_QUOTE_STRING);
     }
 
     private void assertStringHas(String character, IElementType token) {
-        assertThat(lexing("\"" + character), tokenisedTo(STRING, token));
-        assertThat(lexing("'" + character), tokenisedTo(STRING, token));
+        assertThat(lexing("\"" + character), tokenisedTo(DOUBLE_QUOTE_STRING, token));
+        assertThat(lexing("'" + character), tokenisedTo(SINGLE_QUOTE_STRING, token));
+    }
+
+    @Test
+    public void interpolations() {
+        assertThat(lexing("'a#{@n}'"), tokenisedTo(SINGLE_QUOTE_STRING, SINGLE_QUOTE_STRING, SINGLE_QUOTE_STRING));
+        assertThat(lexing("\"b#{@n}\""), tokenisedTo(DOUBLE_QUOTE_STRING, DOUBLE_QUOTE_STRING, INTERPOLATION,  ACCESSOR, IDENTIFIER, INTERPOLATION, DOUBLE_QUOTE_STRING));
+        assertThat(lexing("'''c#{@n}'''"), tokenisedTo(SINGLE_QUOTE_HEREDOC, SINGLE_QUOTE_HEREDOC, SINGLE_QUOTE_HEREDOC, SINGLE_QUOTE_HEREDOC, SINGLE_QUOTE_HEREDOC, SINGLE_QUOTE_HEREDOC, SINGLE_QUOTE_HEREDOC, SINGLE_QUOTE_HEREDOC));
+        assertThat(lexing("\"\"\"d#{@n}\"\"\""), tokenisedTo(DOUBLE_QUOTE_HEREDOC, DOUBLE_QUOTE_HEREDOC, INTERPOLATION, ACCESSOR, IDENTIFIER, INTERPOLATION, DOUBLE_QUOTE_HEREDOC));
     }
 
     @Test
     public void heredocs() {
-        assertInitialNounOfTwoTokens("''''''", HEREDOCS, HEREDOCS);
-        assertThat(lexing("'''a"), tokenisedTo(HEREDOCS, HEREDOCS));
-        assertThat(lexing("''''"), tokenisedTo(HEREDOCS, HEREDOCS));
-        assertThat(lexing("'''\n"), tokenisedTo(HEREDOCS, LINE_TERMINATOR));
-        assertThat(lexing("'''\r"), tokenisedTo(HEREDOCS, LINE_TERMINATOR));
-        assertThat(lexing("'''\n\n'''"), tokenisedTo(HEREDOCS, LINE_TERMINATOR, LINE_TERMINATOR, HEREDOCS));
+        assertInitialNounOfTwoTokens("''''''", SINGLE_QUOTE_HEREDOC, SINGLE_QUOTE_HEREDOC);
+        assertThat(lexing("'''a"), tokenisedTo(SINGLE_QUOTE_HEREDOC, SINGLE_QUOTE_HEREDOC));
+        assertThat(lexing("''''"), tokenisedTo(SINGLE_QUOTE_HEREDOC, SINGLE_QUOTE_HEREDOC));
+        assertThat(lexing("'''\n"), tokenisedTo(SINGLE_QUOTE_HEREDOC, LINE_TERMINATOR));
+        assertThat(lexing("'''\r"), tokenisedTo(SINGLE_QUOTE_HEREDOC, LINE_TERMINATOR));
+        assertThat(lexing("'''\n\n'''"), tokenisedTo(SINGLE_QUOTE_HEREDOC, LINE_TERMINATOR, LINE_TERMINATOR, SINGLE_QUOTE_HEREDOC));
     }
 
     @Test
-    public void doubleQuatedHeredocs() {
-        assertInitialNounOfTwoTokens("\"\"\"\"\"\"", HEREDOCS, HEREDOCS);
-        assertThat(lexing("\"\"\"a"), tokenisedTo(HEREDOCS, HEREDOCS));
-        assertThat(lexing("\"\"\"\""), tokenisedTo(HEREDOCS, HEREDOCS));
-        assertThat(lexing("\"\"\"\n"), tokenisedTo(HEREDOCS, LINE_TERMINATOR));
-        assertThat(lexing("\"\"\"\r"), tokenisedTo(HEREDOCS, LINE_TERMINATOR));
-        assertThat(lexing("\"\"\"\n\n\"\"\""), tokenisedTo(HEREDOCS, LINE_TERMINATOR, LINE_TERMINATOR, HEREDOCS));
+    public void doubleQuotedHeredocs() {
+        assertInitialNounOfTwoTokens("\"\"\"\"\"\"", DOUBLE_QUOTE_HEREDOC, DOUBLE_QUOTE_HEREDOC);
+        assertThat(lexing("\"\"\"a"), tokenisedTo(DOUBLE_QUOTE_HEREDOC, DOUBLE_QUOTE_HEREDOC));
+        assertThat(lexing("\"\"\"\""), tokenisedTo(DOUBLE_QUOTE_HEREDOC, DOUBLE_QUOTE_HEREDOC));
+        assertThat(lexing("\"\"\"\n"), tokenisedTo(DOUBLE_QUOTE_HEREDOC, LINE_TERMINATOR));
+        assertThat(lexing("\"\"\"\r"), tokenisedTo(DOUBLE_QUOTE_HEREDOC, LINE_TERMINATOR));
+        assertThat(lexing("\"\"\"\n\n\"\"\""), tokenisedTo(DOUBLE_QUOTE_HEREDOC, LINE_TERMINATOR, LINE_TERMINATOR, DOUBLE_QUOTE_HEREDOC));
     }
 
     static void assertInitialNounOfTwoTokens(String initialNoun, IElementType startToken, IElementType endToken) {
@@ -98,8 +105,8 @@ public class CoffeeScriptLexerUnitTest {
 
     @Test
     public void multiLineStrings() {
-        assertThat(lexing("'\nx"), tokenisedTo(STRING, LINE_TERMINATOR, STRING));
-        assertThat(lexing("'\rx"), tokenisedTo(STRING, LINE_TERMINATOR, STRING));
+        assertThat(lexing("'\nx"), tokenisedTo(SINGLE_QUOTE_STRING, LINE_TERMINATOR, SINGLE_QUOTE_STRING));
+        assertThat(lexing("'\rx"), tokenisedTo(SINGLE_QUOTE_STRING, LINE_TERMINATOR, SINGLE_QUOTE_STRING));
     }
 
     @Test
@@ -255,10 +262,10 @@ public class CoffeeScriptLexerUnitTest {
 
         @Test
         public void strings() {
-            assertThat(lexing("(\""), tokenisedTo(PARENTHESIS, STRING));
-            assertThat(lexing("(\"\"+"), tokenisedTo(PARENTHESIS, STRING, STRING, OPERATOR));
-            assertThat(lexing("('"), tokenisedTo(PARENTHESIS, STRING));
-            assertThat(lexing("(''+"), tokenisedTo(PARENTHESIS, STRING, STRING, OPERATOR));
+            assertThat(lexing("(\""), tokenisedTo(PARENTHESIS, DOUBLE_QUOTE_STRING));
+            assertThat(lexing("(\"\"+"), tokenisedTo(PARENTHESIS, DOUBLE_QUOTE_STRING, DOUBLE_QUOTE_STRING, OPERATOR));
+            assertThat(lexing("('"), tokenisedTo(PARENTHESIS, SINGLE_QUOTE_STRING));
+            assertThat(lexing("(''+"), tokenisedTo(PARENTHESIS, SINGLE_QUOTE_STRING, SINGLE_QUOTE_STRING, OPERATOR));
         }
 
         @Test
@@ -382,8 +389,8 @@ public class CoffeeScriptLexerUnitTest {
             assertThat(lexing(NOUN + VERB + "("), tokenisedTo(AnyToken.NOUN, AnyToken.VERB, PARENTHESIS));
             assertThat(lexing("(" + NOUN), tokenisedTo(PARENTHESIS, AnyToken.NOUN));
             assertThat(lexing("()"), tokenisedTo(PARENTHESIS, PARENTHESIS));
-            assertThat(lexing("(\"\")"), tokenisedTo(PARENTHESIS, STRING, STRING, PARENTHESIS));
-            assertThat(lexing("('')"), tokenisedTo(PARENTHESIS, STRING, STRING, PARENTHESIS));
+            assertThat(lexing("(\"\")"), tokenisedTo(PARENTHESIS, DOUBLE_QUOTE_STRING, DOUBLE_QUOTE_STRING, PARENTHESIS));
+            assertThat(lexing("('')"), tokenisedTo(PARENTHESIS, SINGLE_QUOTE_STRING, SINGLE_QUOTE_STRING, PARENTHESIS));
             assertNounalPreVerb(")", PARENTHESIS);
         }
 

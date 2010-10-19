@@ -27,7 +27,8 @@ public class CoffeeScriptTokenTypes {
     public static final IElementType BLOCK_COMMENT = new CoffeeScriptElementType("BLOCK_COMMENT");
     public static final IElementType ASSIGNMENT = new CoffeeScriptElementType("ASSIGNMENT");
     public static final IElementType IDENTIFIER = new CoffeeScriptElementType("IDENTIFIER");
-    public static final IElementType STRING = new CoffeeScriptElementType("STRING");
+    public static final IElementType SINGLE_QUOTE_STRING = new CoffeeScriptElementType("SINGLE_QUOTE_STRING");
+    public static final IElementType DOUBLE_QUOTE_STRING = new CoffeeScriptElementType("DOUBLE_QUOTE_STRING");
     public static final IElementType BAD_CHARACTER = TokenType.BAD_CHARACTER;
     public static final IElementType STRING_LITERAL = new CoffeeScriptElementType("STRING_LITERAL");
     public static final IElementType LINE_TERMINATOR = new CoffeeScriptElementType("LINE_TERMINATOR");
@@ -46,5 +47,7 @@ public class CoffeeScriptTokenTypes {
     public static final IElementType JAVASCRIPT = new CoffeeScriptElementType("JAVASCRIPT");
     public static final IElementType FUNCTION = new CoffeeScriptElementType("FUNCTION");
     public static final IElementType REGULAR_EXPRESSION_FLAG = new CoffeeScriptElementType("REGULAR_EXPRESSION_FLAG");
-    public static final IElementType HEREDOCS = new CoffeeScriptElementType("HEREDOCS");
+    public static final IElementType SINGLE_QUOTE_HEREDOC = new CoffeeScriptElementType("SINGLE_QUOTE_HEREDOC");
+    public static final IElementType DOUBLE_QUOTE_HEREDOC = new CoffeeScriptElementType("DOUBLE_QUOTE_HEREDOC");
+    public static final IElementType INTERPOLATION = new CoffeeScriptElementType("INTERPOLATION");
 }

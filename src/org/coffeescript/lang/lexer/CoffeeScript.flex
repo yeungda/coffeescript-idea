@@ -19,6 +19,7 @@ package org.coffeescript.lang.lexer;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
+import java.util.Stack;
 
 %%
 
@@ -34,17 +35,28 @@ import com.intellij.psi.tree.IElementType;
 %eof}
 
 %{
-  // For Demetra compatibility
-  public void reset(CharSequence buffer, int initialState){
-    zzBuffer = buffer;
-    zzBufferArray = null;
-    zzCurrentPos = zzMarkedPos = zzStartRead = 0;
-    zzPushbackPos = 0;
-    zzAtEOF = false;
-    zzAtBOL = true;
-    zzEndRead = buffer.length();
-    yybegin(initialState);
-  }
+    private Stack<Integer> stack = new Stack<Integer>();
+
+    private void yypushState(int newState) {
+        stack.push(yystate());
+        yybegin(newState);
+    }
+
+    private void yypopState() {
+        yybegin(stack.pop());
+    }
+
+    // For Demetra compatibility
+    public void reset(CharSequence buffer, int initialState){
+        zzBuffer = buffer;
+        zzBufferArray = null;
+        zzCurrentPos = zzMarkedPos = zzStartRead = 0;
+        zzPushbackPos = 0;
+        zzAtEOF = false;
+        zzAtBOL = true;
+        zzEndRead = buffer.length();
+        yybegin(initialState);
+    }
 %}
 
 WS = [\ \t]+
@@ -60,8 +72,10 @@ BLOCK_COMMENTS = (([ \t]*)?(###)+([^]*?)(###)+)
 CODE           = ((-|=)>)
 ASSIGNMENT     = (:|=|or=)
 
-CHARACTERS_IN_DOUBLE_QUOTES = ([^\"\r\n\\]+)
+CHARACTERS_IN_DOUBLE_QUOTES = ([^#{\"\r\n\\]+)
 CHARACTERS_IN_SINGLE_QUOTES = ([^\'\r\n\\]+)
+CHARACTERS_IN_HEREDOCS      = [^\r\n]
+CHARACTERS_IN_JAVASCRIPT    = [^`]+
 
 REGULAR_EXPRESSION            = [^/\\\r\n]+
 REGULAR_EXPRESSION_LITERAL    = \\.
@@ -69,10 +83,12 @@ REGULAR_EXPRESSION_FLAGS      = [imgy]{0,4}
 REGULAR_EXPRESSION_TERMINATOR = \/{REGULAR_EXPRESSION_FLAGS}
 REGULAR_EXPRESSION_START      = \/[^ ]
 
-HEREDOCS        = [^\r\n]
-JAVASCRIPT      = [^`]+
 
-%state NOUN, DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING, REGULAR_EXPRESSION, VERB, REGULAR_EXPRESSION_FLAG, NOUN_OR_VERB, JAVASCRIPT, HEREDOCS
+%state NOUN, VERB, NOUN_OR_VERB
+%state DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING
+%state DOUBLE_QUOTE_HEREDOC, SINGLE_QUOTE_HEREDOC
+%state REGULAR_EXPRESSION, REGULAR_EXPRESSION_FLAG
+%state JAVASCRIPT, INTERPOLATION
 
 %%
 
@@ -98,7 +114,7 @@ JAVASCRIPT      = [^`]+
 
 <JAVASCRIPT> {
     "`"                         { yybegin(YYINITIAL); return CoffeeScriptTokenTypes.JAVASCRIPT; }
-    {JAVASCRIPT}                { return CoffeeScriptTokenTypes.JAVASCRIPT; }
+    {CHARACTERS_IN_JAVASCRIPT}  { return CoffeeScriptTokenTypes.JAVASCRIPT; }
 }
 
 <VERB, NOUN_OR_VERB> {
@@ -142,7 +158,7 @@ JAVASCRIPT      = [^`]+
     <YYINITIAL> ";"             { yybegin(NOUN); return CoffeeScriptTokenTypes.SEMI_COLON; }
 }
 
-<YYINITIAL, NOUN, VERB, NOUN_OR_VERB> {
+<YYINITIAL, NOUN, VERB, NOUN_OR_VERB, INTERPOLATION> {
     "@"                         { yybegin(NOUN); return CoffeeScriptTokenTypes.ACCESSOR; }
     "if"                        |
     "else"                      |
@@ -163,10 +179,16 @@ JAVASCRIPT      = [^`]+
     "->"                        |
     "=>"                        { yybegin(NOUN); return CoffeeScriptTokenTypes.FUNCTION; }
     "]"                         { yybegin(VERB); return CoffeeScriptTokenTypes.BRACKET; }
-    "}"                         { yybegin(VERB); return CoffeeScriptTokenTypes.BRACE; }
+    "}"                         {
+        if (stack.empty()) {
+            yybegin(VERB); return CoffeeScriptTokenTypes.BRACE;
+        } else {
+            yypopState(); return CoffeeScriptTokenTypes.INTERPOLATION;
+        }
+    }
 }
 
-<YYINITIAL, NOUN, NOUN_OR_VERB> {
+<YYINITIAL, NOUN, NOUN_OR_VERB, INTERPOLATION> {
     "new"                       |
     "return"                    |
     "try"                       |
@@ -198,10 +220,10 @@ JAVASCRIPT      = [^`]+
     {NUMBER}                    { yybegin(VERB); return CoffeeScriptTokenTypes.NUMBER; }
     "{"                         { yybegin(NOUN); return CoffeeScriptTokenTypes.BRACE; }
     ")"                         { yybegin(VERB); return CoffeeScriptTokenTypes.PARENTHESIS; }
-    \"                          { yybegin(DOUBLE_QUOTE_STRING); return CoffeeScriptTokenTypes.STRING; }
-    "\"\"\""                    |
-    "'''"                       { yybegin(HEREDOCS); return CoffeeScriptTokenTypes.HEREDOCS; }
-    \'                          { yybegin(SINGLE_QUOTE_STRING); return CoffeeScriptTokenTypes.STRING; }
+    \'                          { yybegin(SINGLE_QUOTE_STRING); return CoffeeScriptTokenTypes.SINGLE_QUOTE_STRING; }
+    \"                          { yybegin(DOUBLE_QUOTE_STRING); return CoffeeScriptTokenTypes.DOUBLE_QUOTE_STRING; }
+    "'''"                       { yybegin(SINGLE_QUOTE_HEREDOC); return CoffeeScriptTokenTypes.SINGLE_QUOTE_HEREDOC; }
+    "\"\"\""                    { yybegin(DOUBLE_QUOTE_HEREDOC); return CoffeeScriptTokenTypes.DOUBLE_QUOTE_HEREDOC; }
     "`"                         { yybegin(JAVASCRIPT); return CoffeeScriptTokenTypes.JAVASCRIPT; }
 
 }
@@ -232,14 +254,16 @@ JAVASCRIPT      = [^`]+
 <REGULAR_EXPRESSION_FLAG> {
     {REGULAR_EXPRESSION_FLAGS}      { yybegin(VERB); return CoffeeScriptTokenTypes.REGULAR_EXPRESSION_FLAG; }
 }
+
 <DOUBLE_QUOTE_STRING> {
-    \"                              { yybegin(VERB); return CoffeeScriptTokenTypes.STRING; }
-    {CHARACTERS_IN_DOUBLE_QUOTES}   { return CoffeeScriptTokenTypes.STRING; }
+    "#{"                            { yypushState(INTERPOLATION); return CoffeeScriptTokenTypes.INTERPOLATION; }
+    \"                              { yybegin(VERB); return CoffeeScriptTokenTypes.DOUBLE_QUOTE_STRING; }
+    {CHARACTERS_IN_DOUBLE_QUOTES}   { return CoffeeScriptTokenTypes.DOUBLE_QUOTE_STRING; }
 }
 
 <SINGLE_QUOTE_STRING> {
-    \'                              { yybegin(VERB); return CoffeeScriptTokenTypes.STRING; }
-    {CHARACTERS_IN_SINGLE_QUOTES}   { return CoffeeScriptTokenTypes.STRING; }
+    \'                              { yybegin(VERB); return CoffeeScriptTokenTypes.SINGLE_QUOTE_STRING; }
+    {CHARACTERS_IN_SINGLE_QUOTES}   { return CoffeeScriptTokenTypes.SINGLE_QUOTE_STRING; }
 }
 
 <DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING> {
@@ -253,11 +277,19 @@ JAVASCRIPT      = [^`]+
     \\.                             { return CoffeeScriptTokenTypes.BAD_CHARACTER; }
 }
 
-<HEREDOCS> {
-    {HEREDOCS}                      { return CoffeeScriptTokenTypes.HEREDOCS; }
+<SINGLE_QUOTE_HEREDOC> {
+    "'''"                           { yybegin(VERB);  return CoffeeScriptTokenTypes.SINGLE_QUOTE_HEREDOC;}
+    {CHARACTERS_IN_HEREDOCS}        { return CoffeeScriptTokenTypes.SINGLE_QUOTE_HEREDOC; }
+}
+
+<DOUBLE_QUOTE_HEREDOC> {
+    "#{"                            { yypushState(INTERPOLATION); return CoffeeScriptTokenTypes.INTERPOLATION;}
+    "\"\"\""                        { yybegin(VERB);  return CoffeeScriptTokenTypes.DOUBLE_QUOTE_HEREDOC;}
+    {CHARACTERS_IN_HEREDOCS}        { return CoffeeScriptTokenTypes.DOUBLE_QUOTE_HEREDOC; }
+}
+
+<DOUBLE_QUOTE_HEREDOC, SINGLE_QUOTE_HEREDOC> {
     {LINE_TERMINATOR}               { return CoffeeScriptTokenTypes.LINE_TERMINATOR; }
-    "'''"                           |
-    "\"\"\""                        { yybegin(VERB);  return CoffeeScriptTokenTypes.HEREDOCS;}
 }
 
 .                                   { yybegin(YYINITIAL);   return CoffeeScriptTokenTypes.BAD_CHARACTER; }

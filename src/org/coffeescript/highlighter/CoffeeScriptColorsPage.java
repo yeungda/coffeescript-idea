@@ -37,12 +37,16 @@ public class CoffeeScriptColorsPage implements ColorSettingsPage {
         new AttributesDescriptor("Number", CoffeeScriptSyntaxHighlighter.NUMBER),
         new AttributesDescriptor("Operator", CoffeeScriptSyntaxHighlighter.OPERATOR),
         new AttributesDescriptor("Assignment", CoffeeScriptSyntaxHighlighter.ASSIGNMENT),
-        new AttributesDescriptor("Comment", CoffeeScriptSyntaxHighlighter.COMMENT),
+        new AttributesDescriptor("Line comment", CoffeeScriptSyntaxHighlighter.COMMENT),
         new AttributesDescriptor("Block comment", CoffeeScriptSyntaxHighlighter.BLOCK_COMMENT),
-        new AttributesDescriptor("String", CoffeeScriptSyntaxHighlighter.STRING),
+        new AttributesDescriptor("Single quoted string", CoffeeScriptSyntaxHighlighter.SINGLE_QUOTE_STRING),
+        new AttributesDescriptor("Double quoted string", CoffeeScriptSyntaxHighlighter.DOUBLE_QUOTE_STRING),
+        new AttributesDescriptor("Single quoted heredoc", CoffeeScriptSyntaxHighlighter.SINGLE_QUOTE_HEREDOC),
+        new AttributesDescriptor("Double quoted heredoc", CoffeeScriptSyntaxHighlighter.DOUBLE_QUOTE_HEREDOC),
         new AttributesDescriptor("String literal", CoffeeScriptSyntaxHighlighter.STRING_LITERAL),
         new AttributesDescriptor("Keyword", CoffeeScriptSyntaxHighlighter.KEYWORD),
         new AttributesDescriptor("Reserved keyword", CoffeeScriptSyntaxHighlighter.RESERVED_WORD),
+        new AttributesDescriptor("Interpolation", CoffeeScriptSyntaxHighlighter.INTERPOLATION),
     };
 
     @NotNull
@@ -72,45 +76,55 @@ public class CoffeeScriptColorsPage implements ColorSettingsPage {
     @NotNull
     public String getDemoText() {
         return "###\n" +
-                "Some examples\n" +
-                "###\n" +
-                "class Animal\n" +
-                "  constructor: (@name) -> \n" +
-                "  move: (meters) -> alert @name + \" moved \" + meters + \"m.\"\n" +
-                "\n" +
-                "class Snake extends Animal\n" +
-                "  move: -> \n" +
-                "    alert \"Slithering...\"\n" +
-                "    super 5\n" +
-                "\n" +
-                "# Assignment:\n" +
-                "number   = 42\n" +
-                "opposite = true\n" +
-                "\n" +
-                "# Conditions:\n" +
-                "number = -42 if opposite\n" +
-                "\n" +
-                "# Functions:\n" +
-                "square = (x) -> x * x\n" +
-                "\n" +
-                "# Arrays:\n" +
-                "list = [1, 2, 3, 4, 5]\n" +
-                "\n" +
-                "# Objects:\n" +
-                "math =\n" +
-                "  root:   Math.sqrt\n" +
-                "  square: square\n" +
-                "  cube:   (x) -> x * square x\n" +
-                "\n" +
-                "# Splats:\n" +
-                "race = (winner, runners...) ->\n" +
-                "  print winner, runners\n" +
-                "\n" +
-                "# Existence:\n" +
-                "alert \"I knew it!\" if elvis?\n" +
-                "\n" +
-                "# Array comprehensions:\n" +
-                "cubes = math.cube num for num in list";
+               "Some examples\n" +
+               "###\n" +
+               "class Animal\n" +
+               "  constructor: (@name) -> \n" +
+               "  move: (meters) -> alert @name + \" moved \" + meters + \"m.\"\n" +
+               "\n" +
+               "class Snake extends Animal\n" +
+               "  move: -> \n" +
+               "    alert \'Slithering...\'\n" +
+               "    super 5\n" +
+               "\n" +
+               "# Assignment:\n" +
+               "number   = 42\n" +
+               "opposite = true\n" +
+               "\n" +
+               "# Conditions:\n" +
+               "number = -42 if opposite\n" +
+               "\n" +
+               "# Functions: \n" +
+               "square = (x) -> x * x\n" +
+               "\n" +
+               "# Arrays:\n" +
+               "list = [1, 2, 3, 4, 5]\n" +
+               "\n" +
+               "# Objects:\n" +
+               "math =\n" +
+               "  root:   Math.sqrt\n" +
+               "  square: square\n" +
+               "  cube:   (x) -> x * square x\n" +
+               "\n" +
+               "# Splats:\n" +
+               "race = (winner, runners...) ->\n" +
+               "  print winner, runners\n" +
+               "\n" +
+               "# Existence:\n" +
+               "alert \"I knew it!\" if elvis?\n" +
+               "\n" +
+               "# Array comprehensions:\n" +
+               "cubes = math.cube num for num in list\n" +
+               "\n" +
+               "# Interpolation\n" +
+               "s = \"The result is #{ number }\"\n" +
+               "\n" +
+               "# Heredocs\n" +
+               "text = \"\"\"\n" +
+               " Result \n" +
+               "    is #{ @numbder }\"\"\"\n" +
+               "\n" +
+               "o = ''' Another '''\n";
     }
 
     public Map<String, TextAttributesKey> getAdditionalHighlightingTagToDescriptorMap() {
