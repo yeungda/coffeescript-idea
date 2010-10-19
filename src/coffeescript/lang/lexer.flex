@@ -41,7 +41,7 @@ COMMENT       = (((\n?[ \t]*)?#[^\n]*)+)
 CODE          = ((-|=)>)
 MULTI_DENT    = ((\n([ \t]*))+)(\.)?
 LAST_DENT     = \n([ \t]*)
-ASSIGNMENT    = (:|=)
+ASSIGNMENT    = (:|=|or=)
 
 CHARACTERS_IN_DOUBLE_QUOTES  = ([^\"\r\n\\]+)
 CHARACTERS_IN_SINGLE_QUOTES  = ([^\'\r\n\\]+)
@@ -116,6 +116,7 @@ JAVASCRIPT = [^`]+
     "..."                       |
     "<-"                        { yybegin(NOUN); return Tokens.OPERATOR; }
     ")"                         { return Tokens.PARENTHESIS; }
+    "or="                       |
     "="                         |
     ":"                         { yybegin(NOUN); return Tokens.ASSIGNMENT; }
     "."                         { yybegin(NOUN); return Tokens.DOT; }
@@ -189,6 +190,7 @@ JAVASCRIPT = [^`]+
 }
 
 <NOUN> {
+    "or="                       |
     "="                         { return Tokens.ASSIGNMENT; }
     {REGULAR_EXPRESSION_START}  { yypushback(1); yybegin(REGULAR_EXPRESSION); return Tokens.REGULAR_EXPRESSION; }
 }

@@ -230,6 +230,8 @@ public class LexerUnitTest {
             assertThat(lexing("foo+="), tokenisedTo(IDENTIFIER, OPERATOR, ASSIGNMENT));
             assertThat(lexing("foo-="), tokenisedTo(IDENTIFIER, OPERATOR, ASSIGNMENT));
             assertThat(lexing("foo="), tokenisedTo(IDENTIFIER, ASSIGNMENT));
+            assertThat(lexing("foo or="), tokenisedTo(IDENTIFIER, WHITESPACE, ASSIGNMENT));
+            assertThat(lexing("fooor="), tokenisedTo(IDENTIFIER, ASSIGNMENT));
         }
 
         @Test
