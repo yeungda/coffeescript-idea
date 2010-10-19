@@ -126,6 +126,7 @@ public class CoffeeScriptLexerUnitTest {
         assertThat(lexing("native"), tokenisedTo(RESERVED_WORD));
         assertThat(lexing("__extends"), tokenisedTo(RESERVED_WORD));
         assertThat(lexing("__hasProp"), tokenisedTo(RESERVED_WORD));
+        assertThat(lexing("__slice"), tokenisedTo(RESERVED_WORD));
     }
 
     @Test
