@@ -30,6 +30,20 @@ import com.intellij.psi.tree.IElementType;
 %eof{  return;
 %eof}
 
+%{
+  // For Demetra compatibility
+  public void reset(CharSequence buffer, int initialState){
+    zzBuffer = buffer;
+    zzBufferArray = null;
+    zzCurrentPos = zzMarkedPos = zzStartRead = 0;
+    zzPushbackPos = 0;
+    zzAtEOF = false;
+    zzAtBOL = true;
+    zzEndRead = buffer.length();
+    yybegin(initialState);
+  }
+%}
+
 WS=[\ \t]+
 
 IDENTIFIER    = [a-zA-Z\$_]([a-zA-Z_0-9$])*
@@ -184,6 +198,7 @@ JAVASCRIPT = [^`]+
     \"                          { yybegin(DOUBLE_QUOTE_STRING); return Tokens.STRING; }
     "\"\"\""                    |
     "'''"                       { yybegin(HEREDOCS); return Tokens.HEREDOCS; }
+    "###"                       { yybegin(BLOCK_COMMENT); return Tokens.BLOCK_COMMENT; }
     \'                          { yybegin(SINGLE_QUOTE_STRING); return Tokens.STRING; }
     "`"                         { yybegin(JAVASCRIPT); return Tokens.JAVASCRIPT; }
 
