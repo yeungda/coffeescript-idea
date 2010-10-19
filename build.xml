@@ -99,7 +99,7 @@
     </target>
 
     <target  name="install-in-rubymine-on-mac" description="deploy built jar to existing rubymine 2.0 installation">
-        <delete dir="${user.home}/Library/Application Support/RubyMine20" includes="coffeescript-idea*.jar"/>
-        <copy todir="${user.home}/Library/Application Support/RubyMine20"><fileset dir="${basedir}/target/jar" includes="*.jar"/></copy>
+        <delete dir="${user.home}/Library/Application Support/RubyMine25" includes="coffeescript-idea*.jar"/>
+        <copy todir="${user.home}/Library/Application Support/RubyMine25"><fileset dir="${basedir}/target/jar" includes="*.jar"/></copy>
     </target>
 </project>
