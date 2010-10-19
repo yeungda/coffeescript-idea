@@ -51,7 +51,7 @@ NUMBER        = (0(x|X)[0-9a-fA-F]+)|([0-9]+(\.[0-9]+)?(e[+\-]?[0-9]+)?)
 INTERPOLATION = \$([a-zA-Z_@]\w*(\.\w+)*)
 OPERATOR      = ([+\*&|\/\-%=<>:!?][=+])
 WHITESPACE    = ([ \t]+)
-COMMENT       = (((\n?[ \t]*)?#[^\n]*)+)
+COMMENT       = ((([ \t]*)?#[^\n]*)+)
 CODE          = ((-|=)>)
 MULTI_DENT    = ((\n([ \t]*))+)(\.)?
 LAST_DENT     = \n([ \t]*)
