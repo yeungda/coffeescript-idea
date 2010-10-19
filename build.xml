@@ -36,7 +36,7 @@
             <include name="lib/*.jar"/>
             <include name="redist/*.jar"/>
         </fileset>
-        <fileset dir="/Applications/IntelliJ IDEA 9.0.1 CE.app/lib/">
+        <fileset dir="/Applications/IntelliJ IDEA 9.0.3 CE.app/lib/">
             <include name="*.jar"/>
         </fileset>
     </path>
