@@ -74,20 +74,20 @@ JAVASCRIPT      = [^`]+
 %%
 
 <YYINITIAL> {
-    "case"      |
-    "default"   |
-    "do"        |
-    "function"  |
-    "var"       |
-    "void"      |
-    "with"      |
-    "const"     |
-    "let"       |
-    "enum"      |
-    "export"    |
-    "import"    |
-    "native"    |
-    "__extends" |
+    "case"                      |
+    "default"                   |
+    "do"                        |
+    "function"                  |
+    "var"                       |
+    "void"                      |
+    "with"                      |
+    "const"                     |
+    "let"                       |
+    "enum"                      |
+    "export"                    |
+    "import"                    |
+    "native"                    |
+    "__extends"                 |
     "__hasProp"                 { return Tokens.RESERVED_WORD; }
     {LINE_TERMINATOR}           { return Tokens.LINE_TERMINATOR; }
 }
@@ -203,15 +203,15 @@ JAVASCRIPT      = [^`]+
 }
 
 <NOUN> {
-    "or="                       |
-    "="                         { return Tokens.ASSIGNMENT; }
-    {REGULAR_EXPRESSION_START}  { yypushback(1); yybegin(REGULAR_EXPRESSION); return Tokens.REGULAR_EXPRESSION; }
+    "or="                           |
+    "="                             { return Tokens.ASSIGNMENT; }
+    {REGULAR_EXPRESSION_START}      { yypushback(1); yybegin(REGULAR_EXPRESSION); return Tokens.REGULAR_EXPRESSION; }
 }
 
 <REGULAR_EXPRESSION> {
-    {REGULAR_EXPRESSION}       { return Tokens.REGULAR_EXPRESSION; }
-    "\\/"                      { return Tokens.REGULAR_EXPRESSION_LITERAL; }
-    {REGULAR_EXPRESSION_LITERAL} { return Tokens.REGULAR_EXPRESSION_LITERAL; }
+    {REGULAR_EXPRESSION}            { return Tokens.REGULAR_EXPRESSION; }
+    "\\/"                           { return Tokens.REGULAR_EXPRESSION_LITERAL; }
+    {REGULAR_EXPRESSION_LITERAL}    { return Tokens.REGULAR_EXPRESSION_LITERAL; }
     {REGULAR_EXPRESSION_TERMINATOR} {
         final int length = yytext().length();
         if (length > 1) {
@@ -222,31 +222,31 @@ JAVASCRIPT      = [^`]+
         }
         return Tokens.REGULAR_EXPRESSION;
     }
-    {LINE_TERMINATOR}          { yybegin(YYINITIAL); return Tokens.BAD_CHARACTER; }
+    {LINE_TERMINATOR}               { yybegin(YYINITIAL); return Tokens.BAD_CHARACTER; }
 }
 
 <REGULAR_EXPRESSION_FLAG> {
-    {REGULAR_EXPRESSION_FLAGS}       { yybegin(VERB); return Tokens.REGULAR_EXPRESSION_FLAG; }
+    {REGULAR_EXPRESSION_FLAGS}      { yybegin(VERB); return Tokens.REGULAR_EXPRESSION_FLAG; }
 }
 <DOUBLE_QUOTE_STRING> {
-    \"                             { yybegin(VERB); return Tokens.STRING; }
-    {CHARACTERS_IN_DOUBLE_QUOTES}  { return Tokens.STRING; }
+    \"                              { yybegin(VERB); return Tokens.STRING; }
+    {CHARACTERS_IN_DOUBLE_QUOTES}   { return Tokens.STRING; }
 }
 
 <SINGLE_QUOTE_STRING> {
-    \'                             { yybegin(VERB); return Tokens.STRING; }
-    {CHARACTERS_IN_SINGLE_QUOTES}  { return Tokens.STRING; }
+    \'                              { yybegin(VERB); return Tokens.STRING; }
+    {CHARACTERS_IN_SINGLE_QUOTES}   { return Tokens.STRING; }
 }
 
 <DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING> {
-    "\\n"                          |
-    "\\t"                          |
-    "\\'"                          |
+    "\\n"                           |
+    "\\t"                           |
+    "\\'"                           |
     "\\\""                          |
-    "\\\\"                         { return Tokens.STRING_LITERAL; }
-    "\n"                           |
-    "\r"                           { return Tokens.LINE_TERMINATOR; }
-    \\.                            { return Tokens.BAD_CHARACTER; }
+    "\\\\"                          { return Tokens.STRING_LITERAL; }
+    "\n"                            |
+    "\r"                            { return Tokens.LINE_TERMINATOR; }
+    \\.                             { return Tokens.BAD_CHARACTER; }
 }
 
 <HEREDOCS> {
@@ -256,4 +256,4 @@ JAVASCRIPT      = [^`]+
     "\"\"\""                        { yybegin(VERB);  return Tokens.HEREDOCS;}
 }
 
-.                                  { yybegin(YYINITIAL);   return Tokens.BAD_CHARACTER; }
+.                                   { yybegin(YYINITIAL);   return Tokens.BAD_CHARACTER; }
