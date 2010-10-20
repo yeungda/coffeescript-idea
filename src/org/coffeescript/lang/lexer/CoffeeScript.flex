@@ -72,12 +72,12 @@ BLOCK_COMMENTS = (([ \t]*)?(###)+([^]*?)(###)+)
 CODE           = ((-|=)>)
 ASSIGNMENT     = (:|=|or=)
 
-CHARACTERS_IN_DOUBLE_QUOTES = ([^#{\"\r\n\\]+)
-CHARACTERS_IN_SINGLE_QUOTES = ([^\'\r\n\\]+)
-CHARACTERS_IN_HEREDOCS      = [^\r\n]
-CHARACTERS_IN_JAVASCRIPT    = [^`]+
+CHARACTERS_IN_DOUBLE_QUOTES      = ([^#{\"\r\n\\]+)
+CHARACTERS_IN_SINGLE_QUOTES      = ([^\'\r\n\\]+)
+CHARACTERS_IN_HEREDOCS           = [^\r\n]
+CHARACTERS_IN_JAVASCRIPT         = [^`]+
+CHARACTERS_IN_REGULAR_EXPRESSION = [^#{/\\\r\n]+
 
-REGULAR_EXPRESSION            = [^/\\\r\n]+
 REGULAR_EXPRESSION_LITERAL    = \\.
 REGULAR_EXPRESSION_FLAGS      = [imgy]{0,4}
 REGULAR_EXPRESSION_TERMINATOR = \/{REGULAR_EXPRESSION_FLAGS}
@@ -229,16 +229,18 @@ REGULAR_EXPRESSION_START      = \/[^ ]
 }
 
 <NOUN> {
-    "or="                           |
-    "="                             { return CoffeeScriptTokenTypes.ASSIGNMENT; }
-    {REGULAR_EXPRESSION_START}      { yypushback(1); yybegin(REGULAR_EXPRESSION); return CoffeeScriptTokenTypes.REGULAR_EXPRESSION; }
+    "or="                              |
+    "="                                { return CoffeeScriptTokenTypes.ASSIGNMENT; }
+    {REGULAR_EXPRESSION_START}         { System.out.println("RE_STATE"); yypushback(1); yybegin(REGULAR_EXPRESSION); return CoffeeScriptTokenTypes.REGULAR_EXPRESSION; }
 }
 
 <REGULAR_EXPRESSION> {
-    {REGULAR_EXPRESSION}            { return CoffeeScriptTokenTypes.REGULAR_EXPRESSION; }
-    "\\/"                           { return CoffeeScriptTokenTypes.REGULAR_EXPRESSION_LITERAL; }
-    {REGULAR_EXPRESSION_LITERAL}    { return CoffeeScriptTokenTypes.REGULAR_EXPRESSION_LITERAL; }
-    {REGULAR_EXPRESSION_TERMINATOR} {
+    "#{"                               { System.out.println("INT"); yypushState(INTERPOLATION); return CoffeeScriptTokenTypes.INTERPOLATION; }
+    {CHARACTERS_IN_REGULAR_EXPRESSION} { System.out.println("RE"); return CoffeeScriptTokenTypes.REGULAR_EXPRESSION; }
+    "\\/"                              { System.out.println("RE_LI"); return CoffeeScriptTokenTypes.REGULAR_EXPRESSION_LITERAL; }
+    {REGULAR_EXPRESSION_LITERAL}       { System.out.println("RE_LI2"); return CoffeeScriptTokenTypes.REGULAR_EXPRESSION_LITERAL; }
+    {REGULAR_EXPRESSION_TERMINATOR}    {
+        System.out.println("RE_TE"); 
         final int length = yytext().length();
         if (length > 1) {
             yypushback(length -1);
@@ -248,48 +250,48 @@ REGULAR_EXPRESSION_START      = \/[^ ]
         }
         return CoffeeScriptTokenTypes.REGULAR_EXPRESSION;
     }
-    {LINE_TERMINATOR}               { yybegin(YYINITIAL); return CoffeeScriptTokenTypes.BAD_CHARACTER; }
+    {LINE_TERMINATOR}                  { yybegin(YYINITIAL); return CoffeeScriptTokenTypes.BAD_CHARACTER; }
 }
 
 <REGULAR_EXPRESSION_FLAG> {
-    {REGULAR_EXPRESSION_FLAGS}      { yybegin(VERB); return CoffeeScriptTokenTypes.REGULAR_EXPRESSION_FLAG; }
+    {REGULAR_EXPRESSION_FLAGS}         { yybegin(VERB); return CoffeeScriptTokenTypes.REGULAR_EXPRESSION_FLAG; }
 }
 
 <DOUBLE_QUOTE_STRING> {
-    "#{"                            { yypushState(INTERPOLATION); return CoffeeScriptTokenTypes.INTERPOLATION; }
-    \"                              { yybegin(VERB); return CoffeeScriptTokenTypes.DOUBLE_QUOTE_STRING; }
-    {CHARACTERS_IN_DOUBLE_QUOTES}   { return CoffeeScriptTokenTypes.DOUBLE_QUOTE_STRING; }
+    "#{"                               { yypushState(INTERPOLATION); return CoffeeScriptTokenTypes.INTERPOLATION; }
+    \"                                 { yybegin(VERB); return CoffeeScriptTokenTypes.DOUBLE_QUOTE_STRING; }
+    {CHARACTERS_IN_DOUBLE_QUOTES}      { return CoffeeScriptTokenTypes.DOUBLE_QUOTE_STRING; }
 }
 
 <SINGLE_QUOTE_STRING> {
-    \'                              { yybegin(VERB); return CoffeeScriptTokenTypes.SINGLE_QUOTE_STRING; }
-    {CHARACTERS_IN_SINGLE_QUOTES}   { return CoffeeScriptTokenTypes.SINGLE_QUOTE_STRING; }
+    \'                                 { yybegin(VERB); return CoffeeScriptTokenTypes.SINGLE_QUOTE_STRING; }
+    {CHARACTERS_IN_SINGLE_QUOTES}      { return CoffeeScriptTokenTypes.SINGLE_QUOTE_STRING; }
 }
 
 <DOUBLE_QUOTE_STRING, SINGLE_QUOTE_STRING> {
-    "\\n"                           |
-    "\\t"                           |
-    "\\'"                           |
-    "\\\""                          |
-    "\\\\"                          { return CoffeeScriptTokenTypes.STRING_LITERAL; }
-    "\n"                            |
-    "\r"                            { return CoffeeScriptTokenTypes.LINE_TERMINATOR; }
-    \\.                             { return CoffeeScriptTokenTypes.BAD_CHARACTER; }
+    "\\n"                              |
+    "\\t"                              |
+    "\\'"                              |
+    "\\\""                             |
+    "\\\\"                             { return CoffeeScriptTokenTypes.STRING_LITERAL; }
+    "\n"                               |
+    "\r"                               { return CoffeeScriptTokenTypes.LINE_TERMINATOR; }
+    \\.                                { return CoffeeScriptTokenTypes.BAD_CHARACTER; }
 }
 
 <SINGLE_QUOTE_HEREDOC> {
-    "'''"                           { yybegin(VERB);  return CoffeeScriptTokenTypes.SINGLE_QUOTE_HEREDOC;}
-    {CHARACTERS_IN_HEREDOCS}        { return CoffeeScriptTokenTypes.SINGLE_QUOTE_HEREDOC; }
+    "'''"                              { yybegin(VERB);  return CoffeeScriptTokenTypes.SINGLE_QUOTE_HEREDOC;}
+    {CHARACTERS_IN_HEREDOCS}           { return CoffeeScriptTokenTypes.SINGLE_QUOTE_HEREDOC; }
 }
 
 <DOUBLE_QUOTE_HEREDOC> {
-    "#{"                            { yypushState(INTERPOLATION); return CoffeeScriptTokenTypes.INTERPOLATION;}
-    "\"\"\""                        { yybegin(VERB);  return CoffeeScriptTokenTypes.DOUBLE_QUOTE_HEREDOC;}
-    {CHARACTERS_IN_HEREDOCS}        { return CoffeeScriptTokenTypes.DOUBLE_QUOTE_HEREDOC; }
+    "#{"                               { yypushState(INTERPOLATION); return CoffeeScriptTokenTypes.INTERPOLATION;}
+    "\"\"\""                           { yybegin(VERB);  return CoffeeScriptTokenTypes.DOUBLE_QUOTE_HEREDOC;}
+    {CHARACTERS_IN_HEREDOCS}           { return CoffeeScriptTokenTypes.DOUBLE_QUOTE_HEREDOC; }
 }
 
 <DOUBLE_QUOTE_HEREDOC, SINGLE_QUOTE_HEREDOC> {
-    {LINE_TERMINATOR}               { return CoffeeScriptTokenTypes.LINE_TERMINATOR; }
+    {LINE_TERMINATOR}                  { return CoffeeScriptTokenTypes.LINE_TERMINATOR; }
 }
 
-.                                   { yybegin(YYINITIAL);   return CoffeeScriptTokenTypes.BAD_CHARACTER; }
+.                                      { yybegin(YYINITIAL);   return CoffeeScriptTokenTypes.BAD_CHARACTER; }
