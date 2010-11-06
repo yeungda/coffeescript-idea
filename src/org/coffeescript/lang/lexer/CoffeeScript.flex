@@ -231,16 +231,15 @@ REGULAR_EXPRESSION_START      = \/[^ ]
 <NOUN> {
     "or="                              |
     "="                                { return CoffeeScriptTokenTypes.ASSIGNMENT; }
-    {REGULAR_EXPRESSION_START}         { System.out.println("RE_STATE"); yypushback(1); yybegin(REGULAR_EXPRESSION); return CoffeeScriptTokenTypes.REGULAR_EXPRESSION; }
+    {REGULAR_EXPRESSION_START}         { yypushback(1); yybegin(REGULAR_EXPRESSION); return CoffeeScriptTokenTypes.REGULAR_EXPRESSION; }
 }
 
 <REGULAR_EXPRESSION> {
-    "#{"                               { System.out.println("INT"); yypushState(INTERPOLATION); return CoffeeScriptTokenTypes.INTERPOLATION; }
-    {CHARACTERS_IN_REGULAR_EXPRESSION} { System.out.println("RE"); return CoffeeScriptTokenTypes.REGULAR_EXPRESSION; }
-    "\\/"                              { System.out.println("RE_LI"); return CoffeeScriptTokenTypes.REGULAR_EXPRESSION_LITERAL; }
-    {REGULAR_EXPRESSION_LITERAL}       { System.out.println("RE_LI2"); return CoffeeScriptTokenTypes.REGULAR_EXPRESSION_LITERAL; }
+    "#{"                               { yypushState(INTERPOLATION); return CoffeeScriptTokenTypes.INTERPOLATION; }
+    {CHARACTERS_IN_REGULAR_EXPRESSION} { return CoffeeScriptTokenTypes.REGULAR_EXPRESSION; }
+    "\\/"                              { return CoffeeScriptTokenTypes.REGULAR_EXPRESSION_LITERAL; }
+    {REGULAR_EXPRESSION_LITERAL}       { return CoffeeScriptTokenTypes.REGULAR_EXPRESSION_LITERAL; }
     {REGULAR_EXPRESSION_TERMINATOR}    {
-        System.out.println("RE_TE"); 
         final int length = yytext().length();
         if (length > 1) {
             yypushback(length -1);
