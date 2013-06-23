@@ -13,8 +13,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<idea-plugin version="2" url="http://yeungda.github.com/coffeescript-idea/">
-  <name>coffeescript-idea</name>
+<idea-plugin version="2" url="http://yeungda.github.com/org.coffeescript-idea/">
+  <name>org.coffeescript-idea</name>
   <description>Syntax highlighting for CoffeeScript</description>
   <version>${version}</version>
   <vendor>David Yeung</vendor>
@@ -25,7 +25,7 @@
   <application-components>
     <!-- Add your application components here -->
       <component>
-          <implementation-class>coffeescript.Launcher</implementation-class>
+          <implementation-class>org.coffeescript.CoffeeScriptLoader</implementation-class>
       </component>
   </application-components>
 
@@ -39,8 +39,9 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->
-      <lang.syntaxHighlighterFactory key="CoffeeScript" implementationClass="coffeescript.lang.Language$HighlighterFactory" />
-      <lang.parserDefinition language="CoffeeScript" implementationClass="coffeescript.lang.ParserDefinition"/>
-
+      <lang.syntaxHighlighterFactory key="CoffeeScript" implementationClass="org.coffeescript.CoffeeScriptLanguage$HighlighterFactory" />
+      <lang.parserDefinition language="CoffeeScript" implementationClass="org.coffeescript.lang.parser.CoffeeScriptParserDefinition"/>
+      <colorSettingsPage implementation="org.coffeescript.highlighter.CoffeeScriptColorsPage"/>
+      <lang.commenter language="CoffeeScript" implementationClass="org.coffeescript.highlighter.CoffeeScriptCommenter"/>
   </extensions>
 </idea-plugin>

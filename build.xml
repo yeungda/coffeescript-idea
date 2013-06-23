@@ -36,15 +36,15 @@
             <include name="lib/*.jar"/>
             <include name="redist/*.jar"/>
         </fileset>
-        <fileset dir="/Applications/IntelliJ IDEA 9.0.1 CE.app/lib/">
+        <fileset dir="/Applications/IntelliJ IDEA 9.0.3 CE.app/lib/">
             <include name="*.jar"/>
         </fileset>
     </path>
 
     <target name="generate-lexer">
         <jflex skeleton="${idea.home}/tools/lexer/idea-flex.skeleton" nobak="true"
-               file="${basedir}/src/coffeescript/lang/lexer.flex"
-               destdir="${basedir}/src"
+               file="${basedir}/src/org/coffeescript/lang/lexer/CoffeeScript.flex"
+               destdir="${basedir}/src/"
                charat="true"/>
     </target>
 
@@ -99,7 +99,7 @@
     </target>
 
     <target  name="install-in-rubymine-on-mac" description="deploy built jar to existing rubymine 2.0 installation">
-        <delete dir="${user.home}/Library/Application Support/RubyMine20" includes="coffeescript-idea*.jar"/>
-        <copy todir="${user.home}/Library/Application Support/RubyMine20"><fileset dir="${basedir}/target/jar" includes="*.jar"/></copy>
+        <delete dir="${user.home}/Library/Application Support/RubyMine25" includes="coffeescript-idea*.jar"/>
+        <copy todir="${user.home}/Library/Application Support/RubyMine25"><fileset dir="${basedir}/target/jar" includes="*.jar"/></copy>
     </target>
 </project>

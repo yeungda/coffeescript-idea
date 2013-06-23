@@ -1,7 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="coffeescript-idea">
+  <settings default="org.coffeescript-idea">
     <module2copyright>
-      <element module="All" copyright="coffeescript-idea" />
+      <element module="All" copyright="org.coffeescript-idea" />
     </module2copyright>
   </settings>
 </component>
