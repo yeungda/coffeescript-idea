@@ -1,3 +1,7 @@
+# ABANDONED
+
+JetBrainz offer first class support for CoffeeScript these days. See https://www.jetbrains.com/help/idea/2016.1/coffeescript-support.html
+
 # coffeescript-idea
 
 coffeescript-idea is a plugin for IntelliJ IDEA provides syntax highlighting for CoffeeScript.
